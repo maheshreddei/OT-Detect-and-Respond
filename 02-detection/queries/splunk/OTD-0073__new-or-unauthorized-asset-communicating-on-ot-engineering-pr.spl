@@ -1,0 +1,9 @@
+``` OTD-0073 - New or Unauthorized Asset Communicating on OT Engineering Protocol Port ```
+``` Source: 02-detection/sigma/ot-ics-soc/20_new-or-unauthorized-asset-communicating-on-ot-engineering-pr.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  ((dest_port=502 OR dest_port=20000 OR dest_port=102 OR dest_port=4840 OR dest_port=2404))
+  NOT (src_ip="known_ot_asset_inventory")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

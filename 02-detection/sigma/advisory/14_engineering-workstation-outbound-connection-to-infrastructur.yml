@@ -1,0 +1,24 @@
+title: Engineering Workstation Outbound Connection to Infrastructure Outside Approved List
+id: sw12a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects an engineering workstation resolving or connecting to external infrastructure not present in its approved outbound destination list, operationalizing the advisory's threat-hunting hypothesis (H2) that EWS compromise often manifests first as unexpected outbound connectivity before any OT-side action is taken.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (EWS compromise hunt, not actor-specific)
+tags:
+  - attack.t1071
+  - attack.ics.t0883
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: dns
+  product: generic
+detection:
+  selection:
+    src_ip|in_list: 'designated_engineering_workstations'
+  filter:
+    query_name|in_list: 'approved_ews_outbound_destinations'
+  condition: selection and not filter
+falsepositives:
+  - Legitimate software vendor update-check domain not yet added to the approved list
+level: high

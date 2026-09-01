@@ -1,0 +1,11 @@
+// OTD-0128 - Ransomware Precursor — Lateral Movement Targeting Historian or SCADA Hostnames
+// Source: 02-detection/sigma/advisory/06_ransomware-precursor-lateral-movement-targeting-historian-or.yml
+// ATT&CK for ICS: attack.ics.t0888
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where ((TargetComputerName contains "HIST" or TargetComputerName contains "SCADA" or TargetComputerName contains "PI-" or TargetComputerName contains "DCS"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 30m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

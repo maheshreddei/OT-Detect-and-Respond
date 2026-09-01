@@ -1,0 +1,25 @@
+title: OPC UA Write Request to Critical Node from Unauthorized Client
+id: 9c3a1d5c-3f4e-405c-bd6a-3c4d5e6f7003
+status: experimental
+description: Detects an OPC UA Write service call targeting a NodeId within the critical control address-space range from a client IP not in the approved SCADA/HMI allow-list.
+references:
+  - https://reference.opcfoundation.org/Core/Part4/v104/docs/5.10.4
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0836
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: opcua
+detection:
+  selection:
+    proto: opcua
+    service: Write
+    node_id|startswith: 'ns=2;s=Control.'
+  filter:
+    src_ip|cidr: '10.10.10.0/24'   # replace with approved HMI/SCADA subnet
+  condition: selection and not filter
+falsepositives:
+  - Newly added HMI client not yet added to the allow-list
+level: high

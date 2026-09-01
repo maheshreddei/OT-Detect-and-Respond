@@ -1,0 +1,11 @@
+// OTD-0069 - IEC 60870-5-104 General Interrogation from Unauthorized Master
+// Source: 02-detection/sigma/ot-ics-soc/16_iec-60870-5-104-general-interrogation-from-unauthorized-mast.yml
+// ATT&CK for ICS: attack.ics.t0846, attack.ics.t0888
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "iec104" and TypeId == "C_IC_NA_1")
+| where not ((ipv4_is_in_range(SourceIP, "10.10.20.0/24")))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

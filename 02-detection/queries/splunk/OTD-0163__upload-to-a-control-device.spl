@@ -1,0 +1,12 @@
+``` OTD-0163 - Upload to a control device ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: FTP-03 ```
+``` ATT&CK for ICS: T0839  |  Severity: high ```
+``` Detection logic: STOR/PUT to a PLC/RTU/gateway ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- STOR/PUT to a PLC/RTU/gateway ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

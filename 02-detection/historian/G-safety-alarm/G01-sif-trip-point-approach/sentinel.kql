@@ -1,0 +1,37 @@
+// ============================================================================
+// G01 - SIF trip-point approach  (TRITON/TRISIS precursor)
+// Read-only. MONITORING ONLY - does not interact with the SIS.
+// Schedule every 1m, lookback sized to the approach window.
+// Data model: docs/data-model.md   Watchlist: SIFTripLimits
+// ============================================================================
+let approachWindow = 10m;
+OTHistorian_CL
+| where TimeGenerated > ago(approachWindow) and Quality_s == "Good"
+| where TagName_s endswith ".PV"
+// Keep only safety-related tags present in the SIF watchlist
+| lookup kind=inner _GetWatchlist("SIFTripLimits") on $left.TagName_s == $right.TagName
+| extend trip_value = todouble(trip_value), prealarm_value = todouble(prealarm_value), safe_margin = todouble(safe_margin)
+| extend margin = case(trip_direction == "high", trip_value - Value_d,
+                       trip_direction == "low",  Value_d - trip_value,
+                       real(null))
+| extend margin_pct = round(100 * margin / safe_margin, 1)
+| extend past_prealarm = case(trip_direction == "high", Value_d >= prealarm_value,
+                              trip_direction == "low",  Value_d <= prealarm_value,
+                              false)
+// Trend across the window: earliest vs latest margin per tag => approach rate
+| order by TagName_s asc, TimeGenerated asc
+| summarize
+    m_first   = arg_min(TimeGenerated, margin),
+    lastState = arg_max(TimeGenerated, margin, Value_d, trip_value, prealarm_value, safe_margin, margin_pct, past_prealarm, sif_id, unit, trip_direction),
+    tFirst    = min(TimeGenerated),
+    tLast     = max(TimeGenerated)
+    by TagName_s
+| extend span_min = (datetime_diff('second', tLast, tFirst)) / 60.0
+| extend margin_rate = round((lastState_margin - m_first) / iff(span_min == 0, 1.0, span_min), 3)  // per min; negative = approaching
+// Fire: inside safe margin AND actively approaching (deadband)
+| where lastState_margin < lastState_safe_margin and margin_rate < -0.01
+| extend severity = iff(lastState_past_prealarm, "critical", "high"), detection = "G01"
+| project tLast, TagName_s, lastState_sif_id, lastState_Value_d, lastState_trip_value,
+          lastState_prealarm_value, lastState_margin, lastState_margin_pct, margin_rate,
+          lastState_unit, severity, detection
+| order by tLast desc

@@ -1,0 +1,10 @@
+// OTD-0121 - Engineering Workstation Reflective/Memory-Only Process Injection
+// Source: 02-detection/sigma/threat-actor/19_engineering-workstation-reflective-memory-only-process-injec.yml
+// ATT&CK for ICS: attack.ics.t0851
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (Computer == "designated_engineering_workstations" and (CallTrace contains "UNKNOWN"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

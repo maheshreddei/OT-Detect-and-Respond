@@ -1,0 +1,31 @@
+title: Spearphishing Lure Execution by OT Engineering Personnel
+id: sw18a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects an Office application spawning a script interpreter or LOLBin process on a host belonging to OT engineering personnel shortly after opening an email attachment, matching the advisory's documented pattern of profession-relevant spearphishing lures (technical manuals, software update notices, conference materials) used by APT33, APT34, and Moses Staff against OT engineers specifically.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Multiple (APT33, APT34, Moses Staff)
+tags:
+  - attack.t1566.001
+  - attack.t1204.002
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    ParentImage|endswith:
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\outlook.exe'
+    Image|endswith:
+      - '\powershell.exe'
+      - '\cmd.exe'
+      - '\wscript.exe'
+      - '\mshta.exe'
+    User|in_list: 'ot_engineering_staff_accounts'
+  condition: selection
+falsepositives:
+  - Legitimate macro-enabled engineering template that intentionally shells out to a system utility
+level: critical

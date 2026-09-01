@@ -1,0 +1,12 @@
+``` OTD-0165 - Web login brute force ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: HTTP-01 ```
+``` ATT&CK for ICS: T0859  |  Severity: high ```
+``` Detection logic: Many auth failures then success to OT web UI ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- Many auth failures then success to OT web UI ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

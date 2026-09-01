@@ -1,0 +1,12 @@
+``` OTD-0157 - Tag/Set_Attribute write from non-controller ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: ENIP-01 ```
+``` ATT&CK for ICS: T0836  |  Severity: high ```
+``` Detection logic: CIP write service from host outside controller/EWS baseline ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- CIP write service from host outside controller/EWS baseline ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

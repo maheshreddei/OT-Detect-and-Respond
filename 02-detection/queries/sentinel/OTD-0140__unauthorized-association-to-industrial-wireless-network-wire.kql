@@ -1,0 +1,11 @@
+// OTD-0140 - Unauthorized Association to Industrial Wireless Network (WirelessHART/ISA100/OT Wi-Fi)
+// Source: 02-detection/sigma/advisory/18_unauthorized-association-to-industrial-wireless-network-wire.yml
+// ATT&CK for ICS: attack.ics.t0822, attack.ics.t0846
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (network_type in ("wirelesshart", "isa100", "ot_wifi"))
+| where not ((client_mac == "approved_ot_wireless_assets"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,7 @@
+id,scenario,layer,detection,attack,tda_goals,environment,severity
+TDA-IT-001,Brute-force success after failures,IT-identity,IAM-03,T1110,log;logic;speed,lab,high
+TDA-IT-002,Encoded PowerShell execution,IT-endpoint,EDR-01,T1059.001,log;logic;speed,lab,high
+TDA-IT-003,DNS tunnelling,IT-egress,OUT-01,T1071.004,log;logic;fp;speed,lab,high
+TDA-OT-001,Unauthorized Modbus write,OT-protocol,MOD-01,T0836,log;logic;speed,lab/pcap-replay,high
+TDA-OT-002,PLC program download (S7),OT-engineering,S7-02,T0843,log;logic;blindspot;speed,lab/pcap-replay,critical
+TDA-OT-003,SIS key-switch to PROGRAM,OT-safety,SIS-B4,T0858,log;logic;escalation,injection-only,critical

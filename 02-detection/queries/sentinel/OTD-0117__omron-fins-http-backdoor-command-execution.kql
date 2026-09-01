@@ -1,0 +1,11 @@
+// OTD-0117 - OMRON FINS/HTTP Backdoor Command Execution
+// Source: 02-detection/sigma/threat-actor/15_omron-fins-http-backdoor-command-execution.yml
+// ATT&CK for ICS: attack.ics.t0859, attack.ics.t0883
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "fins")
+| where not ((SourceIP == "designated_engineering_workstations"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

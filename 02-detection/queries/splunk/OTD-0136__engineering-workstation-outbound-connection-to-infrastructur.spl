@@ -1,0 +1,9 @@
+``` OTD-0136 - Engineering Workstation Outbound Connection to Infrastructure Outside Approved List ```
+``` Source: 02-detection/sigma/advisory/14_engineering-workstation-outbound-connection-to-infrastructur.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=dns
+  (src_ip="designated_engineering_workstations")
+  NOT (query_name="approved_ews_outbound_destinations")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

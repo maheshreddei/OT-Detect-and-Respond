@@ -1,0 +1,9 @@
+``` OTD-0116 - CODESYS Protocol Command to Schneider Controller From Non-Engineering Host ```
+``` Source: 02-detection/sigma/threat-actor/14_codesys-protocol-command-to-schneider-controller-from-non-en.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (proto="codesys" (command="file_delete" OR command="login_attempt" OR command="file_download"))
+  NOT (src_ip="designated_engineering_workstations")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

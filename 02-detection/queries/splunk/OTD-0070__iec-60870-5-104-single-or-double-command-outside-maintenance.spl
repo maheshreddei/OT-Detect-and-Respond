@@ -1,0 +1,8 @@
+``` OTD-0070 - IEC 60870-5-104 Single or Double Command Outside Maintenance Window ```
+``` Source: 02-detection/sigma/ot-ics-soc/17_iec-60870-5-104-single-or-double-command-outside-maintenance.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:iec104
+  (proto="iec104" (type_id="C_SC_NA_1" OR type_id="C_DC_NA_1")) (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

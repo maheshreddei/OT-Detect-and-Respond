@@ -1,0 +1,22 @@
+title: DNP3 Disable Unsolicited Responses Command
+id: 8b2f0c4b-2e3d-4f2b-ac5f-2b3c4d5e6f02
+status: experimental
+description: Detects DNP3 function code 21 (Disable Unsolicited Responses), which can be abused to suppress event/alarm reporting from an outstation to the master, masking subsequent malicious activity.
+references:
+  - https://www.dnp.org/About/Overview-of-DNP3-Protocol
+tags:
+  - attack.ics.t0804
+  - attack.ics.t0814
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: dnp3
+detection:
+  selection:
+    proto: dnp3
+    function_code: 21
+  condition: selection
+falsepositives:
+  - Planned reconfiguration of polling/reporting model by engineering team
+level: high

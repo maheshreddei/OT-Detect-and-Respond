@@ -1,0 +1,29 @@
+title: OPC UA Server Enumeration Followed by Node Value Tampering
+id: ta04a1b2-c3d4-4e5f-8071-004000000001
+status: experimental
+description: Detects an OPC UA Browse/Read sequence against a server immediately followed by a Write call from the same client within a short window, matching the CHERNOVITE/PIPEDREAM TAGRUN module's pattern of scanning an OPC UA server, reading its node structure, and then tampering with reported values to mask a subsequent manipulation.
+references:
+  - CISA AA22-103A PIPEDREAM/INCONTROLLER Advisory
+  - TXOne PIPEDREAM Malware Analysis
+threat_actor: CHERNOVITE (PIPEDREAM / INCONTROLLER)
+tags:
+  - attack.ics.t0846
+  - attack.ics.t0856
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: opcua
+detection:
+  selection_browse:
+    proto: opcua
+    service:
+      - Browse
+      - Read
+  selection_write:
+    proto: opcua
+    service: Write
+  condition: selection_browse | followed_by(selection_write, field=src_ip, window=2m)
+falsepositives:
+  - Legitimate engineering tool performing a read-validate-write configuration sequence
+level: high

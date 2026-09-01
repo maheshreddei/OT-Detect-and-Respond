@@ -1,0 +1,48 @@
+title: Unauthorized Modbus Write to Coils or Registers
+id: bafa9bf0-9e16-489b-a7bb-dd47dada30bc
+status: stable
+description: |
+  Detects Modbus write function codes (5, 6, 15, 16) issued from a source that is
+  not an authorized engineering workstation or SCADA master. Unauthorized writes to
+  coils or holding registers can alter setpoints, actuate outputs, or manipulate the
+  process. Baseline the authorized master set (uc_context.authorized_masters) before
+  enabling in production.
+references:
+  - https://attack.mitre.org/techniques/T0855/
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0855
+author: Mahesh Reddy
+date: 2026/08/09
+tags:
+  - attack.ics
+  - attack.impair-process-control
+  - attack.t0855
+logsource:
+  product: zeek
+  service: modbus
+detection:
+  writes:
+    func|contains:
+      - 'WRITE_SINGLE_COIL'
+      - 'WRITE_SINGLE_REGISTER'
+      - 'WRITE_MULTIPLE_COILS'
+      - 'WRITE_MULTIPLE_REGISTERS'
+  authorized:
+    id.orig_h:
+      - '10.20.30.11'   # EWS-01  (replace with authorized master list)
+      - '10.20.30.12'   # SCADA-Master-01
+  condition: writes and not authorized
+fields:
+  - id.orig_h
+  - id.resp_h
+  - func
+  - address
+  - quantity
+falsepositives:
+  - Maintenance windows using an unlisted temporary master
+  - Poorly baselined authorized-master list
+level: high
+# --- Catalog cross-reference (non-Sigma custom keys) ---
+uc_id: OT-UC-0003
+nozomi_type_id: PROT:MODBUS-ILLEGAL
+sectors: [Oil & Gas, Water, Manufacturing, Chemical]
+threat_actors: [CHERNOVITE]

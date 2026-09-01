@@ -1,0 +1,11 @@
+// OTD-0139 - Unauthenticated Modbus/DNP3 Traffic Through Legacy Serial-to-Ethernet Gateway
+// Source: 02-detection/sigma/advisory/17_unauthenticated-modbus-dnp3-traffic-through-legacy-serial-to.yml
+// ATT&CK for ICS: attack.ics.t0846, attack.ics.t0855
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol in ("modbus", "dnp3") and src_device_type == "serial_to_ethernet_gateway")
+| where not ((DestinationIP == "approved_scada_polling_hosts"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

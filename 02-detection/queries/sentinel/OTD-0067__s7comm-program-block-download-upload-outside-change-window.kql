@@ -1,0 +1,10 @@
+// OTD-0067 - S7comm Program Block Download/Upload Outside Change Window
+// Source: 02-detection/sigma/ot-ics-soc/14_s7comm-program-block-download-upload-outside-change-window.yml
+// ATT&CK for ICS: attack.ics.t0843, attack.ics.t0871
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "s7comm" and Rosctr == "Job" and FunctionName in ("Request download", "Download block", "Request upload")) and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

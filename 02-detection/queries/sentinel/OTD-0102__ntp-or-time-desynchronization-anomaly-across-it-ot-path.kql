@@ -1,0 +1,11 @@
+// OTD-0102 - NTP or Time Desynchronization Anomaly Across IT-OT Path
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/27_ntp-or-time-desynchronization-anomaly-across-it-ot-path.yml
+// ATT&CK for ICS: attack.ics.t0851, attack.ics.t0804
+// Severity: low
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (event_type == "time_sync_failure")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1h
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,22 @@
+title: NTP or Time Desynchronization Anomaly Across IT-OT Path
+id: d1a1b2c3-0006-4a1b-8c1d-6a2b3c4d5e05
+status: experimental
+description: Detects a host's clock drifting beyond the acceptable tolerance from the authoritative time source, or repeated rejected/failed time-sync attempts, which can be used to desynchronize event timestamps and hinder forensic timeline correlation across the IT-DMZ-OT path during an active intrusion.
+references:
+  - https://attack.mitre.org/techniques/T0851/
+tags:
+  - attack.ics.t0851
+  - attack.ics.t0804
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: system
+  product: generic
+detection:
+  selection:
+    event_type: 'time_sync_failure'
+  timeframe: 1h
+  condition: selection | count() by host > 5
+falsepositives:
+  - Network connectivity issue between a site and its NTP source unrelated to malicious activity
+level: low

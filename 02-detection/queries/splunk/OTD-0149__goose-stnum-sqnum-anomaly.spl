@@ -1,0 +1,12 @@
+``` OTD-0149 - GOOSE stNum/sqNum anomaly ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: 61850-03 ```
+``` ATT&CK for ICS: T0856  |  Severity: critical ```
+``` Detection logic: Out-of-sequence or jumped state number (spoof signature) ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- Out-of-sequence or jumped state number (spoof signature) ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

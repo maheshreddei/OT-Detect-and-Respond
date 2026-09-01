@@ -1,0 +1,28 @@
+title: Security Event Log Cleared on OT Network System
+id: sw09a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects Windows Security event log clearing (Event ID 1102) or System log clearing (Event ID 104) on a host within the OT network, an explicit high-value detection signature called out in the Shieldworkz advisory as an anti-forensic indicator frequently preceding or following destructive or disruptive OT-adjacent activity.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (anti-forensic indicator across multiple actors)
+tags:
+  - attack.t1070.001
+  - attack.ics.t0851
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: system
+  product: windows
+detection:
+  selection:
+    EventID:
+      - 1102
+      - 104
+    ComputerName|in_list:
+      - 'l2_hmi_hosts'
+      - 'l3_scada_servers'
+      - 'designated_engineering_workstations'
+  condition: selection
+falsepositives:
+  - Authorized log-retention policy enforcement job clearing logs on a defined schedule
+level: critical

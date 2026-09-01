@@ -1,0 +1,10 @@
+// OTD-0142 - Spearphishing Lure Execution by OT Engineering Personnel
+// Source: 02-detection/sigma/advisory/20_spearphishing-lure-execution-by-ot-engineering-personnel.yml
+// ATT&CK for ICS: n/a
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (ParentImage in ("\winword.exe", "\excel.exe", "\outlook.exe") and NewProcessName in ("\powershell.exe", "\cmd.exe", "\wscript.exe", "\mshta.exe") and User == "ot_engineering_staff_accounts")
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

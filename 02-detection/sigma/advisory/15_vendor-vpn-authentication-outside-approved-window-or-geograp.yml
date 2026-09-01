@@ -1,0 +1,26 @@
+title: Vendor VPN Authentication Outside Approved Window or Geography
+id: sw13a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects a vendor remote-access VPN authentication occurring outside the approved maintenance time window or from a geographic location inconsistent with the vendor's documented support location, operationalizing the advisory's threat-hunting hypothesis (H3) covering vendor account misuse or compromise.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (vendor access hunt, not actor-specific)
+tags:
+  - attack.t1078.002
+  - attack.ics.t0883
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: authentication
+  product: vpn
+detection:
+  selection:
+    account_type: vendor
+  filter_geo:
+    src_country|in_list: 'vendor_approved_countries'
+  filter_time:
+    change_ticket_active: true
+  condition: selection and not (filter_geo and filter_time)
+falsepositives:
+  - Vendor traveling for an approved on-site visit while still using remote access en route
+level: medium

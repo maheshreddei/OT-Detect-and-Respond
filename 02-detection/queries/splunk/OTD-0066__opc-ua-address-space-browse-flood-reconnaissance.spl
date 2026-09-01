@@ -1,0 +1,8 @@
+``` OTD-0066 - OPC UA Address Space Browse Flood (Reconnaissance) ```
+``` Source: 02-detection/sigma/ot-ics-soc/12_opc-ua-address-space-browse-flood-reconnaissance.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:opcua
+  (proto="opcua" service="Browse")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

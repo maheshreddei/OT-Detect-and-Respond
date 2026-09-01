@@ -1,0 +1,10 @@
+// OTD-0133 - Security Event Log Cleared on OT Network System
+// Source: 02-detection/sigma/advisory/11_security-event-log-cleared-on-ot-network-system.yml
+// ATT&CK for ICS: attack.ics.t0851
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (EventID in (1102, 104) and Computer in ("l2_hmi_hosts", "l3_scada_servers", "designated_engineering_workstations"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

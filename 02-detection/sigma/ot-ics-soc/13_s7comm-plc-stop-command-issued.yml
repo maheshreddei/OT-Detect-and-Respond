@@ -1,0 +1,24 @@
+title: S7comm PLC STOP Command Issued
+id: ad4b2e6d-405f-416d-ce7b-4d5e6f708101
+status: experimental
+description: Detects an S7comm PLC control function requesting STOP, which halts CPU program execution. A high-impact command that should only occur during a planned, authorized maintenance action.
+references:
+  - https://wiki.wireshark.org/S7comm
+tags:
+  - attack.ics.t0816
+  - attack.ics.t0858
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: s7comm
+detection:
+  selection:
+    proto: s7comm
+    rosctr: 'Userdata'
+    function_group: 'CPU functions'
+    subfunction: 'PLC Stop'
+  condition: selection
+falsepositives:
+  - Authorized PLC programmer halting CPU for an approved logic change
+level: critical

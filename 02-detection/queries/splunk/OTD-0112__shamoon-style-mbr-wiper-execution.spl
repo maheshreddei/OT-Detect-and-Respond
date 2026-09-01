@@ -1,0 +1,8 @@
+``` OTD-0112 - Shamoon-Style MBR Wiper Execution ```
+``` Source: 02-detection/sigma/threat-actor/10_shamoon-style-mbr-wiper-execution.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((CommandLine="*\\.\PhysicalDrive*"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

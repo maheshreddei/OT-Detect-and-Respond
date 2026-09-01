@@ -1,0 +1,10 @@
+// OTD-0064 - OPC UA Untrusted or Self-Signed Certificate Accepted
+// Source: 02-detection/sigma/ot-ics-soc/10_opc-ua-untrusted-or-self-signed-certificate-accepted.yml
+// ATT&CK for ICS: attack.ics.t0859, attack.ics.t0822
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "opcua" and service == "OpenSecureChannel" and certificate_trusted == false)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

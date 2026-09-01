@@ -1,0 +1,44 @@
+title: S-01 Interactive/RDP Logon from Non-Jump-Host Source
+id: 5c21e743-8aa0-4901-b2ed-bf309e5850e3
+status: experimental
+description: >
+  RemoteInteractive (RDP) or console Interactive logon to the SCADA/Control
+  Server S-01 from a source outside the sanctioned administrative jump-host set.
+  S-01 must only be reached interactively via the OT jump host; anything else is
+  a lateral-movement candidate.
+references:
+  - https://attack.mitre.org/techniques/T1021/001/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+    LogonType:
+      - 10   # RemoteInteractive (RDP)
+      - 2    # Interactive (console)
+  filter_jumphost:
+    IpAddress:
+      - '10.20.0.10'   # PLACEHOLDER: sanctioned OT jump host(s)
+      - '10.20.0.11'
+  filter_local:
+    IpAddress:
+      - '-'
+      - '127.0.0.1'
+      - '::1'
+  condition: selection and not filter_jumphost and not filter_local
+fields:
+  - TargetUserName
+  - IpAddress
+  - LogonType
+  - WorkstationName
+falsepositives:
+  - Authorized maintenance from a jump host not yet in the allowlist
+  - Break-glass administrative access during an incident
+level: high
+tags:
+  - attack.lateral_movement
+  - attack.t1021.001
+  - asset.s_01

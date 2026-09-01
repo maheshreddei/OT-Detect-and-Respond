@@ -1,0 +1,10 @@
+// OTD-0062 - DNP3 Direct Operate Without Preceding Select (Bypass of Select-Before-Operate)
+// Source: 02-detection/sigma/ot-ics-soc/07_dnp3-direct-operate-without-preceding-select-bypass-of-selec.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0858
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "dnp3" and FunctionCode == 5) and (Protocol == "dnp3" and FunctionCode == 3)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

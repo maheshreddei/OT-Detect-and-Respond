@@ -1,0 +1,12 @@
+``` OTD-0181 - Program upload (logic theft) ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: S7-03 ```
+``` ATT&CK for ICS: T0845  |  Severity: high ```
+``` Detection logic: Block upload ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:s7comm earliest=-24h
+``` TODO: express the detection condition -- Block upload ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

@@ -1,0 +1,9 @@
+``` OTD-0141 - OT Cloud Agent Unexpected Outbound Data Pathway ```
+``` Source: 02-detection/sigma/advisory/19_ot-cloud-agent-unexpected-outbound-data-pathway.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=firewall
+  ((src_zone="L2_HMI" OR src_zone="L3") dst_zone="internet" process_tag="iiot_cloud_agent")
+  NOT (dst_domain="approved_ot_cloud_vendor_domains")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

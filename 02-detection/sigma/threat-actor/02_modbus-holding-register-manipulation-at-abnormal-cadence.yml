@@ -1,0 +1,26 @@
+title: Modbus Holding Register Manipulation at Abnormal Cadence
+id: ta01a1b2-c3d4-4e5f-8071-001000000002
+status: experimental
+description: Detects repeated Modbus holding register writes (function code 06/16) to the same device at a sustained, machine-paced cadence inconsistent with normal HMI/operator-driven control, resembling the FrostyGoop pattern of directly manipulating device parameters (e.g., heating system setpoints) via Modbus TCP for sabotage rather than reconnaissance.
+references:
+  - Dragos FrostyGoop malware analysis
+threat_actor: Sandworm / APT44 (assessed)
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0836
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: modbus
+detection:
+  selection:
+    proto: modbus
+    function_code:
+      - 6
+      - 16
+  timeframe: 5m
+  condition: selection | count() by src_ip, dst_ip, register_address > 30
+falsepositives:
+  - Automated control loop or PID controller performing legitimate high-frequency register writes
+level: high

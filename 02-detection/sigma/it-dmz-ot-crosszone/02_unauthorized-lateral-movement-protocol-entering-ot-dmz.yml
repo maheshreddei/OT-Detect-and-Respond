@@ -1,0 +1,29 @@
+title: Unauthorized Lateral-Movement Protocol Entering OT DMZ
+id: d1a1b2c3-0001-4a1b-8c1d-1a2b3c4d5e02
+status: experimental
+description: Detects RDP, SMB, PsExec/Admin-share, or WinRM traffic originating from corporate IT IP ranges and terminating on OT DMZ hosts, consistent with lateral movement techniques used to pivot from an IT compromise toward OT (as seen in NotPetya/TRITON-style intrusion paths).
+references:
+  - https://attack.mitre.org/techniques/T0866/
+  - https://attack.mitre.org/techniques/T1021/
+tags:
+  - attack.ics.t0866
+  - attack.t1021.002
+  - attack.t1021.006
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    src_zone: IT
+    dst_zone: OT_DMZ
+    dst_port:
+      - 3389
+      - 445
+      - 5985
+      - 5986
+  condition: selection
+falsepositives:
+  - Authorized IT administrator performing approved DMZ server patching via documented break-glass account
+level: high

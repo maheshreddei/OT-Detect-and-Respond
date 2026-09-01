@@ -1,0 +1,11 @@
+// OTD-0080 - Direct IT-to-OT-DMZ Connection Bypassing Jump Host
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/01_direct-it-to-ot-dmz-connection-bypassing-jump-host.yml
+// ATT&CK for ICS: attack.ics.t0886
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (src_zone == "IT" and dst_zone == "OT_DMZ")
+| where not ((DestinationIP == "approved_jump_host_ips"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

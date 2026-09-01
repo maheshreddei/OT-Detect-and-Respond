@@ -1,0 +1,23 @@
+title: OT DMZ Asset External DNS or NTP Resolution Attempt
+id: d1a1b2c3-0001-4a1b-8c1d-1a2b3c4d5e05
+status: experimental
+description: Detects a DMZ host attempting DNS or NTP resolution against a server outside the small, fixed internal set normally permitted, which can indicate C2 beaconing, DNS tunneling, or an attempt to set up time-based evasion.
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+tags:
+  - attack.t1071.004
+  - attack.t1568
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: dns
+  product: generic
+detection:
+  selection:
+    src_zone: OT_DMZ
+  filter:
+    dst_ip|in_list: 'approved_internal_dns_ntp_servers'
+  condition: selection and not filter
+falsepositives:
+  - Newly added internal DNS/NTP server not yet in the allow-list
+level: medium

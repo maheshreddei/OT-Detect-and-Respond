@@ -1,0 +1,26 @@
+title: Removable Media Event on DMZ or L3 Asset
+id: d1a1b2c3-0006-4a1b-8c1d-6a2b3c4d5e03
+status: experimental
+description: Detects a USB mass-storage device insertion event on an OT DMZ or L3 SCADA/historian asset, the initial-access vector used by Stuxnet and a recurring technique in OT-targeted intrusions where network segmentation otherwise limits remote access.
+references:
+  - https://attack.mitre.org/techniques/T0847/
+tags:
+  - attack.ics.t0847
+  - attack.t1091
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: device_event
+  product: windows
+detection:
+  selection:
+    EventID:
+      - 2003
+      - 2010
+    ComputerName|in_list:
+      - 'dmz_jump_hosts'
+      - 'l3_scada_servers'
+  condition: selection
+falsepositives:
+  - Authorized engineering USB drive used for an approved offline patch/firmware transfer per the site's removable-media policy
+level: high

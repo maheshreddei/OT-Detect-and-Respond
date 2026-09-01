@@ -1,0 +1,20 @@
+source,description,log_ease,noise,source_count,importance,tier,notes
+Control Server / SCADA Server,Central server talking to PLCs/RTUs and HMIs,Easy,Medium,Few,Critical,1,Best vantage point for commands reaching the process
+Firewall (OT),Segments zones controls IT/DMZ/OT traffic,Easy,Medium,Few,Critical,1,Cheapest high-value source; confirms Purdue zone-crossing
+Jump Host,Secure access point into OT (RDP/SSH),Easy,Medium,Few,Critical,1,Every legit remote session should pass here
+VPN Server,Remote connectivity into OT / between sites,Easy,Low,Very Few,Critical,1,Pairs with jump host for full remote-access chain
+Switch,Connects devices defines OT segments,Medium,Low,Many,Critical,1,Port security MAC changes VLAN hopping; filter to security events
+Workstations (Eng/Operator),Config programming diagnostics,Medium,High,Moderate,Critical,1,Easy to collect; noisiest critical source; tune aggressively
+PLC,Core automation controllers executing logic,Hard,Low,Many,Critical,2,Limited native logging; use passive monitoring as proxy
+Safety Controller,Safety-critical logic with redundancy,Hard,Low,Few,Critical,2,Any event is a priority-1 investigation
+Data Gateway,Protocol translation/aggregation between zones,Medium,Medium,Few,High,2,Chokepoint for cross-protocol detections
+Data Historian,Stores process data events alarms,Easy,Low,Few,High,2,Easy win; also baselines process behavior
+HMI,Operator monitoring/control interface,Easy,Medium,Moderate,High,2,Setpoint changes login anomalies off-window engineering mode
+IED,Protection/control devices (power),Easy,Low,Many,High,2,IEC 61850 GOOSE/MMS if available else gateway logs
+Router,Routes traffic between OT segments,Medium,Low,Moderate,High,2,Complements firewall for east-west
+Application Server,Hosts ICS apps analytics alarms reporting,Medium,Medium,Few,Medium,3,Standard Windows/Linux pipeline (Sysmon/auditd)
+DCS Controller,Manages continuous processes,Hard,Low,Many,High,3,Vendor logging limited; prioritize network detection
+PAC,Advanced programmable controller,Hard,Low,Moderate,Critical,3,Same constraints as PLC; passive monitoring
+RTU,Aggregates field data forwards to SCADA,Hard,Low,Moderate,High,3,Distributed often serial; polling-based DNP3/104
+Network Traffic (SPAN/TAP/IDS),Passive OT protocol monitoring,Medium,Nightmare,Very Few,High,3,Highest effort; fills every gap; needs DPI + Sigma tuning
+Field I/O,Sensors and actuators raw I/O,Nightmare,Low,Very Many,Low,4,Do not collect directly; covered via PLC/RTU + historian

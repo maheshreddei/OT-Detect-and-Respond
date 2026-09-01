@@ -1,0 +1,23 @@
+title: OPC UA Session Established with Anonymous Authentication
+id: 9c3a1d5c-3f4e-405c-bd6a-3c4d5e6f7001
+status: experimental
+description: Detects an OPC UA session activated using the Anonymous UserIdentityToken policy against a server, which should not be permitted on a production OT OPC UA server per IEC 62443 hardening guidance.
+references:
+  - https://reference.opcfoundation.org/Core/Part4/v104/docs/5.6.3
+tags:
+  - attack.ics.t0859
+  - attack.ics.t0883
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: opcua
+detection:
+  selection:
+    proto: opcua
+    service: ActivateSession
+    user_identity_token_type: Anonymous
+  condition: selection
+falsepositives:
+  - Lab/test OPC UA server intentionally configured for anonymous access
+level: high

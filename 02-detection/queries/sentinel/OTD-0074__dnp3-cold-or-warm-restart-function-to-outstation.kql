@@ -1,0 +1,11 @@
+// OTD-0074 - DNP3 Cold or Warm Restart Function to Outstation
+// Source: 02-detection/sigma/core-protocol/dnp3-restart.yml
+// ATT&CK for ICS: attack.t0816
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (FunctionCode in (13, 14))
+| where not ((SourceIP == "10.30.10.5"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

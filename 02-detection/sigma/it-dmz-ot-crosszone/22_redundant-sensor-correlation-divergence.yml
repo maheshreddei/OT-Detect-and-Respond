@@ -1,0 +1,21 @@
+title: Redundant Sensor Correlation Divergence
+id: d1a1b2c3-0005-4a1b-8c1d-5a2b3c4d5e03
+status: experimental
+description: Detects the primary and redundant readings for the same physical measurement point (e.g., dual-redundant pressure transmitters) diverging beyond the configured tolerance, which can indicate either an instrumentation fault or a spoofed/manipulated sensor feed used to mask a process manipulation from operators.
+references:
+  - https://attack.mitre.org/techniques/T0856/
+tags:
+  - attack.ics.t0856
+  - attack.ics.t0804
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    point_pair_type: 'redundant_sensor'
+  condition: selection | delta(primary_value, redundant_value) > tolerance_threshold
+falsepositives:
+  - Genuine sensor drift or calibration fault requiring maintenance
+level: medium

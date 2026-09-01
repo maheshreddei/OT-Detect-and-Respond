@@ -1,0 +1,8 @@
+``` OTD-0121 - Engineering Workstation Reflective/Memory-Only Process Injection ```
+``` Source: 02-detection/sigma/threat-actor/19_engineering-workstation-reflective-memory-only-process-injec.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  (host="designated_engineering_workstations" (CallTrace="*UNKNOWN*"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,8 @@
+``` OTD-0099 - Zone Enforcement Firewall Rule Hit-Count Anomaly ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/24_zone-enforcement-firewall-rule-hit-count-anomaly.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=firewall
+  (rule_historical_avg_hits_per_day=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

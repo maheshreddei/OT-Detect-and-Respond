@@ -1,0 +1,27 @@
+title: Unauthorized Association to Industrial Wireless Network (WirelessHART/ISA100/OT Wi-Fi)
+id: sw16a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects a device MAC address not present in the approved asset inventory associating to an industrial wireless network (WirelessHART, ISA100, or OT-dedicated Wi-Fi used for mobile operations), surfacing the advisory's identified wireless-exposure blind spot where these networks are frequently deployed without adequate segmentation.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (wireless exposure, not actor-specific)
+tags:
+  - attack.ics.t0822
+  - attack.ics.t0846
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: wireless
+  product: generic
+detection:
+  selection:
+    network_type:
+      - wirelesshart
+      - isa100
+      - ot_wifi
+  filter:
+    client_mac|in_list: 'approved_ot_wireless_assets'
+  condition: selection and not filter
+falsepositives:
+  - Newly procured field instrument not yet added to the wireless asset inventory
+level: high

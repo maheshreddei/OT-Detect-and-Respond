@@ -1,0 +1,28 @@
+title: Mass Lateral Deployment Tooling Preceding Suspected Wiper Activity
+id: ta01a1b2-c3d4-4e5f-8071-001000000005
+status: experimental
+description: Detects PsExec, WMIC process-call-create, or Group Policy immediate-task deployment used to push the same executable to many hosts within minutes, the mass-propagation technique used by both BlackEnergy3 (2015 Ukraine grid attack) and NotPetya to stage destructive payloads enterprise-wide before pivoting toward OT-adjacent systems.
+references:
+  - MITRE ATT&CK Software S0094 (BlackEnergy)
+  - MITRE ATT&CK Software S0368 (NotPetya)
+threat_actor: Sandworm / APT44
+tags:
+  - attack.t1570
+  - attack.t1047
+  - attack.ics.t0867
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '\PsExec.exe'
+      - '\wmic.exe'
+    CommandLine|contains: 'process call create'
+  timeframe: 5m
+  condition: selection | count(distinct TargetComputerName) by ParentImage, CommandLine > 10
+falsepositives:
+  - Authorized IT operations performing a scripted fleet-wide software deployment
+level: high

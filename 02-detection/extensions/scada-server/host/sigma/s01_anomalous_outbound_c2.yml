@@ -1,0 +1,40 @@
+title: S-01 Anomalous Outbound Connection (Possible C2)
+id: b1928488-9cc4-4504-ace5-bf08e1e8c91b
+status: experimental
+description: >
+  Outbound network connection from S-01 to a destination outside the sanctioned
+  OT allowlist. A supervisory host has a tiny, well-known egress profile; anything
+  new is a C2/exfil candidate. Tune the allowlist to the plant's real peers
+  (historian mirror, patch source, NTP, DNS, jump host).
+references:
+  - https://attack.mitre.org/techniques/T1071/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  category: network_connection  # Sysmon EventID 3
+detection:
+  selection:
+    Initiated: 'true'
+  filter_allowlist_dst:
+    DestinationIp|cidr:
+      - '10.30.0.0/24'          # PLACEHOLDER: OT process/control subnet(s)
+      - '10.20.0.0/24'          # PLACEHOLDER: OT DMZ / jump / historian
+  filter_local:
+    DestinationIp|cidr:
+      - '127.0.0.0/8'
+      - '169.254.0.0/16'
+      - '224.0.0.0/4'
+  condition: selection and not filter_allowlist_dst and not filter_local
+fields:
+  - Image
+  - DestinationIp
+  - DestinationPort
+  - DestinationHostname
+falsepositives:
+  - New sanctioned peer not yet added to the allowlist
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071
+  - asset.s_01

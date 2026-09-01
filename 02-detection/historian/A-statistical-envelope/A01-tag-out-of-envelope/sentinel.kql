@@ -1,0 +1,34 @@
+// ============================================================================
+// A01 - Tag out of operating envelope
+// Read-only. Schedule every 5m, lookback 15m.
+// Data model: docs/data-model.md
+// ============================================================================
+let lookback = 15m;
+let minRun = 3;            // dwell: consecutive out-of-band samples required
+OTHistorian_CL
+| where TimeGenerated > ago(lookback) and Quality_s == "Good"
+| where TagName_s endswith ".PV"
+// Attach per-tag baseline (extend the watchlist join key with Mode if segmenting on mode)
+| lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+| extend lower = todouble(coalesce(LL, P01)), upper = todouble(coalesce(HL, P99))
+| extend in_band = iff(Value_d >= lower and Value_d <= upper, 1, 0)
+// Persistence: consecutive out-of-band run length per tag
+| order by TagName_s asc, TimeGenerated asc
+| serialize
+| extend grp = row_cumsum(in_band, TagName_s != prev(TagName_s))   // segment resets per tag
+| extend breach_run = row_rank_min(TimeGenerated) // placeholder; see note below
+| extend breach = iff(Value_d < lower, "below", "above")
+| extend sigma_off = round((Value_d - todouble(Mean)) / todouble(Std), 2)
+| where in_band == 0
+// Persistence in KQL: group consecutive out-of-band samples and require count >= minRun
+| summarize run_count = count(), firstSeen = min(TimeGenerated), lastVal = arg_max(TimeGenerated, Value_d, lower, upper, breach, sigma_off, Mode_s)
+    by TagName_s, bin(TimeGenerated, 5m)
+| where run_count >= minRun
+| extend severity = iff(abs(sigma_off) > 6, "high", "medium")
+| project firstSeen, TagName_s, Mode_s, Value_d, lower, upper, breach, sigma_off, run_count, severity
+| order by firstSeen desc
+
+// NOTE: KQL has no native "reset-on-condition" streamstats. The summarize-by-bin
+// approach above approximates dwell by requiring >= minRun out-of-band samples in a
+// window. For strict consecutive-run semantics, use the prev()/serialize island
+// pattern (see docs/data-model.md) or emit dwell from the historian analytics layer.

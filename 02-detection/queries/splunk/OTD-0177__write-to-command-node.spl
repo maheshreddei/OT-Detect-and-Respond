@@ -1,0 +1,12 @@
+``` OTD-0177 - Write to command node ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: OPC-02 ```
+``` ATT&CK for ICS: T0836  |  Severity: high ```
+``` Detection logic: Write service to control NodeId from unexpected client ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:opcua earliest=-24h
+``` TODO: express the detection condition -- Write service to control NodeId from unexpected client ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

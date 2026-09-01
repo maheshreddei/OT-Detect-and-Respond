@@ -1,0 +1,12 @@
+``` OTD-0144 - Setpoint command ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: 104-02 ```
+``` ATT&CK for ICS: T0836  |  Severity: high ```
+``` Detection logic: C_SE (48-50) to a command IOA ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:iec104 earliest=-24h
+``` TODO: express the detection condition -- C_SE (48-50) to a command IOA ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

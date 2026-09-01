@@ -1,0 +1,27 @@
+title: Historian Query Pattern Anomaly From IT-Network Host
+id: sw11a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects an IT-zone host issuing a high volume or unusual breadth of queries against the PI System or Aveva Historian, operationalizing the advisory's threat-hunting hypothesis (H1) that an adversary already holding IT access may be conducting passive OT reconnaissance via historian query patterns rather than direct OT network access.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (reconnaissance hunt, not actor-specific)
+tags:
+  - attack.ics.t0801
+  - attack.ics.t0811
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: network_connection
+  product: generic
+detection:
+  selection:
+    dst_port:
+      - 5450
+      - 443
+    dst_ip|in_list: 'historian_servers'
+    src_zone: IT
+  timeframe: 1h
+  condition: selection | count(distinct tag_or_point_queried) by src_ip > 200
+falsepositives:
+  - Authorized business-intelligence dashboard or reporting tool with broad historian read access
+level: medium

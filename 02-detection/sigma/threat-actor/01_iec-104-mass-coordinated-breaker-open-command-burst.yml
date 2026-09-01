@@ -1,0 +1,29 @@
+title: IEC 104 Mass Coordinated Breaker-Open Command Burst
+id: ta01a1b2-c3d4-4e5f-8071-001000000001
+status: experimental
+description: Detects multiple IEC 60870-5-104 Single/Double Command (open) operations issued to several distinct substation RTUs within a short time window from the same or correlated source(s), matching the coordinated multi-substation breaker-opening pattern used by Sandworm/Electrum's Industroyer2 against the Ukrainian grid in 2022.
+references:
+  - MITRE ATT&CK Software S1072 (Industroyer2)
+  - APT44 Unearthing Sandworm (Mandiant)
+threat_actor: Sandworm / APT44 (Electrum)
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0831
+  - attack.ics.t0879
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: iec104
+detection:
+  selection:
+    proto: iec104
+    type_id:
+      - 'C_SC_NA_1'
+      - 'C_DC_NA_1'
+    command_state: 'open'
+  timeframe: 2m
+  condition: selection | count(distinct dst_ip) by src_ip > 3
+falsepositives:
+  - Legitimate wide-area protection scheme tripping multiple breakers during a genuine grid fault
+level: critical

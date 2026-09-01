@@ -1,0 +1,11 @@
+// OTD-0072 - Engineering Workstation Communicating with Multiple PLCs Across Zones
+// Source: 02-detection/sigma/ot-ics-soc/19_engineering-workstation-communicating-with-multiple-plcs-acr.yml
+// ATT&CK for ICS: attack.ics.t0867, attack.ics.t0843
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol in ("modbus", "s7comm", "dnp3", "opcua") and ipv4_is_in_range(SourceIP, "10.10.10.0/24"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1h
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

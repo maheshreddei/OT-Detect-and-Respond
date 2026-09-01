@@ -1,0 +1,11 @@
+// OTD-0101 - East-West Traffic Between L1 Controllers Across Process Cells
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/26_east-west-traffic-between-l1-controllers-across-process-cell.yml
+// ATT&CK for ICS: attack.ics.t0867, attack.ics.t0883
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (SourceIP == "l1_controllers" and DestinationIP == "l1_controllers")
+| where not ((src_dst_same_cell == true))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

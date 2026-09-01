@@ -1,0 +1,43 @@
+title: S-01 Encoded PowerShell or Download Cradle
+id: 3279a841-183e-4218-adf7-df671fb41437
+status: experimental
+description: >
+  Encoded, hidden, or download-cradle PowerShell execution on S-01. A supervisory
+  host has no legitimate reason to run obfuscated PowerShell or pull remote script
+  content.
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  category: process_creation   # Sysmon EventID 1 / 4688
+detection:
+  selection_img:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+  selection_enc:
+    CommandLine|contains:
+      - ' -enc '
+      - ' -EncodedCommand'
+      - 'FromBase64String'
+      - '-w hidden'
+      - '-WindowStyle Hidden'
+      - 'DownloadString'
+      - 'DownloadFile'
+      - 'IEX('
+      - 'Invoke-Expression'
+      - 'Net.WebClient'
+  condition: selection_img and selection_enc
+fields:
+  - CommandLine
+  - ParentImage
+  - User
+falsepositives:
+  - Vendor deployment scripts (should be baselined and excluded by hash/path)
+level: high
+tags:
+  - attack.execution
+  - attack.t1059.001
+  - asset.s_01

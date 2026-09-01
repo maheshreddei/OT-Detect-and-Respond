@@ -1,0 +1,30 @@
+title: S7comm Program Block Download/Upload Outside Change Window
+id: ad4b2e6d-405f-416d-ce7b-4d5e6f708102
+status: experimental
+description: Detects S7comm Download/Upload service requests (block write/read of OB/FB/FC/DB blocks) occurring outside the approved engineering change window, indicating possible unauthorized PLC logic modification.
+references:
+  - https://wiki.wireshark.org/S7comm
+tags:
+  - attack.ics.t0843
+  - attack.ics.t0871
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: s7comm
+detection:
+  selection:
+    proto: s7comm
+    rosctr: 'Job'
+    function:
+      - 'Request download'
+      - 'Download block'
+      - 'Request upload'
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Emergency logic fix performed off-hours with an approved change ticket
+level: high

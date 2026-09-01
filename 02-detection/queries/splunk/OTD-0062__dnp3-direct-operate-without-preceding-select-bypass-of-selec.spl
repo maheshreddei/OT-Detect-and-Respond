@@ -1,0 +1,8 @@
+``` OTD-0062 - DNP3 Direct Operate Without Preceding Select (Bypass of Select-Before-Operate) ```
+``` Source: 02-detection/sigma/ot-ics-soc/07_dnp3-direct-operate-without-preceding-select-bypass-of-selec.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:dnp3
+  (proto="dnp3" function_code=5) (proto="dnp3" function_code=3)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

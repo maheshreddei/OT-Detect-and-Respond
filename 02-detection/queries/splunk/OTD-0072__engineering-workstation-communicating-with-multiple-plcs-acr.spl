@@ -1,0 +1,8 @@
+``` OTD-0072 - Engineering Workstation Communicating with Multiple PLCs Across Zones ```
+``` Source: 02-detection/sigma/ot-ics-soc/19_engineering-workstation-communicating-with-multiple-plcs-acr.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  ((proto="modbus" OR proto="s7comm" OR proto="dnp3" OR proto="opcua") src_ip="10.10.10.0/24")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

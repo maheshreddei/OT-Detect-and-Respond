@@ -1,0 +1,23 @@
+TEL_ID,Hunt_Rank,Telemetry_Source,Hunt_Value,Effort,LS_ID,Log_Source,Onboarding_Tier,CP_IDs,MVT_IDs,Collection_Pattern
+TEL-01,1,Network metadata (Zeek/sensor),Very High,Medium,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,CP-04,MVT-4;MVT-6,C
+TEL-02,2,Windows Security + Sysmon on HMI/EWS/historian,Very High,Medium,LS-08,Workstations (Engineering/Operator),Tier 1,CP-03;CP-05,MVT-3,A
+TEL-02,2,Windows Security + Sysmon on HMI/EWS/historian,Very High,Medium,LS-11,HMI,Tier 2,CP-03;CP-05,MVT-3,A
+TEL-02,2,Windows Security + Sysmon on HMI/EWS/historian,Very High,Medium,LS-10,Data Historian,Tier 2,CP-03;CP-05,MVT-7,A
+TEL-03,3,Firewall / boundary logs,High,Low,LS-02,Firewall (OT),Tier 1,CP-01,MVT-1,B
+TEL-04,4,Remote-access and VPN authentication,High,Low,LS-03,Jump Host,Tier 1,CP-02,MVT-2,A;B
+TEL-04,4,Remote-access and VPN authentication,High,Low,LS-04,VPN Server,Tier 1,CP-02,MVT-2,A;B
+TEL-05,5,Full PCAP at key points,High,Medium,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,,MVT-4;MVT-6,C
+TEL-06,6,OT platform alerts (Nozomi/Claroty/Dragos),High,Low,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,CP-04,MVT-4;MVT-6,C
+TEL-07,7,Controller checksums and mode state,Very High,Medium,LS-06,PLC,Tier 2,CP-08;CP-10,MVT-5,C
+TEL-07,7,Controller checksums and mode state,Very High,Medium,LS-16,PAC,Tier 3,CP-08;CP-10,,C
+TEL-07,7,Controller checksums and mode state,Very High,Medium,LS-15,DCS Controller,Tier 3,CP-08;CP-10,,C
+TEL-08,8,Historian process data,High,Medium,LS-10,Data Historian,Tier 2,CP-07,MVT-7,A
+TEL-09,9,Engineering software audit logs,Medium-High,Medium,LS-08,Workstations (Engineering/Operator),Tier 1,CP-06,MVT-3,A
+TEL-10,10,"Switch/router syslog, MAC tables",Medium,Low,LS-05,Switch,Tier 1,CP-09,,B
+TEL-10,10,"Switch/router syslog, MAC tables",Medium,Low,LS-13,Router,Tier 2,CP-09,,B
+TEL-11,11,AV/EDR alerts on OT Windows,Medium,Low,LS-08,Workstations (Engineering/Operator),Tier 1,CP-11;CP-13,MVT-3,A
+TEL-11,11,AV/EDR alerts on OT Windows,Medium,Low,LS-14,Application Server,Tier 3,CP-11;CP-13,,A
+TEL-12,12,"Physical access, USB, badge logs",Medium,Medium,LS-08,Workstations (Engineering/Operator),Tier 1,CP-12,MVT-3,A;B
+TEL-13,13,Wireless controller logs,Medium,Low,LS-05,Switch,Tier 1,CP-14,,B
+TEL-14,14,Alarm/event server database,Medium,Medium,LS-11,HMI,Tier 2,,MVT-3,A
+TEL-14,14,Alarm/event server database,Medium,Medium,LS-10,Data Historian,Tier 2,,MVT-7,A

@@ -1,0 +1,11 @@
+```spl
+* Splunk SPL — <ID> <title>
+* Data model: docs/data-model.md
+* Read-only. Schedule as a correlation search.
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+| lookup ot_baseline.csv tag mode OUTPUT p01 p99 ll hl mean std
+* ... detection logic ...
+* Require persistence before alerting to control false positives.
+| table _time tag mode value
+```

@@ -1,0 +1,11 @@
+// OTD-0084 - OT DMZ Asset External DNS or NTP Resolution Attempt
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/05_ot-dmz-asset-external-dns-or-ntp-resolution-attempt.yml
+// ATT&CK for ICS: n/a
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+DnsEvents
+| where (src_zone == "OT_DMZ")
+| where not ((DestinationIP == "approved_internal_dns_ntp_servers"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

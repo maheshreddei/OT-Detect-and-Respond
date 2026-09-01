@@ -1,0 +1,9 @@
+``` OTD-0007 - DNP3 Cold or Warm Restart Function to Outstation ```
+``` Source: 02-detection/sigma/core-protocol/dnp3-restart.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:dnp3
+  ((fc=13 OR fc=14))
+  NOT (src_ip="10.30.10.5")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

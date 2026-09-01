@@ -1,0 +1,27 @@
+title: Mass File Encryption or Rename Activity on OT Historian or Engineering Host
+id: ta06a1b2-c3d4-4e5f-8071-006000000002
+status: experimental
+description: Detects a high rate of file rename/modify events with new or unusual extensions on an OT historian or engineering workstation within a short window, the ransomware-encryption pattern that forced precautionary OT shutdowns in the Colonial Pipeline (DarkSide) and Norsk Hydro (LockerGoga) incidents even though the ransomware itself did not directly target OT systems.
+references:
+  - CISA Colonial Pipeline Ransomware Advisory
+  - Norsk Hydro LockerGoga Incident Reports
+threat_actor: Generalized (Ransomware precursor to OT shutdown)
+tags:
+  - attack.t1486
+  - attack.ics.t0826
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: file_event
+  product: windows
+detection:
+  selection:
+    ComputerName|in_list:
+      - 'l3_scada_servers'
+      - 'designated_engineering_workstations'
+    EventType: 'rename'
+  timeframe: 2m
+  condition: selection | count() by ComputerName > 50
+falsepositives:
+  - Legitimate bulk file-management or archival operation performed by IT
+level: critical

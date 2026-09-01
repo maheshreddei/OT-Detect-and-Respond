@@ -1,0 +1,45 @@
+id: C01
+title: Frozen value / replay
+status: production
+description: >
+  An analog PV holds perfectly constant beyond its normal stall duration, or its
+  variance collapses below its noise floor. Catches stuck/failed sensors and
+  replayed/held values used to mask a manipulation on the reporting path.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0856
+family: C-replay-stale
+attack_ics:
+  - T0856   # Spoof Reporting Message
+  - T0815   # Denial of View
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.*.PV
+baseline:
+  method: variance
+  segmentation: mode
+  clean_window: "2 weeks, Good quality; derive max_stall_sec and min_variance"
+  rebaseline_cadence: quarterly
+  lookup: ot_baseline.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "stall duration > max_stall_sec, or window variance < min_variance"
+fields:
+  - _time
+  - tag
+  - value
+  - stall_sec
+  - win_variance
+falsepositives:
+  - Tags that are legitimately constant (manual constants, disabled loops)
+  - Slow processes with long legitimate holds (needs per-tag max_stall_sec)
+  - Discrete/status tags (exclude or set large max_stall_sec)
+level: medium
+response: |
+  Distinguish sensor fault from replay. Corroborate with an independent read (E01).
+  If replay suspected, escalate as spoofed-reporting / manipulation-of-view.
+validation: validation.md

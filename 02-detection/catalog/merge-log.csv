@@ -1,0 +1,20 @@
+Absorbed_Legacy_ID,Absorbed_Library,Absorbed_Title,Merged_Into_Legacy_ID,Rationale
+SIGMA:it-dmz-ot-crosszone/07,it-dmz-ot-crosszone,Jump Host Issuing OT Control Protocol Traffic Directly,OT-UC-0015,Related detections merged: engineering/control protocol traffic to a controller from a host that is not an approved engineering workstation.
+SIGMA:it-dmz-ot-crosszone/18,it-dmz-ot-crosszone,PLC Logic or Firmware Upload From Non-Engineering Host,OT-UC-0015,Related detections merged: engineering/control protocol traffic to a controller from a host that is not an approved engineering workstation.
+SIGMA:it-dmz-ot-crosszone/20,it-dmz-ot-crosszone,Safety Instrumented System Point Forced or Overridden,OT-UC-0017,Same detection: safety controller placed in PROGRAM mode or an SIS point forced/overridden. SIS library carries the functional-safety framing.
+SIGMA:it-dmz-ot-crosszone/23,it-dmz-ot-crosszone,First-Time Asset Communication Across a Zone Boundary,OT-UC-0014,Same detection at different scopes: first-time asset communication across a zone boundary / new node appearing in a monitored zone.
+SIGMA:ot-ics-soc/01,ot-ics-soc,Modbus Write Operation from Unauthorized Source,OT-UC-0003,"Same detection: Modbus write FC 5/6/15/16 from a source outside the authorized master allowlist. UC carries threat/sector context, Sigma carries portable logic, protocol catalog carries the NDR pattern."
+SIGMA:ot-ics-soc/02,ot-ics-soc,Modbus Diagnostic Restart Communications Function Code,OT-UC-0004,Same detection: Modbus FC08 diagnostic sub-function restart / force listen-only.
+SIGMA:ot-ics-soc/05,ot-ics-soc,DNP3 Cold or Warm Restart Command Issued,OT-UC-0007,Same detection: DNP3 function code 13/14 cold or warm restart to an outstation.
+SIGMA:ot-ics-soc/06,ot-ics-soc,DNP3 Disable Unsolicited Responses Command,OT-UC-0008,Same detection: DNP3 function 21 disabling unsolicited responses (blind the master).
+SIGMA:ot-ics-soc/09,ot-ics-soc,OPC UA Session Established with Anonymous Authentication,OT-UC-0005,Same detection: S7comm PLC STOP / run-state change issued to a controller.
+SIGMA:ot-ics-soc/13,ot-ics-soc,S7comm PLC STOP Command Issued,OT-UC-0009,Same detection: IEC 60870-5-104 control-direction ASDU from a non-authorized source.
+SCAN-01,protocol-ndr,Horizontal scan,OT-UC-0013,"Same detection concept at two vantage points: horizontal scan across OT hosts. Perimeter library scores it on IT flow data, protocol library on OT NDR."
+MOD-01,protocol-ndr,Write from unauthorized source,OT-UC-0003,"Same detection: Modbus write FC 5/6/15/16 from a source outside the authorized master allowlist. UC carries threat/sector context, Sigma carries portable logic, protocol catalog carries the NDR pattern."
+MOD-03,protocol-ndr,Device-ID reconnaissance,OT-UC-0004,Same detection: Modbus FC08 diagnostic sub-function restart / force listen-only.
+S7-02,protocol-ndr,Program download,OT-UC-0005,Same detection: S7comm PLC STOP / run-state change issued to a controller.
+DNP3-02,protocol-ndr,CROB/analog-output write,OT-UC-0007,Same detection: DNP3 function code 13/14 cold or warm restart to an outstation.
+DNP3-03,protocol-ndr,Cold/warm restart,OT-UC-0008,Same detection: DNP3 function 21 disabling unsolicited responses (blind the master).
+SCN-01,perimeter,Outbound scanning external ranges,OT-UC-0013,"Same detection concept at two vantage points: horizontal scan across OT hosts. Perimeter library scores it on IT flow data, protocol library on OT NDR."
+SIS-A4,sis,New asset on safety network,OT-UC-0014,Same detection at different scopes: first-time asset communication across a zone boundary / new node appearing in a monitored zone.
+SIS-B1,sis,SIS engineering-tool session,OT-UC-0017,Same detection: safety controller placed in PROGRAM mode or an SIS point forced/overridden. SIS library carries the functional-safety framing.

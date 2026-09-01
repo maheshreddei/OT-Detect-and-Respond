@@ -1,0 +1,35 @@
+```spl
+* ============================================================================
+* A01 - Tag out of operating envelope
+* Read-only. Schedule every 5m over a 15m window (adjust to sample rate).
+* Data model: docs/data-model.md
+* ============================================================================
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    tag IN ("PLANT1.*.PV")
+
+* Attach the per-tag, per-mode baseline
+| lookup ot_baseline.csv tag mode OUTPUT p01 p99 ll hl mean std
+
+* Engineering limits win over statistical bands when present
+| eval lower = coalesce(ll, p01)
+| eval upper = coalesce(hl, p99)
+
+* Flag in-band vs out-of-band
+| eval in_band = if(value >= lower AND value <= upper, 1, 0)
+
+* Persistence: count consecutive out-of-band samples per tag, reset on any in-band sample
+| sort 0 tag _time
+| streamstats reset_before="(in_band==1)" count as breach_run by tag
+
+* Alert only when the excursion has persisted (dwell >= 3 samples)
+| where in_band==0 AND breach_run>=3
+
+* Enrich for the analyst
+| eval breach = if(value < lower, "below", "above")
+| eval sigma_off = round((value - mean) / std, 2)
+| eval detection="A01", severity=case(sigma_off>6 OR sigma_off< -6,"high", true(),"medium")
+
+| table _time tag mode value lower upper breach sigma_off severity detection
+| sort - _time
+```

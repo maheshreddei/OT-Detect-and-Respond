@@ -1,0 +1,9 @@
+``` OTD-0117 - OMRON FINS/HTTP Backdoor Command Execution ```
+``` Source: 02-detection/sigma/threat-actor/15_omron-fins-http-backdoor-command-execution.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (proto="fins")
+  NOT (src_ip="designated_engineering_workstations")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

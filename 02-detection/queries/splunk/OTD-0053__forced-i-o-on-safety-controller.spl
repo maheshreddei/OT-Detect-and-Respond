@@ -1,0 +1,12 @@
+``` OTD-0053 - Forced I/O on safety controller ```
+``` Library: SIS Safety Detection  |  Legacy ID: SIS-E4 ```
+``` ATT&CK for ICS: T0835  |  Severity: critical ```
+``` Detection logic: not-disabled ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- not-disabled ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

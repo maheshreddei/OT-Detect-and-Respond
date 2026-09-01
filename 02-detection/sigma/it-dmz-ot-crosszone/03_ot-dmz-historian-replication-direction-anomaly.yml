@@ -1,0 +1,25 @@
+title: OT DMZ Historian Replication Direction Anomaly
+id: d1a1b2c3-0001-4a1b-8c1d-1a2b3c4d5e03
+status: experimental
+description: Detects a DMZ historian/replication host initiating a connection back into the IT/Enterprise zone, when the documented data-flow design is one-directional (OT to DMZ to IT) via a data diode or unidirectional gateway.
+references:
+  - https://attack.mitre.org/techniques/T0886/
+tags:
+  - attack.ics.t0886
+  - attack.ics.t0840
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    src_zone: OT_DMZ
+    dst_zone: IT
+    src_ip|in_list: 'dmz_historian_ips'
+  filter:
+    timeframe_minute|range: [0, 5]   # replace with actual scheduled replication window check
+  condition: selection and not filter
+falsepositives:
+  - Misconfigured replication schedule causing connections outside the documented window
+level: high

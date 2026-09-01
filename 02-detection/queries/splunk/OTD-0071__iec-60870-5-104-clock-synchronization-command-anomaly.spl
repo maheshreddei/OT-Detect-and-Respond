@@ -1,0 +1,8 @@
+``` OTD-0071 - IEC 60870-5-104 Clock Synchronization Command Anomaly ```
+``` Source: 02-detection/sigma/ot-ics-soc/18_iec-60870-5-104-clock-synchronization-command-anomaly.yml ```
+``` Severity: low ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:iec104
+  (proto="iec104" type_id="C_CS_NA_1")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

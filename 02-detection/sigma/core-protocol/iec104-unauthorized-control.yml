@@ -1,0 +1,44 @@
+title: IEC 60870-5-104 Control Command from Unauthorized Source
+id: 0f860910-3437-476e-8a5d-b95b94bf0ce4
+status: stable
+description: |
+  Detects IEC 60870-5-104 control-direction ASDUs - single command (C_SC_NA_1, type 45),
+  double command (C_DC_NA_1, type 46), and set-point commands - originating from a host
+  that is not an authorized control center / EWS. This is the command class abused in the
+  Industroyer / Industroyer2 attacks against electric substations.
+references:
+  - https://attack.mitre.org/techniques/T0855/
+author: Mahesh Reddy
+date: 2026/08/09
+tags:
+  - attack.ics
+  - attack.impair-process-control
+  - attack.t0855
+logsource:
+  product: zeek
+  service: iec104
+detection:
+  control_asdu:
+    type_id:
+      - 45   # C_SC_NA_1 single command
+      - 46   # C_DC_NA_1 double command
+      - 48   # C_SE_NA_1 set-point normalized
+      - 49   # C_SE_NB_1 set-point scaled
+      - 50   # C_SE_NC_1 set-point short float
+  authorized:
+    id.orig_h:
+      - '10.40.1.10'    # Control-Center-01 (replace with authorized source list)
+  condition: control_asdu and not authorized
+fields:
+  - id.orig_h
+  - id.resp_h
+  - type_id
+  - asdu_address
+  - ioa
+falsepositives:
+  - Secondary/backup control center not present in the authorized list
+level: high
+uc_id: OT-UC-0009
+nozomi_type_id: PROT:IEC104-ILLEGAL
+sectors: [Electric, Transportation]
+threat_actors: [ELECTRUM]

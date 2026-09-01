@@ -1,0 +1,5 @@
+tag,sif_id,trip_direction,trip_value,prealarm_value,safe_margin,unit
+PLANT1.U200.PIC220.PV,SIF-201,high,11.0,10.0,2.0,barg
+PLANT1.U200.TIC205.PV,SIF-202,high,205.0,200.0,15.0,degC
+PLANT1.U200.LIC210.PV,SIF-203,high,90.0,85.0,10.0,pct
+PLANT1.U300.AT301.PV,SIF-301,low,3.0,3.5,1.5,pH

@@ -1,0 +1,30 @@
+title: Modbus Write to Coil/Register Outside Approved Change Window
+id: 7a1e9b3a-1d2c-4e1a-9b4e-1a2b3c4d5e04
+status: experimental
+description: Detects Modbus write function codes occurring outside the defined maintenance/change window, which may indicate unauthorized process manipulation.
+references:
+  - https://attack.mitre.org/techniques/T0855/
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0831
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: modbus
+detection:
+  selection:
+    proto: modbus
+    function_code:
+      - 5
+      - 6
+      - 15
+      - 16
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Legitimate off-hours maintenance with an approved change ticket
+level: medium

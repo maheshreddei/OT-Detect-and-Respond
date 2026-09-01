@@ -1,0 +1,11 @@
+// OTD-0093 - Abnormal Authentication Pattern on SCADA or HMI Server
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/15_abnormal-authentication-pattern-on-scada-or-hmi-server.yml
+// ATT&CK for ICS: attack.ics.t0859
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (EventID == 4625 and TargetComputerName == "l2_l3_ot_servers")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 10m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

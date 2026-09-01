@@ -1,0 +1,8 @@
+``` OTD-0111 - Low-and-Slow HTTPS Beaconing Indicative of OilRig-Class Backdoor C2 ```
+``` Source: 02-detection/sigma/threat-actor/09_low-and-slow-https-beaconing-indicative-of-oilrig-class-back.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (dest_port=443 (src_zone="IT" OR src_zone="OT_DMZ"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

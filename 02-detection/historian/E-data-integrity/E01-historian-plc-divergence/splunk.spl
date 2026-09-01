@@ -1,0 +1,43 @@
+```spl
+* ============================================================================
+* E01 - Historian vs live PLC value divergence  (Stuxnet-class)
+* Read-only. Schedule every 1m over a 5m window.
+* Requires the SAME tags from two independent sources:
+*   source=hmi_historian  and  source=direct_opcua
+* Data model: docs/data-model.md
+* ============================================================================
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    (source="hmi_historian" OR source="direct_opcua")
+    tag IN ("PLANT1.*.PV")
+
+* Align both sources to a common 10s bin
+| bin _time span=10s
+
+* Pivot the two sources into two columns within each (tag,bin)
+| stats
+    latest(eval(if(source=="hmi_historian", value, null()))) as v_hist
+    latest(eval(if(source=="direct_opcua",  value, null()))) as v_direct
+    by tag _time
+
+* Only compare bins where BOTH independent sources produced a Good value
+| where isnotnull(v_hist) AND isnotnull(v_direct)
+
+* Scale tolerance to the tag's own noise (sigma) and add a percent floor
+| lookup ot_baseline.csv tag OUTPUT std
+| eval abs_diff  = abs(v_hist - v_direct)
+| eval pct_diff  = round(100 * abs_diff / abs(coalesce(v_direct,1)), 2)
+| eval sigma_diff = round(abs_diff / coalesce(std, abs_diff), 2)
+
+* Divergence condition
+| eval diverged = if(sigma_diff > 3 OR pct_diff > 2, 1, 0)
+
+* Persistence: require >= 2 consecutive divergent bins per tag
+| sort 0 tag _time
+| streamstats reset_before="(diverged==0)" count as diverge_run by tag
+| where diverged==1 AND diverge_run>=2
+
+| eval detection="E01", severity="high"
+| table _time tag v_hist v_direct abs_diff pct_diff sigma_diff diverge_run severity detection
+| sort - _time
+```

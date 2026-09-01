@@ -1,0 +1,12 @@
+``` OTD-0232 - Resource exhaustion on public service ```
+``` Library: Perimeter-to-Endpoint  |  Legacy ID: NET-08 ```
+``` ATT&CK for ICS: T1499  |  Severity: high ```
+``` Detection logic: baseline ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=firewall earliest=-24h
+``` TODO: express the detection condition -- baseline ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

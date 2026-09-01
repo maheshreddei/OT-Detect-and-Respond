@@ -1,0 +1,27 @@
+title: Engineering Workstation Communicating with Multiple PLCs Across Zones
+id: cf6d4f8f-627a-438f-e09d-6f708192a301
+status: experimental
+description: Detects a single engineering workstation host establishing OT protocol sessions (Modbus/S7comm/DNP3/OPC UA) with PLCs/RTUs/outstations across more Purdue Model zones or process cells than its documented baseline, indicating possible lateral movement using a compromised EWS.
+references:
+  - https://attack.mitre.org/techniques/T0867/
+tags:
+  - attack.ics.t0867
+  - attack.ics.t0843
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    proto:
+      - modbus
+      - s7comm
+      - dnp3
+      - opcua
+    src_ip|cidr: '10.10.10.0/24'   # engineering workstation subnet
+  timeframe: 1h
+  condition: selection | count(dst_ip) by src_ip > 8
+falsepositives:
+  - Site-wide engineering activity such as firmware rollout or scheduled audit
+level: high

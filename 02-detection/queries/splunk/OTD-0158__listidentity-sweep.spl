@@ -1,0 +1,12 @@
+``` OTD-0158 - ListIdentity sweep ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: ENIP-02 ```
+``` ATT&CK for ICS: T0846  |  Severity: medium ```
+``` Detection logic: UDP/44818 ListIdentity to many hosts / unexpected source ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:enip earliest=-24h
+``` TODO: express the detection condition -- UDP/44818 ListIdentity to many hosts / unexpected source ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

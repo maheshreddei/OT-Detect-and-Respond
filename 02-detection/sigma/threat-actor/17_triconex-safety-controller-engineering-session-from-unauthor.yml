@@ -1,0 +1,26 @@
+title: Triconex Safety Controller Engineering Session From Unauthorized Host
+id: ta05a1b2-c3d4-4e5f-8071-005000000001
+status: experimental
+description: Detects a TriStation protocol engineering session (program download, key-switch state change, or memory write) to a Schneider Electric Triconex Safety Instrumented System controller from a host other than the single designated SIS engineering workstation, the exact access pattern used in the 2017 TRITON/TRISIS attack on a Saudi petrochemical facility.
+references:
+  - FireEye TRITON Attack on Safety Instrumented System
+  - MITRE ATT&CK Group G0102 (XENOTIME)
+threat_actor: XENOTIME (TRITON / TRISIS)
+tags:
+  - attack.ics.t0859
+  - attack.ics.t0800
+  - attack.ics.t0837
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: tristation
+detection:
+  selection:
+    proto: tristation
+  filter:
+    src_ip|in_list: 'designated_sis_engineering_workstation'
+  condition: selection and not filter
+falsepositives:
+  - Approved SIS proof-test or logic-verification activity performed from a temporary certified engineering laptop
+level: critical

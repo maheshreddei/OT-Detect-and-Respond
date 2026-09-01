@@ -1,0 +1,25 @@
+title: DNP3 Direct Operate Without Preceding Select (Bypass of Select-Before-Operate)
+id: 8b2f0c4b-2e3d-4f2b-ac5f-2b3c4d5e6f03
+status: experimental
+description: Detects DNP3 Direct Operate (function code 5) issued to a CROB point without a preceding Select (function code 3) for the same point within a short window. Bypassing select-before-operate removes the safety check designed to prevent erroneous control actions.
+references:
+  - https://www.dnp.org/About/Overview-of-DNP3-Protocol
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0858
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: dnp3
+detection:
+  operate:
+    proto: dnp3
+    function_code: 5
+  select:
+    proto: dnp3
+    function_code: 3
+  condition: operate and not near(select, field=point_index, window=10s)
+falsepositives:
+  - Outstation/master implementation that intentionally uses Direct Operate only, by design
+level: high

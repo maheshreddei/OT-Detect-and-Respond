@@ -1,0 +1,10 @@
+// OTD-0091 - New or Modified Scheduled Task on HMI or SCADA Server
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/13_new-or-modified-scheduled-task-on-hmi-or-scada-server.yml
+// ATT&CK for ICS: attack.ics.t0839
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName == "\schtasks.exe" and (CommandLine contains "/create") and Computer == "l2_l3_ot_servers")
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

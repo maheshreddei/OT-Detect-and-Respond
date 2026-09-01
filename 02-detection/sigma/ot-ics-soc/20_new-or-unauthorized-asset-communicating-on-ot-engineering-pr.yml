@@ -1,0 +1,28 @@
+title: New or Unauthorized Asset Communicating on OT Engineering Protocol Port
+id: cf6d4f8f-627a-438f-e09d-6f708192a302
+status: experimental
+description: Detects a source IP not previously observed in the OT asset inventory initiating a session on a known industrial protocol port (Modbus/502, DNP3/20000, S7comm/102, OPC UA/4840, IEC104/2404), indicating rogue device connection or unauthorized network access.
+references:
+  - https://attack.mitre.org/techniques/T0883/
+tags:
+  - attack.ics.t0883
+  - attack.ics.t0846
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    dst_port:
+      - 502
+      - 20000
+      - 102
+      - 4840
+      - 2404
+  filter:
+    src_ip|in_list: 'known_ot_asset_inventory'   # reference to asset inventory lookup list
+  condition: selection and not filter
+falsepositives:
+  - Newly commissioned asset pending addition to inventory/CMDB
+level: medium

@@ -1,0 +1,23 @@
+title: Coordinated Multi-Site SCADA Command Triggering Mass Manual-Fallback (Predatory Sparrow-Class Pattern)
+id: sw07a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects a single operator session or automated process issuing the same SCADA/DCS command across many geographically distinct sites (e.g., fuel-distribution points or production lines) within a short window, the coordinated-disruption pattern demonstrated in nation-state attacks that forced manual fallback operations across thousands of distribution points.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Predatory Sparrow-class capability (calibration reference)
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0826
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    command_type: 'setpoint_or_control_write'
+  timeframe: 5m
+  condition: selection | count(distinct dst_site_id) by src_ip, command_value > 50
+falsepositives:
+  - Legitimate centrally-managed firmware or configuration rollout to multiple sites during a scheduled maintenance window
+level: critical

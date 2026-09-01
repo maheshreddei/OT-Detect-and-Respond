@@ -1,0 +1,258 @@
+OTD_ID,Title,Library_Name,LS_IDs,Log_Sources,Onboarding_Tiers,Reachable_At_Tier1
+OTD-0001,External remote services abuse into OT/DMZ,OT Threat Content,LS-02;LS-03;LS-04,Firewall (OT);Jump Host;VPN Server,Tier 1,Yes
+OTD-0002,Internet-accessible ICS device exposure,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0003,Unauthorized Modbus write to coils/registers,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0004,Modbus FC08 diagnostic restart/listen-only,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0005,S7comm STOP CPU command,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0006,S7comm program/logic download to PLC,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0007,DNP3 cold/warm restart function,OT Threat Content,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0008,DNP3 disable unsolicited responses,OT Threat Content,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0009,IEC-104 unauthorized control from non-EWS,OT Threat Content,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0010,IEC 61850 GOOSE spoofing/manipulation,OT Threat Content,LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0011,OPC UA anonymous/unencrypted session,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0012,EtherNet/IP CIP firmware update to controller,OT Threat Content,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0013,Active network scan of OT subnet,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0014,New/unauthorized node on OT segment,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0015,Rogue engineering workstation to PLC,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0016,Alarm suppression/modify alarm settings,OT Threat Content,LS-08;LS-10;LS-11,Workstations (Engineering/Operator);Data Historian;HMI,Tier 1;Tier 2,Yes
+OTD-0017,SIS key switch in PROGRAM mode,OT Threat Content,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0018,Malware transfer via SMB in OT,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0019,Known-bad C2/malicious IP contact from OT,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0020,Removable media introduced to OT asset,OT Threat Content,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0021,Modbus enumeration and point/tag ID,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0022,Brute force/repeated failed OT auth,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0023,Denial-of-service flood against controller,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0024,Historian/operational data exfiltration,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0025,Time-sync (NTP) manipulation affecting SOE,OT Threat Content,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0026,Unauthorized wireless/cellular modem access,OT Threat Content,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0027,PLC operating mode change to Program/Remote,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0028,Unsigned/downgrade firmware load,OT Threat Content,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0029,Control-to-safety write/command,SIS Safety Detection,LS-02;LS-07;LS-18,Firewall (OT);Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0030,New comms path into SIS zone,SIS Safety Detection,LS-02;LS-07;LS-18,Firewall (OT);Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0031,Reversed data direction at boundary,SIS Safety Detection,LS-02;LS-07;LS-18,Firewall (OT);Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0032,SIS traffic bypassing sanctioned gateway,SIS Safety Detection,LS-02;LS-07;LS-18,Firewall (OT);Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0033,SIS program download,SIS Safety Detection,LS-07;LS-08;LS-18,Safety Controller;Workstations (Engineering/Operator);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0034,SIS program upload,SIS Safety Detection,LS-07;LS-08;LS-18,Safety Controller;Workstations (Engineering/Operator);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0035,Key-switch/mode to PROGRAM/REMOTE,SIS Safety Detection,LS-05;LS-07;LS-08,Switch;Safety Controller;Workstations (Engineering/Operator),Tier 1;Tier 2,Yes
+OTD-0036,SIS logic differs from golden baseline,SIS Safety Detection,LS-07;LS-08,Safety Controller;Workstations (Engineering/Operator),Tier 1;Tier 2,Yes
+OTD-0037,SIS firmware change,SIS Safety Detection,LS-07;LS-08;LS-18,Safety Controller;Workstations (Engineering/Operator);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0038,SIS engineering off-window/new host,SIS Safety Detection,LS-07;LS-08;LS-18,Safety Controller;Workstations (Engineering/Operator);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0039,Safety PV trending toward trip,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0040,Trip setpoint/safety parameter modification,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0041,Unexpected SIF trip/demand,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0042,Expected trip absent/alarm suppression,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0043,Final-element command-response mismatch,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0044,De-energize-to-trip circuit anomaly,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0045,Voting degradation,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0046,Redundant safety-sensor disagreement,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0047,Frozen/replayed safety input,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0048,Loss of independence (shared/BPCS input),SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0049,Safety input bad-quality spike,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0050,SIF bypass/inhibit activated,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0051,Long-duration/overdue bypass,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0052,Bypass from unexpected source/off-window,SIS Safety Detection,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0053,Forced I/O on safety controller,SIS Safety Detection,LS-07,Safety Controller,Tier 2,No
+OTD-0054,Multiple simultaneous bypasses,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0055,SIS-BPCS comm loss (loss of view),SIS Safety Detection,LS-07;LS-10;LS-18,Safety Controller;Data Historian;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0056,SIS diagnostic fault/degraded module,SIS Safety Detection,LS-07,Safety Controller,Tier 2,No
+OTD-0057,Spurious trip-rate anomaly,SIS Safety Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0058,SIS controller restart/power event,SIS Safety Detection,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0059,SIS time/clock skew,SIS Safety Detection,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0060,Modbus Exception Response Flood (Possible Scanning or Fuzzing),Sigma: OT/ICS SOC,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0061,Modbus Write to Coil/Register Outside Approved Change Window,Sigma: OT/ICS SOC,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0062,DNP3 Direct Operate Without Preceding Select (Bypass of Select-Before-Operate),Sigma: OT/ICS SOC,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0063,DNP3 CROB Control Command Outside Maintenance Window,Sigma: OT/ICS SOC,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0064,OPC UA Untrusted or Self-Signed Certificate Accepted,Sigma: OT/ICS SOC,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0065,OPC UA Write Request to Critical Node from Unauthorized Client,Sigma: OT/ICS SOC,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0066,OPC UA Address Space Browse Flood (Reconnaissance),Sigma: OT/ICS SOC,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0067,S7comm Program Block Download/Upload Outside Change Window,Sigma: OT/ICS SOC,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0068,S7comm System Status List (SZL) Enumeration,Sigma: OT/ICS SOC,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0069,IEC 60870-5-104 General Interrogation from Unauthorized Master,Sigma: OT/ICS SOC,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0070,IEC 60870-5-104 Single or Double Command Outside Maintenance Window,Sigma: OT/ICS SOC,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0071,IEC 60870-5-104 Clock Synchronization Command Anomaly,Sigma: OT/ICS SOC,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0072,Engineering Workstation Communicating with Multiple PLCs Across Zones,Sigma: OT/ICS SOC,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0073,New or Unauthorized Asset Communicating on OT Engineering Protocol Port,Sigma: OT/ICS SOC,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0074,DNP3 Cold or Warm Restart Function to Outstation,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0075,IEC 60870-5-104 Control Command from Unauthorized Source,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0076,Modbus FC08 Diagnostic Restart or Force Listen-Only Mode,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0077,Unauthorized Modbus Write to Coils or Registers,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0078,Active Network Scan of OT Subnet,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0079,S7comm STOP CPU Command to PLC,Sigma: Core Protocol,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0080,Direct IT-to-OT-DMZ Connection Bypassing Jump Host,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0081,Unauthorized Lateral-Movement Protocol Entering OT DMZ,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0082,OT DMZ Historian Replication Direction Anomaly,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0083,AV/Patch Management Push to DMZ Outside Maintenance Window or Scope,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0084,OT DMZ Asset External DNS or NTP Resolution Attempt,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0085,Web or Email Content Landing on OT DMZ Jump Host,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0086,Remote Access Session into L3 Without Approved Change Window,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0087,Shared or Service Account Used From Unusual DMZ Source,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0088,File Transfer From DMZ to L3 With Executable or Engineering Project Extension,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0089,Vendor Remote Access Session Duration or Scope Anomaly,Sigma: IT/DMZ/OT Cross-Zone,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
+OTD-0090,Unscheduled HMI Project or Configuration Deployment,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0091,New or Modified Scheduled Task on HMI or SCADA Server,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0092,Engineering Software Launched by Non-Engineering Account,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0093,Abnormal Authentication Pattern on SCADA or HMI Server,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0094,Unexpected Outbound Connection from L2 HMI Toward DMZ or IT,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0095,Control Command From HMI Outside Documented HMI-to-PLC Pairing,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0096,Engineering Protocol Session Opened by HMI Account,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0097,Setpoint Change Exceeding Safe Delta Threshold,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0098,Redundant Sensor Correlation Divergence,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0099,Zone Enforcement Firewall Rule Hit-Count Anomaly,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0100,Removable Media Event on DMZ or L3 Asset,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0101,East-West Traffic Between L1 Controllers Across Process Cells,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0102,NTP or Time Desynchronization Anomaly Across IT-OT Path,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0103,IEC 104 Mass Coordinated Breaker-Open Command Burst,Sigma: Threat Actor,LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0104,Modbus Holding Register Manipulation at Abnormal Cadence,Sigma: Threat Actor,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0105,Mass Disk-Wiping Utility Execution Across Multiple Hosts,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0106,IEC 61850 GOOSE Unauthorized Publisher or Spoofed Message,Sigma: Threat Actor,LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0107,Mass Lateral Deployment Tooling Preceding Suspected Wiper Activity,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0108,DNS Tunneling Beacon From OT DMZ or Engineering Host,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0109,Web Shell Activity on Internet-Facing OT-Adjacent Server,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0110,Credential Harvesting Tool Execution on Engineering or SCADA Host,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0111,Low-and-Slow HTTPS Beaconing Indicative of OilRig-Class Backdoor C2,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0112,Shamoon-Style MBR Wiper Execution,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0113,Password Spray Against OT Remote Access Portal,Sigma: Threat Actor,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
+OTD-0114,Mass Malware Spreader Tool Execution Across Multiple Hosts,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0115,OPC UA Server Enumeration Followed by Node Value Tampering,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0116,CODESYS Protocol Command to Schneider Controller From Non-Engineering Host,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0117,OMRON FINS/HTTP Backdoor Command Execution,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0118,ASRock RGB Driver Exploitation Attempt (CVE-2020-15368),Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0119,Triconex Safety Controller Engineering Session From Unauthorized Host,Sigma: Threat Actor,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0120,Safety Controller Key-Switch or Mode Change Outside Proof-Test Window,Sigma: Threat Actor,LS-07;LS-18,Safety Controller;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0121,Engineering Workstation Reflective/Memory-Only Process Injection,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0122,Mass File Encryption or Rename Activity on OT Historian or Engineering Host,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0123,Unitronics Vision PLC Default Port Access (BAUXITE Pattern),Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0124,HMI Display Screen Defacement or Unauthorized Image/Text Overwrite,Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0125,Post-Unitronics-Compromise Lateral Movement via SMB/RDP From PLC Network Segment,Sigma: CTI Advisory,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0126,Remote Management Tool Installation on OT-Adjacent Host (MuddyWater Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0127,Bulk Exfiltration of OT Documentation and Network Diagrams (Moses Staff Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0128,Ransomware Precursor — Lateral Movement Targeting Historian or SCADA Hostnames,Sigma: CTI Advisory,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0129,Mass File Transfer Appliance Exploitation Preceding OT Document Theft (Cl0p Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0130,Sensor Gateway Mass Filesystem Wipe or RS485/MBus Disruption (Fuxnet Pattern),Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0131,Coordinated Multi-Site SCADA Command Triggering Mass Manual-Fallback (Predatory Sparrow-Class Pattern),Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0132,Password Spray Against Cloud Identity Tenant Serving OT-Adjacent Accounts,Sigma: CTI Advisory,LS-14,Application Server,Tier 3,No
+OTD-0133,Security Event Log Cleared on OT Network System,Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0134,PLC Configuration Drift From Verified Offline Backup,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0135,Historian Query Pattern Anomaly From IT-Network Host,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0136,Engineering Workstation Outbound Connection to Infrastructure Outside Approved List,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0137,Vendor VPN Authentication Outside Approved Window or Geography,Sigma: CTI Advisory,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
+OTD-0138,Dormant Vendor Account First-Use After Extended Inactivity,Sigma: CTI Advisory,LS-14,Application Server,Tier 3,No
+OTD-0139,Unauthenticated Modbus/DNP3 Traffic Through Legacy Serial-to-Ethernet Gateway,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0140,Unauthorized Association to Industrial Wireless Network (WirelessHART/ISA100/OT Wi-Fi),Sigma: CTI Advisory,LS-05,Switch,Tier 1,Yes
+OTD-0141,OT Cloud Agent Unexpected Outbound Data Pathway,Sigma: CTI Advisory,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0142,Spearphishing Lure Execution by OT Engineering Personnel,Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0143,Command ASDU from non-master,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0144,Setpoint command,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0145,Interrogation recon,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0146,Clock-sync/reset abuse,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0147,MMS control Operate from non-master,OT Protocol Defense (NDR),LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0148,MMS write to named variable,OT Protocol Defense (NDR),LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0149,GOOSE stNum/sqNum anomaly,OT Protocol Defense (NDR),LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0150,GOOSE from unexpected source,OT Protocol Defense (NDR),LS-12;LS-18,IED;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0151,WriteProperty to command object,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0152,Who-Is sweep (recon),OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0153,DeviceCommunicationControl,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0154,ReinitializeDevice,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0155,Operate from non-master,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0156,Unsolicited-response anomaly,OT Protocol Defense (NDR),LS-17;LS-18,RTU;Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0157,Tag/Set_Attribute write from non-controller,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0158,ListIdentity sweep,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0159,forward_open from unexpected source,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0160,Write to config class,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0161,Anonymous FTP login to OT device,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0162,FTP brute force,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0163,Upload to a control device,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0164,Firmware/project file transfer,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0165,Web login brute force,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0166,Directory/endpoint enumeration,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0167,New client to device web UI,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0168,Post-login control action,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0169,Write to critical register,OT Protocol Defense (NDR),LS-06;LS-10;LS-18,PLC;Data Historian;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0170,Diagnostic abuse,OT Protocol Defense (NDR),LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0171,Cross-zone Modbus,OT Protocol Defense (NDR),LS-02;LS-06;LS-18,Firewall (OT);PLC;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0172,Publish to command topic,OT Protocol Defense (NDR),LS-03;LS-18,Jump Host;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0173,Wildcard subscribe (mass recon),OT Protocol Defense (NDR),LS-03;LS-18,Jump Host;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0174,Anonymous/new client connect,OT Protocol Defense (NDR),LS-03;LS-18,Jump Host;Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0175,Retained-message tampering,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0176,Anonymous/None session,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0177,Write to command node,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0178,CallMethod to control method,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0179,Browse sweep (recon),OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0180,PLC STOP/START,OT Protocol Defense (NDR),LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0181,Program upload (logic theft),OT Protocol Defense (NDR),LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0182,Write from non-engineering source,OT Protocol Defense (NDR),LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0183,SZL/system recon,OT Protocol Defense (NDR),LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
+OTD-0184,Vertical scan,OT Protocol Defense (NDR),LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0185,Scan from unexpected source,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0186,OT control-port probing,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0187,VNC to a control host,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0188,VNC from unexpected source,OT Protocol Defense (NDR),LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
+OTD-0189,Post-session engineering activity,OT Protocol Defense (NDR),LS-06;LS-08;LS-18,PLC;Workstations (Engineering/Operator);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 2;Tier 3,Yes
+OTD-0190,Cross-zone VNC,OT Protocol Defense (NDR),LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0191,Tag out of operating envelope,OT Historian Detection,LS-10,Data Historian,Tier 2,No
+OTD-0192,Setpoint outside approved range,OT Historian Detection,LS-10,Data Historian,Tier 2,No
+OTD-0193,Frozen value / replay,OT Historian Detection,LS-10,Data Historian,Tier 2,No
+OTD-0194,Impossible state combination,OT Historian Detection,LS-10,Data Historian,Tier 2,No
+OTD-0195,Historian vs live PLC value divergence,OT Historian Detection,LS-10,Data Historian,Tier 2,No
+OTD-0196,SIF trip-point approach,OT Historian Detection,LS-07;LS-10,Safety Controller;Data Historian,Tier 2,No
+OTD-0197,Encoded/suspicious PowerShell,Perimeter-to-Endpoint,LS-02;LS-08;LS-17,Firewall (OT);Workstations (Engineering/Operator);RTU,Tier 1;Tier 3,Yes
+OTD-0198,LOLBin abuse,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0199,Credential access LSASS,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0200,Persistence run key/startup,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0201,Persistence service install,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0202,Persistence scheduled task,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0203,Defense evasion log clearing,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0204,Defense evasion AV/EDR tamper,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0205,Suspicious parent-child,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0206,Masquerading binary,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0207,Internal host scanning,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0208,New east-west peer relationship,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0209,Lateral SMB admin shares,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0210,Lateral RDP internal spread,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0211,Lateral WMI/WinRM exec,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0212,Remote service creation PsExec-like,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0213,Pass-the-hash/anomalous NTLM,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0214,Kerberoasting,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0215,Internal DNS/AD recon,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
+OTD-0216,Brute force single account,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0217,Password spray,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0218,Success after repeated failures,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0219,Privilege/permission change,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0220,New/re-enabled account then use,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0221,Impossible travel/atypical geo,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0222,Off-hours privileged logon,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0223,Disabled/dormant account use,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0224,MFA fatigue,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0225,Ingress/egress volume baseline deviation,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0226,SYN flood,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0227,UDP/amplification flood,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0228,Connection-rate spike to a service,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0229,Source fan-in DDoS,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0230,ICMP flood,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0231,Perimeter deny surge,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0232,Resource exhaustion on public service,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
+OTD-0233,DNS tunnelling,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0234,DGA activity,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0235,Rare/new external domain,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0236,Beaconing C2,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0237,Connection-count outlier,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0238,Data-volume exfil outlier,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0239,Long-lived high-byte session,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0240,DoH/rare resolver,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0241,Threat-intel IOC hit,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0242,Tor usage,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0243,Crypto-mining,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0244,P2P/torrent,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0245,Geo-prohibited destination,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0246,Unauthorized cloud storage,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0247,Prohibited cleartext protocol,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0248,Unauthorized remote-access tool,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0249,Traffic to newly-registered domain,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0250,Outbound vertical scan,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0251,High outbound deny rate,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0252,Web login brute force,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0253,Directory/endpoint enumeration,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0254,Injection patterns SQLi/XSS/cmd,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0255,High 5xx error spike,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0256,Suspicious user-agent/tool,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
+OTD-0257,Web shell indicators,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes

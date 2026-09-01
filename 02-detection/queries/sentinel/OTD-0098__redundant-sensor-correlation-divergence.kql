@@ -1,0 +1,10 @@
+// OTD-0098 - Redundant Sensor Correlation Divergence
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/22_redundant-sensor-correlation-divergence.yml
+// ATT&CK for ICS: attack.ics.t0856, attack.ics.t0804
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (point_pair_type == "redundant_sensor")
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

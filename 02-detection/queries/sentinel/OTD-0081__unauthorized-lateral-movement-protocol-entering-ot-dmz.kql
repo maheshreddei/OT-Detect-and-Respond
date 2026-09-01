@@ -1,0 +1,10 @@
+// OTD-0081 - Unauthorized Lateral-Movement Protocol Entering OT DMZ
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/02_unauthorized-lateral-movement-protocol-entering-ot-dmz.yml
+// ATT&CK for ICS: attack.ics.t0866
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (src_zone == "IT" and dst_zone == "OT_DMZ" and DestinationPort in (3389, 445, 5985, 5986))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

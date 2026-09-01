@@ -1,0 +1,28 @@
+title: OT Cloud Agent Unexpected Outbound Data Pathway
+id: sw17a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects an OT-side cloud-connectivity agent (asset performance management, remote monitoring service, or IIoT gateway) establishing a connection to a cloud endpoint not in the approved vendor cloud allow-list, surfacing the advisory's identified blind spot where cloud data pathways are established without OT security team involvement or formal risk assessment.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (OT cloud/IIoT governance gap, not actor-specific)
+tags:
+  - attack.t1071.001
+  - attack.ics.t0846
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    src_zone:
+      - L2_HMI
+      - L3
+    dst_zone: internet
+    process_tag: 'iiot_cloud_agent'
+  filter:
+    dst_domain|in_list: 'approved_ot_cloud_vendor_domains'
+  condition: selection and not filter
+falsepositives:
+  - Newly onboarded cloud analytics vendor not yet added to the approved domain list
+level: medium

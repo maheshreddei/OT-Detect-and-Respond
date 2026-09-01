@@ -1,0 +1,10 @@
+// OTD-0061 - Modbus Write to Coil/Register Outside Approved Change Window
+// Source: 02-detection/sigma/ot-ics-soc/04_modbus-write-to-coil-register-outside-approved-change-window.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0831
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "modbus" and FunctionCode in (5, 6, 15, 16)) and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

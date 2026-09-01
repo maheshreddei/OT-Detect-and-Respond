@@ -1,0 +1,23 @@
+title: OPC UA Untrusted or Self-Signed Certificate Accepted
+id: 9c3a1d5c-3f4e-405c-bd6a-3c4d5e6f7002
+status: experimental
+description: Detects an OPC UA secure channel established where the client or server certificate was not present in the trusted certificate store, indicating certificate validation has been bypassed or set to AutoAccept.
+references:
+  - https://reference.opcfoundation.org/Core/Part2/v104/docs/4.8
+tags:
+  - attack.ics.t0859
+  - attack.ics.t0822
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: opcua
+detection:
+  selection:
+    proto: opcua
+    service: OpenSecureChannel
+    certificate_trusted: false
+  condition: selection
+falsepositives:
+  - Newly deployed OPC UA client/server pending certificate exchange during commissioning
+level: high

@@ -1,0 +1,39 @@
+title: Modbus FC08 Diagnostic Restart or Force Listen-Only Mode
+id: feba77e8-a03f-4af6-9aa0-bfc857d1c2e7
+status: experimental
+description: |
+  Detects Modbus Diagnostics (Function Code 08) sub-functions that can disrupt a
+  device: 0x01 (Restart Communications Option) and 0x04 (Force Listen Only Mode).
+  These are rarely used in normal operation and can silence or reset a slave device,
+  contributing to an Inhibit Response Function objective.
+references:
+  - https://attack.mitre.org/techniques/T0816/
+author: Mahesh Reddy
+date: 2026/08/09
+tags:
+  - attack.ics
+  - attack.inhibit-response-function
+  - attack.t0816
+logsource:
+  product: zeek
+  service: modbus
+detection:
+  diagnostics:
+    func: 'DIAGNOSTICS'
+  disruptive_subfunc:
+    sub_function:
+      - 1    # Restart Communications Option
+      - 4    # Force Listen Only Mode
+  condition: diagnostics and disruptive_subfunc
+fields:
+  - id.orig_h
+  - id.resp_h
+  - func
+  - sub_function
+falsepositives:
+  - Vendor commissioning or diagnostic tooling during scheduled maintenance
+level: high
+uc_id: OT-UC-0004
+nozomi_type_id: PROT:MODBUS-ILLEGAL
+sectors: [Water, Manufacturing, Chemical]
+threat_actors: [CHERNOVITE]

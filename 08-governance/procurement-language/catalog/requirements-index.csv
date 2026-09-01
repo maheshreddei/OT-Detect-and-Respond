@@ -1,0 +1,48 @@
+category_no,category,control_no,control_title
+2,System Hardening,2.1,Removal of Unnecessary Services and Programs
+2,System Hardening,2.2,Host Intrusion Detection System
+2,System Hardening,2.3,Changes to File System and Operating System Permissions
+2,System Hardening,2.4,Hardware Configuration
+2,System Hardening,2.5,Heartbeat Signals
+2,System Hardening,2.6,"Installing Operating Systems, Applications,"
+3,Perimeter Protection,3.1,Firewalls
+3,Perimeter Protection,3.2,Network Intrusion Detection System
+3,Perimeter Protection,3.3,Canaries
+4,Account Management,4.1,"Disabling, Removing, or Modifying Well-Known or Guest"
+4,Account Management,4.2,Session Management
+4,Account Management,4.3,Password/Authentication Policy and Management
+4,Account Management,4.4,Account Auditing and Logging
+4,Account Management,4.5,Role-Based Access Control for Control System Applications
+4,Account Management,4.6,Single Sign-On
+4,Account Management,4.7,Separation Agreement
+5,Coding Practices,5.1,Coding for Security
+6,Flaw Remediation,6.1,Notification and Documentation from Vendor
+6,Flaw Remediation,6.2,Problem Reporting
+7,Malware Detection And Protection,7.1,Malware Detection and Protection
+8,Host Name Resolution,8.1,Network Addressing and Name Resolution
+9,End Devices,9.1,Intelligent Electronic Devices
+9,End Devices,9.2,Remote Terminal Units
+9,End Devices,9.3,Programmable Logic Controllers
+9,End Devices,9.4,"Sensors, Actuators, and Meters"
+10,Remote Access,10.1,Dial-Up Modems
+10,Remote Access,10.2,Dedicated Line Modems
+10,Remote Access,10.3,TCP/IP
+10,Remote Access,10.4,Web-based Interfaces
+10,Remote Access,10.5,Virtual Private Networks
+10,Remote Access,10.6,Serial Communications Security
+11,Physical Security,11.1,Physical Access of Cyber Components
+11,Physical Security,11.2,Physical Perimeter Access
+11,Physical Security,11.3,Manual Override Control
+11,Physical Security,11.4,Intraperimeter Communications
+12,Network Partitioning,12.1,Network Devices
+12,Network Partitioning,12.2,Network Architecture
+13,Wireless Technologies,13.1,Bluetooth Technology
+13,Wireless Technologies,13.2,Wireless Closed-Circuit TV Technology
+13,Wireless Technologies,13.3,Radio Frequency Identification Technology
+13,Wireless Technologies,13.5,ZigBee Technology
+13,Wireless Technologies,13.6,WirelessHART Technology
+13,Wireless Technologies,13.7,Mobile Radios
+13,Wireless Technologies,13.8,Wireless Mesh Network Technology
+13,Wireless Technologies,13.9,Cellular Technology
+13,Wireless Technologies,13.10,WiMAX Technology
+13,Wireless Technologies,13.11,Microwave and Satellite Technology

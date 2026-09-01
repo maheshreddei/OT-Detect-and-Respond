@@ -1,0 +1,11 @@
+// OTD-0106 - IEC 61850 GOOSE Unauthorized Publisher or Spoofed Message
+// Source: 02-detection/sigma/threat-actor/04_iec-61850-goose-unauthorized-publisher-or-spoofed-message.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0856
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "goose")
+| where not ((publisher_mac == "configured_gocb_publishers"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

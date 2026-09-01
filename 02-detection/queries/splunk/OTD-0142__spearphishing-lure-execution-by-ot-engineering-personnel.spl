@@ -1,0 +1,8 @@
+``` OTD-0142 - Spearphishing Lure Execution by OT Engineering Personnel ```
+``` Source: 02-detection/sigma/advisory/20_spearphishing-lure-execution-by-ot-engineering-personnel.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((ParentImage="\winword.exe" OR ParentImage="\excel.exe" OR ParentImage="\outlook.exe") (Image="\powershell.exe" OR Image="\cmd.exe" OR Image="\wscript.exe" OR Image="\mshta.exe") User="ot_engineering_staff_accounts")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

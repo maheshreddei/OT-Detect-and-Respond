@@ -1,0 +1,26 @@
+title: Post-Unitronics-Compromise Lateral Movement via SMB/RDP From PLC Network Segment
+id: sw01a1b2-c3d4-4e5f-9081-000000000003
+status: experimental
+description: Detects SMB or RDP traffic originating from the network segment hosting Unitronics or other internet-exposed PLCs, indicating an adversary has pivoted from PLC-level access to broader IT-style lateral movement using native Windows tooling, consistent with confirmed BAUXITE post-compromise behavior.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: BAUXITE / CyberAv3ngers (IRGC-affiliated)
+tags:
+  - attack.t1021.001
+  - attack.t1021.002
+  - attack.ics.t0867
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    src_zone: plc_field_network
+    dst_port:
+      - 445
+      - 3389
+  condition: selection
+falsepositives:
+  - Approved engineering maintenance session using SMB for PLC backup file transfer
+level: high

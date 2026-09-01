@@ -1,0 +1,9 @@
+``` OTD-0120 - Safety Controller Key-Switch or Mode Change Outside Proof-Test Window ```
+``` Source: 02-detection/sigma/threat-actor/18_safety-controller-key-switch-or-mode-change-outside-proof-te.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (proto="tristation" mode_change="PROGRAM")
+  NOT (change_ticket_active=true)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

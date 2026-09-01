@@ -1,0 +1,12 @@
+``` OTD-0150 - GOOSE from unexpected source ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: 61850-04 ```
+``` ATT&CK for ICS: T0856  |  Severity: high ```
+``` Detection logic: GOOSE with unknown source MAC / wrong segment ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- GOOSE with unknown source MAC / wrong segment ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

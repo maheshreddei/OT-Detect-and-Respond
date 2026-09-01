@@ -1,0 +1,9 @@
+Threat_Actor,Aliases,Primary_Sectors,Notable_Campaigns,Mapped_UC_Count,Mapped_UC_IDs
+ELECTRUM,Sandworm-linked;VOODOO BEAR-adjacent,Electric,Industroyer;Industroyer2,7,OT-UC-0005;OT-UC-0007;OT-UC-0008;OT-UC-0009;OT-UC-0010;OT-UC-0018;OT-UC-0023;OT-UC-0025
+KAMACITE,Sandworm access-op-linked,Electric;Oil & Gas,Ukraine grid access ops,2,OT-UC-0001;OT-UC-0019
+CHERNOVITE,PIPEDREAM/INCONTROLLER author,Electric;Oil & Gas;Manufacturing,PIPEDREAM toolkit,7,OT-UC-0003;OT-UC-0004;OT-UC-0005;OT-UC-0006;OT-UC-0012;OT-UC-0015;OT-UC-0027;OT-UC-0028
+XENOTIME,TRITON/TRISIS operator,Oil & Gas;Chemical,TRITON (Schneider Triconex),2,OT-UC-0016;OT-UC-0017
+BAUXITE,CyberAv3ngers-associated activity,Water;Oil & Gas,Unitronics/exposed-device campaigns,4,OT-UC-0001;OT-UC-0002;OT-UC-0019;OT-UC-0022;OT-UC-0026
+VOLTZITE,Volt Typhoon-adjacent activity,Electric;Water;Telecom,Living-off-the-land recon,4,OT-UC-0001;OT-UC-0013;OT-UC-0014;OT-UC-0024
+GRAPHITE,APT28-adjacent activity,Energy;Manufacturing,Spearphishing to OT recon,4,OT-UC-0011;OT-UC-0013;OT-UC-0021;OT-UC-0024
+DragonFly,ENERGETIC BEAR;Havex/Karagany,Energy,DragonFly 2.0;Havex,2,OT-UC-0018;OT-UC-0020

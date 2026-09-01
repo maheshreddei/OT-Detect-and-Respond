@@ -1,0 +1,10 @@
+// OTD-0070 - IEC 60870-5-104 Single or Double Command Outside Maintenance Window
+// Source: 02-detection/sigma/ot-ics-soc/17_iec-60870-5-104-single-or-double-command-outside-maintenance.yml
+// ATT&CK for ICS: attack.ics.t0855
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "iec104" and TypeId in ("C_SC_NA_1", "C_DC_NA_1")) and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

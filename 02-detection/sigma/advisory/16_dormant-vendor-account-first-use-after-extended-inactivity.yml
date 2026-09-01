@@ -1,0 +1,27 @@
+title: Dormant Vendor Account First-Use After Extended Inactivity
+id: sw14a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects authentication using a vendor or commissioning account that has had no successful login for more than 180 days, surfacing the legacy/dormant-account blind spot the advisory identifies as a common and persistent regional OT security gap that provides adversaries with pre-existing, authorized-appearing credentials.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (credential hygiene gap, not actor-specific)
+tags:
+  - attack.t1078
+  - attack.ics.t0859
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: authentication
+  product: generic
+detection:
+  selection:
+    account_type:
+      - vendor
+      - commissioning
+    auth_result: success
+  filter:
+    days_since_last_login|lt: 180
+  condition: selection and not filter
+falsepositives:
+  - Vendor returning for an annual maintenance contract after a long planned gap
+level: high

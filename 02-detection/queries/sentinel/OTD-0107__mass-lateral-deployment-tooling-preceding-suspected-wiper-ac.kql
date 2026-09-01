@@ -1,0 +1,11 @@
+// OTD-0107 - Mass Lateral Deployment Tooling Preceding Suspected Wiper Activity
+// Source: 02-detection/sigma/threat-actor/05_mass-lateral-deployment-tooling-preceding-suspected-wiper-ac.yml
+// ATT&CK for ICS: attack.ics.t0867
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName in ("\PsExec.exe", "\wmic.exe") and (CommandLine contains "process call create"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 5m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

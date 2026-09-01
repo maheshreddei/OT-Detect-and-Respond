@@ -1,0 +1,24 @@
+title: First-Time Asset Communication Across a Zone Boundary
+id: d1a1b2c3-0006-4a1b-8c1d-6a2b3c4d5e01
+status: experimental
+description: Detects a source asset establishing a connection across any Purdue Model zone boundary (IT-DMZ, DMZ-L3, L3-L2, L2-L1) for the first time relative to the rolling asset-communication baseline, generalizing the single-protocol "new asset" rule into a cross-zone, cross-protocol behavioral check.
+references:
+  - https://attack.mitre.org/techniques/T0883/
+tags:
+  - attack.ics.t0883
+  - attack.ics.t0846
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    src_zone|in_list: 'all_purdue_zones'
+    dst_zone|in_list: 'all_purdue_zones'
+  filter:
+    src_dst_pair|in_list: 'baseline_observed_pairs'
+  condition: selection and not filter
+falsepositives:
+  - Newly commissioned asset pending baseline update
+level: medium

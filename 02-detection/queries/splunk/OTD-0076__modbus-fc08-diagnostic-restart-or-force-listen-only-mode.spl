@@ -1,0 +1,8 @@
+``` OTD-0076 - Modbus FC08 Diagnostic Restart or Force Listen-Only Mode ```
+``` Source: 02-detection/sigma/core-protocol/modbus-fc08-restart.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:modbus
+  (func="DIAGNOSTICS") ((sub_function=1 OR sub_function=4))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

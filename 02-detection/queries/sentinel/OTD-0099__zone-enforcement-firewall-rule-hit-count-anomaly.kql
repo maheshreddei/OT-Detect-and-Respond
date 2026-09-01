@@ -1,0 +1,11 @@
+// OTD-0099 - Zone Enforcement Firewall Rule Hit-Count Anomaly
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/24_zone-enforcement-firewall-rule-hit-count-anomaly.yml
+// ATT&CK for ICS: attack.ics.t0886
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (rule_historical_avg_hits_per_day == 5)
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1h
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

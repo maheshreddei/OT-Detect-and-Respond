@@ -1,0 +1,8 @@
+MVT_ID,Step,Action,Why_This_Step,Maps_To_CP,Maps_To_LS,Independently_Useful
+MVT-1,1,"Firewall logs (allow + deny) at the IT/OT boundary, forwarded to the SIEM",Cheapest high-value source; establishes zone-crossing visibility,CP-01,LS-02,Yes
+MVT-2,2,Remote-access authentication logs,Covers the most common initial access path,CP-02,LS-03;LS-04,Yes
+MVT-3,3,Windows Security + Sysmon on every engineering workstation and HMI,Where adversaries actually operate once inside,CP-03,LS-08;LS-11,Yes
+MVT-4,4,One passive sensor with Zeek at the boundary,Protocol visibility where no host log exists,CP-04,LS-18,Yes
+MVT-5,5,Controller checksum/mode baseline job with MOC correlation,Highest-fidelity OT signal; ties change to Management of Change,CP-08,LS-06,Yes
+MVT-6,6,A sensor per Level 2 area,Extends protocol visibility from boundary to each cell/area,CP-04,LS-18,Yes
+MVT-7,7,Curated historian tags into the SIEM,Process ground truth for impact confirmation,CP-07,LS-10,Yes

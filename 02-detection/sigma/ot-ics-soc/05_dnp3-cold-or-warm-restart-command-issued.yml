@@ -1,0 +1,24 @@
+title: DNP3 Cold or Warm Restart Command Issued
+id: 8b2f0c4b-2e3d-4f2b-ac5f-2b3c4d5e6f01
+status: experimental
+description: Detects DNP3 function code 13 (Cold Restart) or 14 (Warm Restart), which forces an outstation/RTU to reboot. High operational-impact command rarely used outside planned maintenance.
+references:
+  - https://www.dnp.org/About/Overview-of-DNP3-Protocol
+tags:
+  - attack.ics.t0816
+  - attack.ics.t0814
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: dnp3
+detection:
+  selection:
+    proto: dnp3
+    function_code:
+      - 13
+      - 14
+  condition: selection
+falsepositives:
+  - Scheduled outstation maintenance/firmware update
+level: critical

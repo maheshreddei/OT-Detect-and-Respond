@@ -1,0 +1,2 @@
+source_logical_path,canonical_path
+02-detection/extensions/protocol-ndr/detections/detection-catalog.csv,source-libraries/protocol-ndr-catalog.csv

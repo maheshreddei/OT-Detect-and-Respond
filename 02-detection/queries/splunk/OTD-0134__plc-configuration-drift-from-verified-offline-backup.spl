@@ -1,0 +1,9 @@
+``` OTD-0134 - PLC Configuration Drift From Verified Offline Backup ```
+``` Source: 02-detection/sigma/advisory/12_plc-configuration-drift-from-verified-offline-backup.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (event_type="plc_checksum_mismatch")
+  NOT (change_ticket_active=true)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

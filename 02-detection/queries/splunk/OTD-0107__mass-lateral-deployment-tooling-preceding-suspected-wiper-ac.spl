@@ -1,0 +1,8 @@
+``` OTD-0107 - Mass Lateral Deployment Tooling Preceding Suspected Wiper Activity ```
+``` Source: 02-detection/sigma/threat-actor/05_mass-lateral-deployment-tooling-preceding-suspected-wiper-ac.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((Image="\PsExec.exe" OR Image="\wmic.exe") (CommandLine="*process call create*"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

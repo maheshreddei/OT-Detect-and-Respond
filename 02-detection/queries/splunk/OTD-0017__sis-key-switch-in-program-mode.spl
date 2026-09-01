@@ -1,0 +1,12 @@
+``` OTD-0017 - SIS key switch in PROGRAM mode ```
+``` Library: OT Threat Content  |  Legacy ID: OT-UC-0017 ```
+``` ATT&CK for ICS: T0858  |  Severity: Critical ```
+``` Detection logic: Detects a force/override flag being set on a tag belonging to the Safety Instrumented System (SIS) address range, a technique directly associated with the TRITON/TRISIS attack against a Schneider Electric Triconex SIS controller. ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_nozomi sourcetype=nozomi:alert earliest=-24h
+``` TODO: express the detection condition -- Detects a force/override flag being set on a tag belonging to the Safety Instrumented System (SIS) address range, a technique directly associated with the TRITON/TRISIS attack against a Schneider Electric Triconex SIS controller. ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

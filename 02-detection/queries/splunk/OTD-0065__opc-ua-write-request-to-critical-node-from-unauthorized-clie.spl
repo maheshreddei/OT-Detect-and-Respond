@@ -1,0 +1,9 @@
+``` OTD-0065 - OPC UA Write Request to Critical Node from Unauthorized Client ```
+``` Source: 02-detection/sigma/ot-ics-soc/11_opc-ua-write-request-to-critical-node-from-unauthorized-clie.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:opcua
+  (proto="opcua" service="Write" (node_id="ns=2;s=Control.*"))
+  NOT (src_ip="10.10.10.0/24")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

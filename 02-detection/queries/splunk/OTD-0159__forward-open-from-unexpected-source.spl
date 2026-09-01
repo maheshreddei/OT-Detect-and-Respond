@@ -1,0 +1,12 @@
+``` OTD-0159 - forward_open from unexpected source ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: ENIP-03 ```
+``` ATT&CK for ICS: T0855  |  Severity: high ```
+``` Detection logic: Connection establishment from non-controller ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:enip earliest=-24h
+``` TODO: express the detection condition -- Connection establishment from non-controller ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

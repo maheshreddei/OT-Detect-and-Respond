@@ -1,0 +1,20 @@
+Source_ID,Source,Description,Log_Ease,Noise,Source_Count,Importance,Onboarding_Tier,Primary_Collection_Method,Notes
+LS-01,Control Server / SCADA Server,Central server communicating with PLCs/RTUs and HMIs,Easy,Medium,Few,Critical,Tier 1,Agent + Syslog (Windows/Linux host),Best single vantage point for commands reaching the process.
+LS-02,Firewall (OT),Segments zones and controls traffic between IT/DMZ/OT,Easy,Medium,Few,Critical,Tier 1,Syslog,Cheapest high-value source. Confirms Purdue zone-crossing detections.
+LS-03,Jump Host,Secure access point into OT network (RDP/SSH),Easy,Medium,Few,Critical,Tier 1,Agent (Windows Event Log / SSH),Every legitimate remote-access session should pass through here; alert on anything that does not.
+LS-04,VPN Server,Secure remote connectivity into OT or between sites,Easy,Low,Very Few,Critical,Tier 1,Syslog,Pairs with jump host logs for full remote-access chain visibility.
+LS-05,Switch,Connects devices and defines OT network segments,Medium,Low,Many,Critical,Tier 1,Syslog (security events only),"Port security, MAC changes, VLAN hopping detection; volume manageable if filtered."
+LS-06,PLC,Core automation controllers executing logic,Hard,Low,Many,Critical,Tier 2,Passive network monitoring (Nozomi/SPAN),High value but limited native logging; passive monitoring as proxy.
+LS-07,Safety Controller,Executes safety-critical logic with redundancy,Hard,Low,Few,Critical,Tier 2,Passive monitoring + vendor logs,Low volume but any event here is a priority-1 investigation regardless of source difficulty.
+LS-08,Workstations (Engineering/Operator),"Used for configuration, programming, diagnostics",Medium,High,Moderate,Critical,Tier 1,Agent (Windows Event Log / Sysmon),"Windows event logs are easy to collect; tune aggressively, usually the noisiest critical source."
+LS-09,Data Gateway,"Protocol translation, aggregation, mirroring between zones",Medium,Medium,Few,High,Tier 2,Syslog / API,Good chokepoint for cross-protocol detections (e.g. Modbus-to-OPC UA translation abuse).
+LS-10,Data Historian,"Stores process data, events, alarms for analysis and business use",Easy,Low,Few,High,Tier 2,Agent / DB query / API,"Easy win; also valuable for baselining process behavior, not just security events."
+LS-11,HMI,Operator interface for monitoring and control,Easy,Medium,Moderate,High,Tier 2,Agent (Windows) / app logs,"Watch for unauthorized setpoint changes, login anomalies, engineering-mode access outside change windows."
+LS-12,IED,Protection and control devices (mostly power sector),Easy,Low,Many,High,Tier 2,Syslog / passive (IEC 61850),IEC 61850 GOOSE/MMS visibility if available; otherwise rely on substation gateway logs.
+LS-13,Router,Routes traffic between OT network segments,Medium,Low,Moderate,High,Tier 2,Syslog,Complements firewall logs for east-west traffic between cells/zones.
+LS-14,Application Server,"Hosts ICS applications (analytics, alarms, reporting) on Windows/Linux",Medium,Medium,Few,Medium,Tier 3,Agent (Sysmon/auditd),Standard Windows/Linux telemetry pipeline applies directly.
+LS-15,DCS Controller,Manages continuous processes in distributed control systems,Hard,Low,Many,High,Tier 3,Passive network monitoring,Vendor-specific logging is limited; prioritize network-based detection.
+LS-16,PAC,Advanced programmable controller with extended capabilities,Hard,Low,Moderate,Critical,Tier 3,Passive network monitoring,Same constraints as PLC; passive monitoring is the practical path.
+LS-17,RTU,Aggregates field data and forwards to SCADA,Hard,Low,Moderate,High,Tier 3,Polling / passive (DNP3/104),"Geographically distributed, often serial-based; polling-based DNP3/104 monitoring recommended."
+LS-18,Network Traffic (SPAN/TAP/IDS),Passive monitoring of OT protocols,Medium,Nightmare,Very Few,High,Tier 3,Passive sensor (SPAN/TAP -> Nozomi/IDS),Highest engineering effort but fills every visibility gap above; needs dedicated tuning and a Sigma/DPI ruleset.
+LS-19,Field I/O,Sensors and actuators providing raw input/output,Nightmare,Low,Very Many,Low,Tier 4,None (indirect via PLC/RTU/historian),Do not attempt direct log collection; covered indirectly via PLC/RTU and process historian data.

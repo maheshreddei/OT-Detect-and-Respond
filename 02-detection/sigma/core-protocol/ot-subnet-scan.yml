@@ -1,0 +1,38 @@
+title: Active Network Scan of OT Subnet
+id: 3c03018c-27c9-43ce-9ede-518ccbedbe8e
+status: experimental
+description: |
+  Detects horizontal scanning behaviour inside an OT segment - a single source
+  initiating connections to many distinct OT hosts in a short window. Scanning is a
+  discovery precursor and is especially high-signal inside a Level 2/3 OT zone where
+  hosts communicate on stable, predictable paths.
+references:
+  - https://attack.mitre.org/techniques/T0840/
+author: Mahesh Reddy
+date: 2026/08/09
+tags:
+  - attack.ics
+  - attack.discovery
+  - attack.t0840
+logsource:
+  product: zeek
+  service: conn
+detection:
+  ot_zone:
+    id.resp_h|cidr: '10.20.0.0/16'   # replace with monitored OT CIDR
+  selection:
+    proto: tcp
+  timeframe: 5m
+  condition: ot_zone and selection | count(id.resp_h) by id.orig_h > 15
+fields:
+  - id.orig_h
+  - id.resp_h
+  - id.resp_p
+falsepositives:
+  - Authorized vulnerability scanner or asset-discovery appliance
+  - Nozomi/monitoring appliance performing Smart Polling
+level: medium
+uc_id: OT-UC-0013
+nozomi_type_id: NET:TCP-SYN-SCAN
+sectors: [Electric, Oil & Gas, Water, Manufacturing]
+threat_actors: [VOLTZITE, GRAPHITE]

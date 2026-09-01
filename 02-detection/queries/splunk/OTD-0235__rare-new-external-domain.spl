@@ -1,0 +1,12 @@
+``` OTD-0235 - Rare/new external domain ```
+``` Library: Perimeter-to-Endpoint  |  Legacy ID: OUT-03 ```
+``` ATT&CK for ICS: T1071  |  Severity: medium ```
+``` Detection logic: baseline ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=dns earliest=-24h
+``` TODO: express the detection condition -- baseline ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

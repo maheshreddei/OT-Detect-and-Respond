@@ -1,0 +1,26 @@
+title: Jump Host Issuing OT Control Protocol Traffic Directly
+id: d1a1b2c3-0002-4a1b-8c1d-2a2b3c4d5e01
+status: experimental
+description: Detects a designated RDP/jump-server host appearing as a Modbus, DNP3, S7comm, or OPC UA protocol client itself rather than simply brokering an interactive remote session, which can indicate an attacker has installed tooling directly on the jump host to issue OT commands.
+references:
+  - https://attack.mitre.org/techniques/T0867/
+tags:
+  - attack.ics.t0867
+  - attack.ics.t0855
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    proto:
+      - modbus
+      - dnp3
+      - s7comm
+      - opcua
+    src_ip|in_list: 'designated_jump_hosts'
+  condition: selection
+falsepositives:
+  - Jump host intentionally repurposed as an engineering access point per an approved architecture change
+level: critical

@@ -1,0 +1,8 @@
+``` OTD-0115 - OPC UA Server Enumeration Followed by Node Value Tampering ```
+``` Source: 02-detection/sigma/threat-actor/13_opc-ua-server-enumeration-followed-by-node-value-tampering.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:opcua
+  (proto="opcua" (service="Browse" OR service="Read")) (proto="opcua" service="Write")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

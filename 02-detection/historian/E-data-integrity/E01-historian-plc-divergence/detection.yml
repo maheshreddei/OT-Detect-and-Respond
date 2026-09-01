@@ -1,0 +1,51 @@
+id: E01
+title: Historian vs live PLC value divergence
+status: production
+description: >
+  The same physical tag, collected independently through the normal
+  control->HMI->historian path and via a direct read from the controller,
+  disagree beyond sensor tolerance. Detects manipulation-of-view / spoofed
+  reporting where the operator is shown a fabricated normal value (Stuxnet class).
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0832
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0856
+family: E-data-integrity
+attack_ics:
+  - T0832   # Manipulation of View
+  - T0856   # Spoof Reporting Message
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.*.PV
+  requires_two_sources: true      # hmi_historian AND direct_opcua
+baseline:
+  method: divergence
+  segmentation: none              # compares two live sources; std used only to scale tolerance
+  clean_window: "n/a - relative comparison, not a learned band"
+  rebaseline_cadence: quarterly   # refresh std for tolerance scaling
+  lookup: ot_baseline.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: ">= 2 consecutive divergent time bins"
+fields:
+  - _time
+  - tag
+  - v_hist
+  - v_direct
+  - abs_diff
+  - pct_diff
+  - sigma_diff
+falsepositives:
+  - Collection-timing skew between the two sources (mitigated by binning + persistence)
+  - One source in Bad quality (mitigated by dual-Good gate)
+  - Genuinely non-independent second source (deployment error - fix provisioning)
+level: high
+response: |
+  Do NOT trust the HMI/historian value; do NOT act on the control system.
+  Corroborate with a third reading and NDR rogue-master/MITM signals.
+  Escalate immediately as a candidate manipulation-of-view incident.
+validation: validation.md

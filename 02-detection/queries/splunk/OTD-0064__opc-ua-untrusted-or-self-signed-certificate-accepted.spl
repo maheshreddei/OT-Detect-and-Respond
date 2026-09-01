@@ -1,0 +1,8 @@
+``` OTD-0064 - OPC UA Untrusted or Self-Signed Certificate Accepted ```
+``` Source: 02-detection/sigma/ot-ics-soc/10_opc-ua-untrusted-or-self-signed-certificate-accepted.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:opcua
+  (proto="opcua" service="OpenSecureChannel" certificate_trusted=false)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

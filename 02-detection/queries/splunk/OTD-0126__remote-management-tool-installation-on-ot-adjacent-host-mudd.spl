@@ -1,0 +1,9 @@
+``` OTD-0126 - Remote Management Tool Installation on OT-Adjacent Host (MuddyWater Pattern) ```
+``` Source: 02-detection/sigma/advisory/04_remote-management-tool-installation-on-ot-adjacent-host-mudd.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((Image="\AteraAgent.exe" OR Image="\RemoteUtilities.exe" OR Image="\ScreenConnect.ClientService.exe") (host="dmz_jump_hosts" OR host="l3_scada_servers"))
+  NOT (approved_software_baseline=true)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

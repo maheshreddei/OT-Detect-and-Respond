@@ -1,0 +1,10 @@
+// OTD-0115 - OPC UA Server Enumeration Followed by Node Value Tampering
+// Source: 02-detection/sigma/threat-actor/13_opc-ua-server-enumeration-followed-by-node-value-tampering.yml
+// ATT&CK for ICS: attack.ics.t0846, attack.ics.t0856
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "opcua" and service in ("Browse", "Read")) and (Protocol == "opcua" and service == "Write")
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

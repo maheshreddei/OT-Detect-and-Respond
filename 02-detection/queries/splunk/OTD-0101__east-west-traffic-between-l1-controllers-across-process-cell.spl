@@ -1,0 +1,9 @@
+``` OTD-0101 - East-West Traffic Between L1 Controllers Across Process Cells ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/26_east-west-traffic-between-l1-controllers-across-process-cell.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (src_ip="l1_controllers" dest_ip="l1_controllers")
+  NOT (src_dst_same_cell=true)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,12 @@
+``` OTD-0244 - P2P/torrent ```
+``` Library: Perimeter-to-Endpoint  |  Legacy ID: PRB-04 ```
+``` ATT&CK for ICS: T1048  |  Severity: medium ```
+``` Detection logic: signature ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=netflow earliest=-24h
+``` TODO: express the detection condition -- signature ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

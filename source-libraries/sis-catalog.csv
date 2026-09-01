@@ -1,0 +1,34 @@
+id,category,detection,safety_principle,data_source,attack_ics,severity
+SIS-A1,boundary,Control-to-safety write/command,independence,NDR,T0855;T0836,critical
+SIS-A2,boundary,New comms path into SIS zone,independence,NDR+baseline,T0855,high
+SIS-A3,boundary,Reversed data direction at boundary,independence,gateway/NDR,T0855,high
+SIS-A4,boundary,New asset on safety network,independence,NDR-inventory,T0846,high
+SIS-A5,boundary,SIS traffic bypassing sanctioned gateway,independence,NDR/firewall,T0855,high
+SIS-B1,engineering,SIS engineering-tool session,logic-integrity,NDR,T0868;T0843,high
+SIS-B2,engineering,SIS program download,logic-integrity,NDR+SIS-event,T0843,critical
+SIS-B3,engineering,SIS program upload,logic-integrity,NDR,T0845,high
+SIS-B4,engineering,Key-switch/mode to PROGRAM/REMOTE,logic-integrity,keyswitch-DI/SIS-event,T0858,critical
+SIS-B5,engineering,SIS logic differs from golden baseline,logic-integrity,offline-compare,T0889,critical
+SIS-B6,engineering,SIS firmware change,logic-integrity,SIS-event/NDR,T0839;T0800,critical
+SIS-B7,engineering,SIS engineering off-window/new host,logic-integrity,NDR+host,T0868,high
+SIS-C1,trip,Safety PV trending toward trip,trip-integrity,historian,T0880;T0837,high
+SIS-C2,trip,Trip setpoint/safety parameter modification,trip-integrity,historian/SIS-event,T0836;T0838,critical
+SIS-C3,trip,Unexpected SIF trip/demand,trip-integrity,historian/alarm,T0880,high
+SIS-C4,trip,Expected trip absent/alarm suppression,trip-integrity,historian/alarm,T0878;T0837,critical
+SIS-C5,trip,Final-element command-response mismatch,trip-integrity,historian,T0835;T0856,critical
+SIS-C6,trip,De-energize-to-trip circuit anomaly,fail-safe,SIS-diagnostics/historian,T0837,high
+SIS-D1,sensor-voting,Voting degradation,voting,historian,T0837,high
+SIS-D2,sensor-voting,Redundant safety-sensor disagreement,voting,historian,T0856,high
+SIS-D3,sensor-voting,Frozen/replayed safety input,input-integrity,historian,T0856,high
+SIS-D4,sensor-voting,Loss of independence (shared/BPCS input),independence,historian,T0856;T0835,high
+SIS-D5,sensor-voting,Safety input bad-quality spike,input-integrity,historian,T0815,medium
+SIS-E1,bypass,SIF bypass/inhibit activated,not-disabled,historian/SIS-event,T0837,high
+SIS-E2,bypass,Long-duration/overdue bypass,not-disabled,historian,T0837,high
+SIS-E3,bypass,Bypass from unexpected source/off-window,not-disabled,SIS-event/NDR,T0837,high
+SIS-E4,bypass,Forced I/O on safety controller,not-disabled,SIS-diagnostics,T0835,critical
+SIS-E5,bypass,Multiple simultaneous bypasses,not-disabled,historian,T0837,critical
+SIS-F1,availability,SIS-BPCS comm loss (loss of view),fail-safe,historian/gateway/NDR,T0804;T0837,high
+SIS-F2,availability,SIS diagnostic fault/degraded module,fail-safe,SIS-event,T0837,high
+SIS-F3,availability,Spurious trip-rate anomaly,fail-safe,historian/alarm,T0880,medium
+SIS-F4,availability,SIS controller restart/power event,fail-safe,SIS-event/NDR,T0816,high
+SIS-F5,availability,SIS time/clock skew,fail-safe,SIS-event/NDR,T0856,medium

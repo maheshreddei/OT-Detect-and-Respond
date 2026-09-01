@@ -1,0 +1,8 @@
+``` OTD-0093 - Abnormal Authentication Pattern on SCADA or HMI Server ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/15_abnormal-authentication-pattern-on-scada-or-hmi-server.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  (EventCode=4625 TargetComputerName="l2_l3_ot_servers")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

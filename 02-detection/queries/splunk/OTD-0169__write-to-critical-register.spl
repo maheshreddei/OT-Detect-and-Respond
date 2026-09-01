@@ -1,0 +1,12 @@
+``` OTD-0169 - Write to critical register ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: MOD-02 ```
+``` ATT&CK for ICS: T0836  |  Severity: critical ```
+``` Detection logic: Write to safety/critical register range ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:modbus earliest=-24h
+``` TODO: express the detection condition -- Write to safety/critical register range ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

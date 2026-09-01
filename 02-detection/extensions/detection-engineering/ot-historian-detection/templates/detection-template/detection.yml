@@ -1,0 +1,42 @@
+# Sigma-style metadata for a historian baseline/deviation detection.
+# Copy this folder, rename to <ID>-<slug>, and fill every field.
+id: XNN
+title: Short human-readable title
+status: draft            # draft | shadow | production | deprecated
+description: >
+  One paragraph: what deviation this detects and why it matters.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/
+family: <A-statistical-envelope | B-setpoint-control | ...>
+attack_ics:
+  - TXXXX   # e.g. T0836 Modify Parameter
+data_source:
+  index: ot_historian          # Splunk
+  table: OTHistorian_CL        # Sentinel
+  tags:
+    - PLANT1.*.PV
+baseline:
+  method: envelope             # envelope | zscore | slew | variance | correlation | state
+  segmentation: mode           # baseline keyed by this field
+  clean_window: "2 weeks, all modes, Good quality"
+  rebaseline_cadence: quarterly
+  lookup: ot_baseline.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "N consecutive samples / T seconds before alert"
+fields:
+  - _time
+  - tag
+  - value
+falsepositives:
+  - Legitimate mode change or startup transient
+  - Post-MOC operating-point change (re-baseline)
+level: medium                  # informational | low | medium | high | critical (by process consequence)
+response: |
+  1. Do NOT act on the control system.
+  2. Corroborate with a second source (NDR alert, operator, second sensor).
+  3. Escalate per runbook if corroborated.
+validation: validation.md

@@ -1,0 +1,28 @@
+title: Control Command From HMI Outside Documented HMI-to-PLC Pairing
+id: d1a1b2c3-0004-4a1b-8c1d-4a2b3c4d5e01
+status: experimental
+description: Detects a control-protocol command (Modbus/DNP3/S7comm/OPC UA write) issued from an HMI to a PLC/RTU pair that is not present in the documented HMI-to-controller pairing map, e.g. the Line 2 HMI commanding a Line 5 PLC, which can indicate cross-zone pivoting within L2/L1.
+references:
+  - https://attack.mitre.org/techniques/T0855/
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0867
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    proto:
+      - modbus
+      - dnp3
+      - s7comm
+      - opcua
+    function_code|exists: true
+  filter:
+    hmi_plc_pair|in_list: 'documented_hmi_plc_pairing_map'
+  condition: selection and not filter
+falsepositives:
+  - Newly commissioned process line not yet added to the pairing map
+level: high

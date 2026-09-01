@@ -1,0 +1,8 @@
+``` OTD-0105 - Mass Disk-Wiping Utility Execution Across Multiple Hosts ```
+``` Source: 02-detection/sigma/threat-actor/03_mass-disk-wiping-utility-execution-across-multiple-hosts.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((CommandLine="*vssadmin delete shadows*" OR CommandLine="*bcdedit /set*" OR CommandLine="*wbadmin delete catalog*"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,10 @@
+// OTD-0090 - Unscheduled HMI Project or Configuration Deployment
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/12_unscheduled-hmi-project-or-configuration-deployment.yml
+// ATT&CK for ICS: attack.ics.t0831, attack.ics.t0843
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (TargetFilename in (".apa", ".hmi", ".fwx", ".cfg") and Computer == "l2_hmi_hosts") and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

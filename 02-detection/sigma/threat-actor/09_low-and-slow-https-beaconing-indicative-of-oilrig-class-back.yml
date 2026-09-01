@@ -1,0 +1,25 @@
+title: Low-and-Slow HTTPS Beaconing Indicative of OilRig-Class Backdoor C2
+id: ta02a1b2-c3d4-4e5f-8071-002000000004
+status: experimental
+description: Detects a host establishing periodic, low-volume HTTPS connections to the same external destination at a highly regular interval over an extended period, consistent with the long-dwell, low-and-slow C2 beaconing behavior documented for APT34/OilRig implants (e.g., Outer Space, Juicy Mix, STEALHOOK).
+references:
+  - ESET OilRig Outer Space and Juicy Mix
+threat_actor: APT34 / OilRig
+tags:
+  - attack.t1071.001
+  - attack.t1102
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: network_connection
+  product: generic
+detection:
+  selection:
+    dst_port: 443
+    src_zone:
+      - IT
+      - OT_DMZ
+  condition: selection | beacon_interval_stddev(dst_ip) by src_ip < 5s and count() by src_ip, dst_ip > 100
+falsepositives:
+  - Legitimate SaaS application or monitoring agent with fixed-interval polling
+level: medium

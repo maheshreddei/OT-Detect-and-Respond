@@ -1,0 +1,24 @@
+title: IEC 60870-5-104 General Interrogation from Unauthorized Master
+id: be5c3f7e-516f-427e-df8c-5e6f70819201
+status: experimental
+description: Detects an IEC 104 General Interrogation command (Type ID C_IC_NA_1) originating from a source IP that is not the approved control center/SCADA master, which can be used to mass-poll RTU/IED status as a reconnaissance or pre-positioning step.
+references:
+  - https://www.iec.ch/standards
+tags:
+  - attack.ics.t0846
+  - attack.ics.t0888
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: iec104
+detection:
+  selection:
+    proto: iec104
+    type_id: 'C_IC_NA_1'
+  filter:
+    src_ip|cidr: '10.10.20.0/24'   # replace with approved control center subnet
+  condition: selection and not filter
+falsepositives:
+  - Newly commissioned backup control center not yet allow-listed
+level: high

@@ -1,0 +1,9 @@
+``` OTD-0092 - Engineering Software Launched by Non-Engineering Account ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/14_engineering-software-launched-by-non-engineering-account.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((Image="\Studio5000.exe" OR Image="\TIA Portal.exe" OR Image="\RSLogix5000.exe" OR Image="\WinCCExplorer.exe"))
+  NOT (User="engineering_role_group")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

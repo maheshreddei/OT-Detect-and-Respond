@@ -1,0 +1,11 @@
+// OTD-0123 - Unitronics Vision PLC Default Port Access (BAUXITE Pattern)
+// Source: 02-detection/sigma/advisory/01_unitronics-vision-plc-default-port-access-bauxite-pattern.yml
+// ATT&CK for ICS: attack.ics.t0810, attack.ics.t0806
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (DestinationPort == 20256)
+| where not ((SourceIP == "designated_engineering_workstations"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

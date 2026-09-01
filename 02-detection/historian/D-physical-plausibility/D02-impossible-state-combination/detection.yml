@@ -1,0 +1,46 @@
+id: D02
+title: Impossible state combination
+status: production
+description: >
+  Two or more independent tags simultaneously report a physically impossible
+  combination (e.g. pump OFF but downstream flow present). Indicates a spoofed
+  reading, manipulated I/O image, or serious instrument fault. Cross-checks
+  independent tags against a plant physical invariant.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0835
+family: D-physical-plausibility
+attack_ics:
+  - T0835   # Manipulate I/O Image
+  - T0831   # Manipulation of Control
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.U200.P101.RUN
+    - PLANT1.U200.FT201.PV
+baseline:
+  method: state
+  segmentation: none              # physical invariant, not a learned band
+  clean_window: "n/a - engineered impossibility rules"
+  rebaseline_cadence: on-process-change
+  lookup: state_rules.csv         # externalize as rule count grows
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "short dwell to allow physical transition transients"
+fields:
+  - _time
+  - rule
+  - pump_run
+  - flow
+falsepositives:
+  - Physically-real transition transients (pump just stopped, residual flow)
+  - Wrongly-authored invariant (fix the rule)
+level: high
+response: |
+  Identify which tag is lying via independent corroboration (E01/E02). Treat as
+  integrity incident until instrument fault confirmed. Correlate NDR for I/O-image
+  manipulation.
+validation: validation.md

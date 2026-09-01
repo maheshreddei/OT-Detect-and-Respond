@@ -1,0 +1,31 @@
+// ============================================================================
+// C01 - Frozen value / replay
+// Read-only. Two signatures: exact freeze, and variance collapse.
+// Data model: docs/data-model.md
+// ============================================================================
+// ---- Signature 1: FROZEN VALUE ----
+let lookback = 1h;
+OTHistorian_CL
+| where TimeGenerated > ago(lookback) and Quality_s == "Good"
+| where TagName_s endswith ".PV"
+| order by TagName_s asc, TimeGenerated asc
+| serialize
+| extend changed = iff(TagName_s != prev(TagName_s) or Value_d != prev(Value_d), 1, 0)
+| extend runId = row_cumsum(changed)
+| summarize stall_sec = datetime_diff('second', max(TimeGenerated), min(TimeGenerated)),
+            value = any(Value_d), lastSeen = max(TimeGenerated)
+    by runId, TagName_s
+| lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+| where stall_sec > todouble(max_stall_sec)
+| extend signature = "frozen_value", severity = "medium", detection = "C01"
+| project lastSeen, TagName_s, value, stall_sec, max_stall_sec, signature, severity, detection
+| order by lastSeen desc
+;
+// ---- Signature 2: VARIANCE COLLAPSE (run as a separate rule) ----
+// OTHistorian_CL
+// | where TimeGenerated > ago(1h) and Quality_s == "Good" and TagName_s endswith ".PV"
+// | summarize win_variance = variance(Value_d), win_avg = avg(Value_d), n = count()
+//     by TagName_s, bin(TimeGenerated, 5m)
+// | lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+// | where n >= 10 and win_variance < todouble(min_variance)
+// | extend signature = "variance_collapse", severity = "high", detection = "C01"

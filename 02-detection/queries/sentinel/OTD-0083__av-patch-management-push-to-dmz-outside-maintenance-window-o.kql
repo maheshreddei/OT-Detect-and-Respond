@@ -1,0 +1,12 @@
+// OTD-0083 - AV/Patch Management Push to DMZ Outside Maintenance Window or Scope
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/04_av-patch-management-push-to-dmz-outside-maintenance-window-o.yml
+// ATT&CK for ICS: attack.ics.t0843
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName in ("\ccmexec.exe", "\wuauclt.exe"))
+| where not ((Computer == "dmz_managed_hosts"))
+| where not ((hour == 1 and hour == 4))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

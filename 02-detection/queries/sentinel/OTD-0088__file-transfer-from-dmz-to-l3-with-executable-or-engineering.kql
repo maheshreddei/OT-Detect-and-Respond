@@ -1,0 +1,10 @@
+// OTD-0088 - File Transfer From DMZ to L3 With Executable or Engineering Project Extension
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/10_file-transfer-from-dmz-to-l3-with-executable-or-engineering.yml
+// ATT&CK for ICS: attack.ics.t0843
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (TargetFilename in (".exe", ".dll", ".ps1", ".acd", ".s7p", ".ap16", ".l5x") and Computer == "l3_scada_servers") and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,11 @@
+// OTD-0105 - Mass Disk-Wiping Utility Execution Across Multiple Hosts
+// Source: 02-detection/sigma/threat-actor/03_mass-disk-wiping-utility-execution-across-multiple-hosts.yml
+// ATT&CK for ICS: attack.ics.t0826
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where ((CommandLine contains "vssadmin delete shadows" or CommandLine contains "bcdedit /set" or CommandLine contains "wbadmin delete catalog"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 10m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

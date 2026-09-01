@@ -1,0 +1,12 @@
+``` OTD-0020 - Removable media introduced to OT asset ```
+``` Library: OT Threat Content  |  Legacy ID: OT-UC-0020 ```
+``` ATT&CK for ICS: T0847  |  Severity: Medium ```
+``` Detection logic: Malware ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=edr earliest=-24h
+``` TODO: express the detection condition -- Malware ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

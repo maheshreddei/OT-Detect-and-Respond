@@ -1,0 +1,20 @@
+// ============================================================================
+// B01 - Setpoint outside approved range  (Oldsmar-class)
+// Read-only. Alert on CHANGE to an out-of-band setpoint value.
+// Data model: docs/data-model.md   SP limits as LL/HL on *.SP watchlist rows.
+// ============================================================================
+let lookback = 1h;
+OTHistorian_CL
+| where TimeGenerated > ago(lookback) and Quality_s == "Good"
+| where TagName_s endswith ".SP"
+| lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+| extend sp_min = todouble(LL), sp_max = todouble(HL)
+| order by TagName_s asc, TimeGenerated asc
+| serialize
+| extend prev_value = iff(TagName_s == prev(TagName_s), prev(Value_d), real(null))
+| extend changed = iff(isnull(prev_value) or Value_d != prev_value, 1, 0)
+| extend out_of_band = iff(Value_d < sp_min or Value_d > sp_max, 1, 0)
+| where changed == 1 and out_of_band == 1
+| extend breach = iff(Value_d < sp_min, "below_min", "above_max"), severity = "high", detection = "B01"
+| project TimeGenerated, TagName_s, prev_value, Value_d, sp_min, sp_max, breach, severity, detection
+| order by TimeGenerated desc

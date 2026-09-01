@@ -1,0 +1,28 @@
+title: Ransomware Precursor — Lateral Movement Targeting Historian or SCADA Hostnames
+id: sw04a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects directory/share enumeration or authentication attempts specifically targeting hostnames matching historian or SCADA naming conventions during a broader lateral-movement sequence, the deliberate OT-hunting behavior documented in RansomHub-attributed intrusions seeking to maximize extortion leverage by encrypting or disrupting OT-adjacent visibility systems.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: RansomHub and OT-Capable Affiliates
+tags:
+  - attack.t1135
+  - attack.t1018
+  - attack.ics.t0888
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: authentication
+  product: windows
+detection:
+  selection:
+    TargetComputerName|contains:
+      - 'HIST'
+      - 'SCADA'
+      - 'PI-'
+      - 'DCS'
+  timeframe: 30m
+  condition: selection | count(distinct TargetComputerName) by src_ip > 3
+falsepositives:
+  - IT asset-discovery or vulnerability-scanning tool with naming-convention-aware target lists
+level: high

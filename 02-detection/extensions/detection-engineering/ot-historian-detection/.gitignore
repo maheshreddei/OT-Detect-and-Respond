@@ -1,0 +1,24 @@
+# Site-specific / secret material — never commit
+site-config/
+*.local.csv
+*.secret
+credentials*
+*.pem
+*.key
+
+# Real tag exports and baselines from customer environments
+lookups/*.prod.csv
+data/
+exports/
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Build / render artifacts
+dist/
+*.pdf
+*.zip

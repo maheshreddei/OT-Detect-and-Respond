@@ -1,0 +1,40 @@
+title: DNP3 Cold or Warm Restart Function to Outstation
+id: b61b164b-4b82-47ce-9246-a534086ffa3d
+status: stable
+description: |
+  Detects DNP3 application-layer function codes 13 (COLD_RESTART) and 14
+  (WARM_RESTART) directed at an outstation. A restart interrupts monitoring and
+  control of the device and can be used to mask activity or degrade availability in
+  electric and utility environments.
+references:
+  - https://attack.mitre.org/techniques/T0816/
+author: Mahesh Reddy
+date: 2026/08/09
+tags:
+  - attack.ics
+  - attack.inhibit-response-function
+  - attack.t0816
+logsource:
+  product: zeek
+  service: dnp3
+detection:
+  restart:
+    fc:
+      - 13   # COLD_RESTART
+      - 14   # WARM_RESTART
+  authorized:
+    id.orig_h:
+      - '10.30.10.5'    # DNP3-Master-01 (replace with authorized master list)
+  condition: restart and not authorized
+fields:
+  - id.orig_h
+  - id.resp_h
+  - fc
+  - fc_name
+falsepositives:
+  - Authorized master issuing a controlled restart during maintenance
+level: high
+uc_id: OT-UC-0007
+nozomi_type_id: PROT:DNP3-ILLEGAL
+sectors: [Electric, Oil & Gas, Water]
+threat_actors: [ELECTRUM]

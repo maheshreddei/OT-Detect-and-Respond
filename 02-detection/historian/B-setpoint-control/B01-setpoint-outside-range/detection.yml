@@ -1,0 +1,42 @@
+id: B01
+title: Setpoint outside approved range
+status: production
+description: >
+  A setpoint is written outside its MOC-approved operating band. Direct
+  attacker/insider intent signal (Oldsmar class). Setpoints are written, not
+  drifted, so a single out-of-range write is the event.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0836
+family: B-setpoint-control
+attack_ics:
+  - T0836   # Modify Parameter
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.*.SP
+baseline:
+  method: envelope
+  segmentation: none              # SP limits are engineered/MOC, not learned
+  clean_window: "n/a - MOC-approved SP min/max register"
+  rebaseline_cadence: on-MOC
+  lookup: ot_baseline.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "on change - single out-of-range write is the event"
+fields:
+  - _time
+  - tag
+  - value
+  - sp_min
+  - sp_max
+falsepositives:
+  - Legitimate SP change approved via MOC not yet reflected in the limit register
+level: high
+response: |
+  Identify the write source (HMI/EWS/account) via NDR + auth logs. Do NOT revert
+  from a possibly-compromised console. Escalate as parameter modification.
+validation: validation.md

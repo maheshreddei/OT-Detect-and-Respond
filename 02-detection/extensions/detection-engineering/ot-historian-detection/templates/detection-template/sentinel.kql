@@ -1,0 +1,9 @@
+// Microsoft Sentinel KQL — <ID> <title>
+// Data model: docs/data-model.md
+// Read-only. Schedule as an analytics rule.
+
+OTHistorian_CL
+| where TimeGenerated > ago(1h) and Quality_s == "Good"
+| lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+// ... detection logic ...
+| project TimeGenerated, TagName_s, Value_d, Mode_s

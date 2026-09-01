@@ -1,0 +1,29 @@
+UC_ID,Title,Electric,Oil_and_Gas,Water_Wastewater,Manufacturing,Chemical,Building_Automation,Transportation
+OT-UC-0001,External remote services abuse into OT/DMZ,Y,Y,Y,Y,Y,Y,Y
+OT-UC-0002,Internet-accessible ICS device exposure,N,Y,Y,N,N,Y,N
+OT-UC-0003,Unauthorized Modbus write to coils/registers,N,Y,Y,Y,Y,Y,N
+OT-UC-0004,Modbus FC08 diagnostic restart/listen-only,N,N,Y,Y,Y,N,N
+OT-UC-0005,S7comm STOP CPU command,N,Y,N,Y,Y,N,N
+OT-UC-0006,S7comm program/logic download to PLC,N,N,N,Y,Y,N,N
+OT-UC-0007,DNP3 cold/warm restart function,Y,Y,Y,N,N,N,N
+OT-UC-0008,DNP3 disable unsolicited responses,Y,Y,Y,N,N,N,N
+OT-UC-0009,IEC-104 unauthorized control from non-EWS,Y,N,N,N,N,N,Y
+OT-UC-0010,IEC 61850 GOOSE spoofing/manipulation,Y,N,N,N,N,N,N
+OT-UC-0011,OPC UA anonymous/unencrypted session,N,Y,N,Y,Y,Y,N
+OT-UC-0012,EtherNet/IP CIP firmware update to controller,N,N,Y,Y,N,N,N
+OT-UC-0013,Active network scan of OT subnet,Y,Y,Y,Y,Y,Y,Y
+OT-UC-0014,New/unauthorized node on OT segment,Y,Y,Y,Y,Y,Y,Y
+OT-UC-0015,Rogue engineering workstation to PLC,N,Y,N,Y,Y,N,N
+OT-UC-0016,Alarm suppression/modify alarm settings,N,Y,N,N,Y,N,N
+OT-UC-0017,SIS key switch in PROGRAM mode,N,Y,N,N,Y,N,N
+OT-UC-0018,Malware transfer via SMB in OT,Y,Y,N,Y,Y,N,N
+OT-UC-0019,Known-bad C2/malicious IP contact from OT,Y,Y,Y,Y,Y,Y,Y
+OT-UC-0020,Removable media introduced to OT asset,N,Y,N,Y,Y,N,N
+OT-UC-0021,Modbus enumeration and point/tag ID,N,Y,Y,Y,Y,Y,N
+OT-UC-0022,Brute force/repeated failed OT auth,Y,Y,Y,Y,Y,Y,Y
+OT-UC-0023,Denial-of-service flood against controller,Y,N,N,Y,Y,N,Y
+OT-UC-0024,Historian/operational data exfiltration,N,Y,N,Y,Y,N,N
+OT-UC-0025,Time-sync (NTP) manipulation affecting SOE,Y,N,N,N,N,N,Y
+OT-UC-0026,Unauthorized wireless/cellular modem access,N,Y,Y,N,N,N,Y
+OT-UC-0027,PLC operating mode change to Program/Remote,Y,N,N,Y,Y,N,N
+OT-UC-0028,Unsigned/downgrade firmware load,Y,N,N,Y,Y,N,N

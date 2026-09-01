@@ -1,0 +1,9 @@
+``` OTD-0106 - IEC 61850 GOOSE Unauthorized Publisher or Spoofed Message ```
+``` Source: 02-detection/sigma/threat-actor/04_iec-61850-goose-unauthorized-publisher-or-spoofed-message.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (proto="goose")
+  NOT (publisher_mac="configured_gocb_publishers")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

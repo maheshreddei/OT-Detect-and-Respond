@@ -1,0 +1,25 @@
+title: Sensor Gateway Mass Filesystem Wipe or RS485/MBus Disruption (Fuxnet Pattern)
+id: sw06a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects multiple sensor gateway devices (e.g., Segnetics Pixel-class controllers and similar RS485/MBus gateways) losing connectivity or reporting filesystem/MBR-level errors within a short window, matching the Fuxnet malware pattern of bricking sensor infrastructure at scale — a technique demonstrating actor willingness to attack monitoring/sensor layers distinct from process controllers.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Blackjack (Fuxnet) — included for cross-theatre capability awareness
+tags:
+  - attack.ics.t0826
+  - attack.t1561.002
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: device_event
+  product: generic
+detection:
+  selection:
+    event_type:
+      - 'gateway_offline'
+      - 'filesystem_error'
+  timeframe: 10m
+  condition: selection | count(distinct device_id) > 10
+falsepositives:
+  - Power or network infrastructure outage affecting a sensor gateway segment
+level: critical

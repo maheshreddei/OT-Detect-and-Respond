@@ -1,0 +1,12 @@
+``` OTD-0021 - Modbus enumeration and point/tag ID ```
+``` Library: OT Threat Content  |  Legacy ID: OT-UC-0021 ```
+``` ATT&CK for ICS: T0861  |  Severity: Medium ```
+``` Detection logic: Recon ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:modbus earliest=-24h
+``` TODO: express the detection condition -- Recon ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

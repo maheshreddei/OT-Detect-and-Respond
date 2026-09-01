@@ -1,0 +1,35 @@
+title: S-01 Service or Scheduled Task Installed
+id: e2f6ed20-11d5-40b1-b15a-f288cf0f919d
+status: experimental
+description: >
+  Installation of a new Windows service or scheduled task on S-01. On a locked
+  SCADA host these are rare and change-controlled; unscheduled instances are a
+  common persistence mechanism.
+references:
+  - https://attack.mitre.org/techniques/T1543/003/
+  - https://attack.mitre.org/techniques/T1053/005/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID:
+      - 4697   # A service was installed in the system
+      - 4698   # A scheduled task was created
+      - 4702   # A scheduled task was updated
+  condition: selection
+fields:
+  - ServiceName
+  - ServiceFileName
+  - TaskName
+  - SubjectUserName
+falsepositives:
+  - Vendor patch/agent installs during an approved maintenance window
+level: high
+tags:
+  - attack.persistence
+  - attack.t1543.003
+  - attack.t1053.005
+  - asset.s_01

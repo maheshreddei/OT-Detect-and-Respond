@@ -1,0 +1,9 @@
+``` OTD-0119 - Triconex Safety Controller Engineering Session From Unauthorized Host ```
+``` Source: 02-detection/sigma/threat-actor/17_triconex-safety-controller-engineering-session-from-unauthor.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (proto="tristation")
+  NOT (src_ip="designated_sis_engineering_workstation")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

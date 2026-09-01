@@ -1,0 +1,8 @@
+``` OTD-0090 - Unscheduled HMI Project or Configuration Deployment ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/12_unscheduled-hmi-project-or-configuration-deployment.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((TargetFilename=".apa" OR TargetFilename=".hmi" OR TargetFilename=".fwx" OR TargetFilename=".cfg") host="l2_hmi_hosts") (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

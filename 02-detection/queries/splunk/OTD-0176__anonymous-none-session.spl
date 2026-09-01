@@ -1,0 +1,12 @@
+``` OTD-0176 - Anonymous/None session ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: OPC-01 ```
+``` ATT&CK for ICS: T0859  |  Severity: high ```
+``` Detection logic: ActivateSession anonymous or securityMode None vs policy ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:opcua earliest=-24h
+``` TODO: express the detection condition -- ActivateSession anonymous or securityMode None vs policy ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

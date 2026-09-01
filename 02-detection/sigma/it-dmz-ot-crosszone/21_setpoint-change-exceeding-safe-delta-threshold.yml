@@ -1,0 +1,21 @@
+title: Setpoint Change Exceeding Safe Delta Threshold
+id: d1a1b2c3-0005-4a1b-8c1d-5a2b3c4d5e02
+status: experimental
+description: Detects a process setpoint (temperature, pressure, flow, level) write where the new value differs from the prior value by more than the site-defined safe-change percentage in a single command, which can indicate an attempt to drive the process outside safe operating limits.
+references:
+  - https://attack.mitre.org/techniques/T0836/
+tags:
+  - attack.ics.t0836
+  - attack.ics.t0855
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    node_id|startswith: 'Setpoint.'
+  condition: selection | delta(write_value, previous_value) > 25percent
+falsepositives:
+  - Legitimate large process change during startup/shutdown sequencing
+level: high

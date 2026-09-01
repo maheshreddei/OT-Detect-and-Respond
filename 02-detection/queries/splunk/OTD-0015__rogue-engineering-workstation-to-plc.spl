@@ -1,0 +1,12 @@
+``` OTD-0015 - Rogue engineering workstation to PLC ```
+``` Library: OT Threat Content  |  Legacy ID: OT-UC-0015 ```
+``` ATT&CK for ICS: T0859  |  Severity: High ```
+``` Detection logic: Detects a designated RDP/jump-server host appearing as a Modbus, DNP3, S7comm, or OPC UA protocol client itself rather than simply brokering an interactive remote session, which can indicate an attacker has installed tooling directly on the jump host to issue OT commands. ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:s7comm earliest=-24h
+``` TODO: express the detection condition -- Detects a designated RDP/jump-server host appearing as a Modbus, DNP3, S7comm, or OPC UA protocol client itself rather than simply brokering an interactive remote session, which can indicate an attacker has installed tooling directly on the jump host to issue OT commands. ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

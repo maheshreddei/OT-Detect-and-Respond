@@ -1,0 +1,18 @@
+// OTD-0189 - Post-session engineering activity
+// Library: OT Protocol Defense (NDR)  |  Legacy ID: VNC-03
+// ATT&CK for ICS: T0843  |  Severity: critical
+// Detection logic: Engineering-tool launch / program download after VNC session
+//
+// STATUS: SCAFFOLD. This detection is catalogued as a specification; the logic below
+// expresses the intent against the mapped table but MUST be completed and validated
+// against real telemetry before deployment. Placeholders in <angle brackets> are
+// environment-specific.
+//
+OTNetwork_CL
+| where TimeGenerated > ago(24h)
+// TODO: express the detection condition -- Engineering-tool launch / program download after VNC session
+| where isnotempty(SourceIP)
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+    by SourceIP, DestinationIP
+| where Count > <THRESHOLD>
+| order by Count desc

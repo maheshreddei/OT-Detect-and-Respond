@@ -1,0 +1,12 @@
+``` OTD-0172 - Publish to command topic ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: MQTT-01 ```
+``` ATT&CK for ICS: T0855  |  Severity: high ```
+``` Detection logic: PUBLISH to control topic from non-authorized client id ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- PUBLISH to control topic from non-authorized client id ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

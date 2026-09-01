@@ -1,0 +1,9 @@
+``` OTD-0082 - OT DMZ Historian Replication Direction Anomaly ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/03_ot-dmz-historian-replication-direction-anomaly.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=firewall
+  (src_zone="OT_DMZ" dst_zone="IT" src_ip="dmz_historian_ips")
+  NOT ((timeframe_minute=0 OR timeframe_minute=5))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

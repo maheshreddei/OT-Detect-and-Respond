@@ -1,0 +1,8 @@
+``` OTD-0061 - Modbus Write to Coil/Register Outside Approved Change Window ```
+``` Source: 02-detection/sigma/ot-ics-soc/04_modbus-write-to-coil-register-outside-approved-change-window.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:modbus
+  (proto="modbus" (function_code=5 OR function_code=6 OR function_code=15 OR function_code=16)) (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

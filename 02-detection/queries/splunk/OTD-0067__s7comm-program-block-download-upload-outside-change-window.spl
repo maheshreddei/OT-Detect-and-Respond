@@ -1,0 +1,8 @@
+``` OTD-0067 - S7comm Program Block Download/Upload Outside Change Window ```
+``` Source: 02-detection/sigma/ot-ics-soc/14_s7comm-program-block-download-upload-outside-change-window.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:s7comm
+  (proto="s7comm" rosctr="Job" (function="Request download" OR function="Download block" OR function="Request upload")) (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,11 @@
+// OTD-0122 - Mass File Encryption or Rename Activity on OT Historian or Engineering Host
+// Source: 02-detection/sigma/threat-actor/20_mass-file-encryption-or-rename-activity-on-ot-historian-or-e.yml
+// ATT&CK for ICS: attack.ics.t0826
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (Computer in ("l3_scada_servers", "designated_engineering_workstations") and EventType == "rename")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 2m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

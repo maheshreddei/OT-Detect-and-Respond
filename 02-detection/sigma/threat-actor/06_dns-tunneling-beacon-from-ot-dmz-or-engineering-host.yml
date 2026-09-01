@@ -1,0 +1,25 @@
+title: DNS Tunneling Beacon From OT DMZ or Engineering Host
+id: ta02a1b2-c3d4-4e5f-8071-002000000001
+status: experimental
+description: Detects DNS query patterns (high subdomain entropy, abnormal query volume to a single domain, or TXT/NULL record usage) from an OT DMZ or engineering host, consistent with the DNS-based C2 channels used by APT34/OilRig backdoors (e.g., Helminth, QUADAGENT) for covert command-and-control and data exfiltration.
+references:
+  - MITRE ATT&CK Group G0049 (OilRig)
+threat_actor: APT34 / OilRig (Helix Kitten)
+tags:
+  - attack.t1071.004
+  - attack.t1568
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: dns
+  product: generic
+detection:
+  selection:
+    src_zone:
+      - OT_DMZ
+      - engineering
+  timeframe: 1h
+  condition: selection | count(distinct query_name) by src_ip, base_domain > 50
+falsepositives:
+  - Legitimate cloud-management agent using DNS-based polling for configuration updates
+level: high

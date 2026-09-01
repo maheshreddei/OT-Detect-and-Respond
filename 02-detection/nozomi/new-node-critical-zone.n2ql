@@ -1,0 +1,16 @@
+// UC: OT-UC-0014 - New/unauthorized node on OT segment
+// ATT&CK for ICS: T0846 Remote System Discovery (rogue-asset context)
+// Nozomi Type ID: NET:NEW-NODE
+// Author: Mahesh Reddy
+//
+// Purpose: surface nodes that appeared in a monitored critical zone and are not yet
+// in the learned/approved inventory. Pair with an Assertion so a match raises an alert.
+// Validate field names (zone, level.id, appeared_time, learned) against your Guardian
+// version's data model before deploying.
+
+nodes
+| where zone == "critical_ot"
+| where learned == false
+| where appeared_time > now() - 24h
+| select ip mac vendor level.id appeared_time roles
+| sort appeared_time desc

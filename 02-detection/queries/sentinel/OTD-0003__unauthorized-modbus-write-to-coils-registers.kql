@@ -1,0 +1,11 @@
+// OTD-0003 - Unauthorized Modbus Write to Coils or Registers
+// Source: 02-detection/sigma/core-protocol/modbus-unauthorized-write.yml
+// ATT&CK for ICS: attack.t0855
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where ((FunctionCode contains "WRITE_SINGLE_COIL" or FunctionCode contains "WRITE_SINGLE_REGISTER" or FunctionCode contains "WRITE_MULTIPLE_COILS" or FunctionCode contains "WRITE_MULTIPLE_REGISTERS"))
+| where not ((SourceIP in ("10.20.30.11", "10.20.30.12")))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

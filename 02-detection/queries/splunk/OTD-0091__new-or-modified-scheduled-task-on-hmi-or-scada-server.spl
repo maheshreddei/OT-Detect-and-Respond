@@ -1,0 +1,8 @@
+``` OTD-0091 - New or Modified Scheduled Task on HMI or SCADA Server ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/13_new-or-modified-scheduled-task-on-hmi-or-scada-server.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  (Image="\schtasks.exe" (CommandLine="*/create*") host="l2_l3_ot_servers")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

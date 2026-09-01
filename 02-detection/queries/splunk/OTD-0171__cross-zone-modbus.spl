@@ -1,0 +1,12 @@
+``` OTD-0171 - Cross-zone Modbus ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: MOD-05 ```
+``` ATT&CK for ICS: T0885  |  Severity: high ```
+``` Detection logic: Any TCP/502 crossing IT to OT boundary ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network sourcetype=zeek:modbus earliest=-24h
+``` TODO: express the detection condition -- Any TCP/502 crossing IT to OT boundary ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

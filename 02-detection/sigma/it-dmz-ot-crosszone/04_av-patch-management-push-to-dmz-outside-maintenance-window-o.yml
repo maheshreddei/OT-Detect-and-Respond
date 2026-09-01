@@ -1,0 +1,28 @@
+title: AV/Patch Management Push to DMZ Outside Maintenance Window or Scope
+id: d1a1b2c3-0001-4a1b-8c1d-1a2b3c4d5e04
+status: experimental
+description: Detects an enterprise WSUS/SCCM/antivirus management console pushing content to OT DMZ hosts outside the approved patch window, or to a DMZ host not listed in its managed device scope, which can indicate abuse of a trusted management channel for malware staging.
+references:
+  - https://attack.mitre.org/techniques/T1072/
+tags:
+  - attack.t1072
+  - attack.ics.t0843
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+      - '\ccmexec.exe'
+      - '\wuauclt.exe'
+  filter_host:
+    ComputerName|in_list: 'dmz_managed_hosts'
+  filter_time:
+    hour|gte: 1
+    hour|lte: 4
+  condition: selection and not (filter_host and filter_time)
+falsepositives:
+  - Emergency out-of-band patch deployment approved via change ticket
+level: medium

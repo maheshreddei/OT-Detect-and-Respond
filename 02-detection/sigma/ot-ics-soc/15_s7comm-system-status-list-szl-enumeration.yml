@@ -1,0 +1,26 @@
+title: S7comm System Status List (SZL) Enumeration
+id: ad4b2e6d-405f-416d-ce7b-4d5e6f708103
+status: experimental
+description: Detects repeated S7comm "Read SZL" (System Zustands Liste) requests used to enumerate PLC module identification, firmware version, and diagnostic data — a common reconnaissance step preceding targeted exploitation (e.g., as used by Industroyer2/INCONTROLLER-class tooling).
+references:
+  - https://wiki.wireshark.org/S7comm
+  - https://www.cisa.gov/news-events/alerts
+tags:
+  - attack.ics.t0888
+  - attack.ics.t0846
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: s7comm
+detection:
+  selection:
+    proto: s7comm
+    rosctr: 'Userdata'
+    function_group: 'CPU functions'
+    subfunction: 'Read SZL'
+  timeframe: 10m
+  condition: selection | count() by src_ip, dst_ip > 15
+falsepositives:
+  - Engineering workstation performing legitimate diagnostic/asset inventory scan
+level: medium

@@ -1,0 +1,11 @@
+// OTD-0095 - Control Command From HMI Outside Documented HMI-to-PLC Pairing
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/17_control-command-from-hmi-outside-documented-hmi-to-plc-pairi.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0867
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol in ("modbus", "dnp3", "s7comm", "opcua") and FunctionCode == true)
+| where not ((hmi_plc_pair == "documented_hmi_plc_pairing_map"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

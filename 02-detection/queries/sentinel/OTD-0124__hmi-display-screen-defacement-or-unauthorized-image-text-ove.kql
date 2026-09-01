@@ -1,0 +1,10 @@
+// OTD-0124 - HMI Display Screen Defacement or Unauthorized Image/Text Overwrite
+// Source: 02-detection/sigma/advisory/02_hmi-display-screen-defacement-or-unauthorized-image-text-ove.yml
+// ATT&CK for ICS: attack.ics.t0831, attack.ics.t0829
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (TargetFilename in (".bmp", ".png", ".jpg") and Computer == "l2_hmi_hosts") and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

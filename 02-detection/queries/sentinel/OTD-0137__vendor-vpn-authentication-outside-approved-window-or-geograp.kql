@@ -1,0 +1,12 @@
+// OTD-0137 - Vendor VPN Authentication Outside Approved Window or Geography
+// Source: 02-detection/sigma/advisory/15_vendor-vpn-authentication-outside-approved-window-or-geograp.yml
+// ATT&CK for ICS: attack.ics.t0883
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SigninLogs
+| where (account_type == "vendor")
+| where not ((src_country == "vendor_approved_countries"))
+| where not ((change_ticket_active == true))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,10 @@
+Playbook_ID,Title,Default_Severity,Linked_OTD_IDs,Linked_Sigma,Has_Safety_Check,File
+PLAYBOOK-OT-01,Engineering software activity outside change window,Medium,OTD-0015,SIGMA:it-dmz-ot-crosszone/14;SIGMA:ot-ics-soc/04,Yes,PLAYBOOK-OT-01-engineering-software-outside-change-window.md
+PLAYBOOK-OT-02,Unauthorized setpoint or parameter change,Medium,OTD-0016,SIGMA:it-dmz-ot-crosszone/21,Yes,PLAYBOOK-OT-02-unauthorized-setpoint-change.md
+PLAYBOOK-OT-03,Unauthorized PLC / controller logic change,High,OTD-0006;OTD-0027;OTD-0028,SIGMA:advisory/12;SIGMA:it-dmz-ot-crosszone/18,Yes,PLAYBOOK-OT-03-unauthorized-plc-logic-change.md
+PLAYBOOK-OT-04,Malware or ransomware on an OT host,High,OTD-0018;OTD-0020,SIGMA:advisory/06;SIGMA:advisory/11,Yes,PLAYBOOK-OT-04-malware-ransomware-on-ot-host.md
+PLAYBOOK-OT-05,Safety instrumented system manipulation,Critical,OTD-0017,,Yes,PLAYBOOK-OT-05-safety-system-manipulation.md
+PLAYBOOK-OT-06,Suspicious remote access into OT,High,OTD-0001,SIGMA:advisory/15;SIGMA:advisory/16;SIGMA:it-dmz-ot-crosszone/01;SIGMA:it-dmz-ot-crosszone/11,Yes,PLAYBOOK-OT-06-suspicious-remote-access.md
+PLAYBOOK-OT-07,Unauthorized control command on an OT protocol,High,OTD-0003;OTD-0004;OTD-0005;OTD-0007;OTD-0008;OTD-0009,,Yes,PLAYBOOK-OT-07-unauthorized-control-command.md
+PLAYBOOK-OT-08,New or rogue asset in an OT zone,Medium,OTD-0002;OTD-0014;OTD-0026,SIGMA:it-dmz-ot-crosszone/23,Yes,PLAYBOOK-OT-08-rogue-asset-in-ot-zone.md
+PLAYBOOK-OT-09,Process data anomaly (historian-detected),Medium,,SIGMA:it-dmz-ot-crosszone/22,Yes,PLAYBOOK-OT-09-process-data-anomaly.md

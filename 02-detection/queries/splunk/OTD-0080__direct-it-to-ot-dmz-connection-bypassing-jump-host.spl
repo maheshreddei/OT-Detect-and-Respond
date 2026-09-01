@@ -1,0 +1,9 @@
+``` OTD-0080 - Direct IT-to-OT-DMZ Connection Bypassing Jump Host ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/01_direct-it-to-ot-dmz-connection-bypassing-jump-host.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=firewall
+  (src_zone="IT" dst_zone="OT_DMZ")
+  NOT (dest_ip="approved_jump_host_ips")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

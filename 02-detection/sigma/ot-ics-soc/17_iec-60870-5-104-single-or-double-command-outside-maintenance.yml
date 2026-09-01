@@ -1,0 +1,27 @@
+title: IEC 60870-5-104 Single or Double Command Outside Maintenance Window
+id: be5c3f7e-516f-427e-df8c-5e6f70819202
+status: experimental
+description: Detects IEC 104 Single Command (C_SC_NA_1) or Double Command (C_DC_NA_1) operate requests issued outside the approved maintenance/switching window, which may indicate an unauthorized breaker/switch operation.
+references:
+  - https://www.iec.ch/standards
+tags:
+  - attack.ics.t0855
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: iec104
+detection:
+  selection:
+    proto: iec104
+    type_id:
+      - 'C_SC_NA_1'
+      - 'C_DC_NA_1'
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Emergency switching operation by authorized dispatcher off-hours
+level: medium

@@ -1,0 +1,14 @@
+// UC: OT-UC-0002 - Internet-accessible ICS device exposure
+// ATT&CK for ICS: T0883 Internet Accessible Device
+// Nozomi Type ID: VI:NEW-NODE (with public-exposure attribute)
+// Author: Mahesh Reddy
+//
+// Purpose: identify OT nodes (Purdue level <= 3) that are communicating with, or
+// reachable from, public address space. Common in the BAUXITE / exposed-device
+// campaign pattern against water and small O&G sites.
+
+nodes
+| where level.id <= 3
+| where is_public_reachable == true
+| select ip mac vendor product_name level.id protocols is_public_reachable
+| sort level.id asc

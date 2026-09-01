@@ -1,0 +1,79 @@
+// =====================================================================
+// ot-detection-program  |  S-01 Control/SCADA Server  |  HOST-SIDE (KQL)
+// Compiled from detections/S-01/host/sigma/*.yml
+// Targets:
+//   - Security-channel rules  -> SecurityEvent
+//   - Sysmon-category rules   -> MDE Device* advanced-hunting tables
+// If Sysmon is ingested via AMA instead of MDE, swap Device* for the
+// Event table (Source == "Microsoft-Windows-Sysmon") + EventData parse.
+// Replace S01_IP / allowlists / runtime image names before deploy.
+// =====================================================================
+let S01_IP = "10.30.0.5";                       // PLACEHOLDER: S-01 host IP
+let S01_HOST = "SCADA-SRV01";                   // PLACEHOLDER: S-01 hostname
+let JumpHosts = dynamic(["10.20.0.10","10.20.0.11"]);
+let OT_Allow  = dynamic(["10.30.0.0/24","10.20.0.0/24"]);
+let RuntimeImages = dynamic(["hmi_runtime.exe","scada_server.exe","view.exe"]);
+
+// --- s01_rdp_logon_non_jumphost (T1021.001) -------------------------
+SecurityEvent
+| where Computer == S01_HOST and EventID == 4624 and LogonType in (10, 2)
+| where IpAddress !in (JumpHosts) and IpAddress !in ("-","127.0.0.1","::1")
+| project TimeGenerated, Rule="S01-RDP-NonJumpHost", TargetUserName=Account, IpAddress, LogonType, WorkstationName;
+
+// --- s01_new_local_account_privgroup (T1136.001 / T1098) ------------
+SecurityEvent
+| where Computer == S01_HOST and EventID in (4720, 4732, 4728, 4756)
+| project TimeGenerated, Rule="S01-NewAccount-PrivGroup", EventID, TargetAccount=TargetUserName, Actor=SubjectUserName, GroupName=TargetSid;
+
+// --- s01_service_scheduledtask_install (T1543.003 / T1053.005) ------
+SecurityEvent
+| where Computer == S01_HOST and EventID in (4697, 4698, 4702)
+| project TimeGenerated, Rule="S01-Service-Task-Install", EventID, Actor=SubjectUserName, Detail=coalesce(column_ifexists("ServiceName",""), "");
+
+// --- s01_encoded_powershell_cradle (T1059.001) ----------------------
+DeviceProcessEvents
+| where DeviceName =~ S01_HOST
+| where FileName in~ ("powershell.exe","pwsh.exe")
+| where ProcessCommandLine has_any (" -enc "," -EncodedCommand","FromBase64String","-w hidden","-WindowStyle Hidden","DownloadString","DownloadFile","IEX(","Invoke-Expression","Net.WebClient")
+| project Timestamp, Rule="S01-Encoded-PowerShell", ProcessCommandLine, InitiatingProcessFileName, AccountName;
+
+// --- s01_lsass_credential_access (T1003.001) ------------------------
+DeviceEvents
+| where DeviceName =~ S01_HOST and ActionType == "OpenProcessApiCall"
+| where FileName =~ "lsass.exe"
+| where AdditionalFields has_any ("0x1010","0x1410","0x1438","0x143a","0x1fffff")
+| where InitiatingProcessFileName !in~ ("MsMpEng.exe","wmiprvse.exe")
+| project Timestamp, Rule="S01-LSASS-Access", InitiatingProcessFileName, InitiatingProcessCommandLine, AdditionalFields;
+
+// --- s01_unsigned_dll_hmi_runtime (T1574) ---------------------------
+DeviceImageLoadEvents
+| where DeviceName =~ S01_HOST
+| where InitiatingProcessFileName in~ (RuntimeImages)
+| where isempty(column_ifexists("CertificateSubject","")) or tostring(column_ifexists("IsSigned",false)) == "false"
+| project Timestamp, Rule="S01-Unsigned-DLL-Runtime", FolderPath, InitiatingProcessFileName, SHA256;
+// NOTE: DeviceImageLoadEvents signature columns vary; if signature is not
+// available here, gate on FolderPath outside %SystemRoot% + allowlist by hash,
+// or use the Sysmon EventID 7 Event-table path with Signed/SignatureStatus.
+
+// --- s01_removable_media_attach (T1091) -----------------------------
+SecurityEvent
+| where Computer == S01_HOST and EventID == 6416
+| project TimeGenerated, Rule="S01-Removable-Media", Actor=SubjectUserName, Detail=column_ifexists("ClassName","");
+
+// --- s01_defense_evasion_logging_disabled (T1562.001) ---------------
+// (a) event-based
+SecurityEvent
+| where Computer == S01_HOST and EventID in (1102, 4719)
+| project TimeGenerated, Rule="S01-Log-Tamper-Event", EventID, Actor=SubjectUserName;
+// (b) command-line based
+DeviceProcessEvents
+| where DeviceName =~ S01_HOST
+| where ProcessCommandLine has_any ("wevtutil cl","wevtutil clear-log","Clear-EventLog","Set-MpPreference -Disable","Add-MpPreference -ExclusionPath","sc stop eventlog","sc config eventlog","auditpol /clear","auditpol /set","fltmc unload")
+| project Timestamp, Rule="S01-Log-Tamper-CLI", ProcessCommandLine, InitiatingProcessFileName, AccountName;
+
+// --- s01_anomalous_outbound_c2 (T1071) ------------------------------
+DeviceNetworkEvents
+| where DeviceName =~ S01_HOST and ActionType == "ConnectionSuccess"
+| where not(ipv4_is_in_any_range(RemoteIP, OT_Allow))
+| where not(ipv4_is_in_any_range(RemoteIP, dynamic(["127.0.0.0/8","169.254.0.0/16","224.0.0.0/4"])))
+| project Timestamp, Rule="S01-Anomalous-Egress", InitiatingProcessFileName, RemoteIP, RemotePort, RemoteUrl;

@@ -1,0 +1,8 @@
+``` OTD-0078 - Active Network Scan of OT Subnet ```
+``` Source: 02-detection/sigma/core-protocol/ot-subnet-scan.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (dest_ip="10.20.0.0/16") (proto="tcp")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,20 @@
+Source_ID,Source,Collection_Method,Transport,Parser_Technology,SIEM_Sourcetype,Key_Fields,CIM_Normalization
+LS-01,Control Server / SCADA Server,Windows/Linux host agent,TCP (forwarder),Splunk UF + OS TA,WinEventLog / linux_secure,EventCode;user;process;dest,Authentication;Endpoint
+LS-02,Firewall (OT),Syslog,UDP/TCP 514,Vendor TA (PAN/Forti/etc.),firewall vendor sourcetype,src;dst;src_zone;dest_zone;action;app,Network Traffic
+LS-03,Jump Host,Windows Event Log / SSH,TCP (forwarder),Splunk UF + Sysmon,WinEventLog:Security / sshd,user;src;dest;logon_type;session,Authentication
+LS-04,VPN Server,Syslog,UDP/TCP 514,Vendor TA,vpn vendor sourcetype,user;src_ip;assigned_ip;action;duration,Authentication;Network Sessions
+LS-05,Switch,Syslog (security events),UDP 514,Vendor TA / SNMP,cisco:ios / switch syslog,mac;port;vlan;event,Network Traffic;Change
+LS-06,PLC,Passive network monitoring,Syslog/CEF from sensor,Nozomi Guardian / Zeek ICSNPP,nozomi:alert / zeek:modbus,type_id;ip_src;ip_dst;func;protocol,Network Traffic;IDS (custom)
+LS-07,Safety Controller,Passive monitoring + vendor,Syslog/CEF,Nozomi Guardian,nozomi:alert,type_id;ip_src;ip_dst;protocol,IDS (custom)
+LS-08,Workstations (Engineering/Operator),Windows Event Log + Sysmon,TCP (forwarder),Splunk UF + Sysmon TA,WinEventLog / XmlWinEventLog:Sysmon,EventCode;user;process;parent_process;dest,Endpoint;Authentication
+LS-09,Data Gateway,Syslog / API,UDP 514 / REST,Vendor TA / custom,gateway syslog,src;dst;protocol_in;protocol_out,Network Traffic
+LS-10,Data Historian,DB query / API / agent,DB Connect / REST,Splunk DB Connect / custom,historian:events,tag;value;quality;user;timestamp,Change (process baselining)
+LS-11,HMI,Windows agent / app logs,TCP (forwarder),Splunk UF,WinEventLog / hmi:app,user;action;setpoint;mode;logon,Authentication;Change
+LS-12,IED,Syslog / passive IEC 61850,UDP 514 / sensor,Vendor TA / Nozomi,ied syslog / nozomi:alert,event;goose_id;stnum;sqnum,IDS (custom)
+LS-13,Router,Syslog,UDP 514,Vendor TA,cisco:ios / router syslog,src;dst;interface;acl_action,Network Traffic
+LS-14,Application Server,Sysmon / auditd,TCP (forwarder),Splunk UF + TA,WinEventLog / linux:audit,EventCode;user;process;dest,Endpoint;Authentication
+LS-15,DCS Controller,Passive network monitoring,Syslog/CEF,Nozomi Guardian,nozomi:alert,type_id;ip_src;ip_dst;protocol,IDS (custom)
+LS-16,PAC,Passive network monitoring,Syslog/CEF,Nozomi Guardian / Zeek ICSNPP,nozomi:alert / zeek:enip,type_id;ip_src;ip_dst;func,IDS (custom)
+LS-17,RTU,Polling / passive DNP3-104,Sensor / poller,Nozomi Guardian / Zeek ICSNPP,nozomi:alert / zeek:dnp3,type_id;ip_src;ip_dst;fc,IDS (custom)
+LS-18,Network Traffic (SPAN/TAP/IDS),Passive sensor SPAN/TAP,Syslog/CEF from sensor,Nozomi Guardian + Zeek ICSNPP,nozomi:alert / zeek:*,type_id;ip_src;ip_dst;protocol;mitre_attack_for_ics,Network Traffic;IDS (custom)
+LS-19,Field I/O,Not collected directly,N/A,N/A (indirect),N/A,N/A,N/A

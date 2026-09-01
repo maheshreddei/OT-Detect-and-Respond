@@ -1,0 +1,38 @@
+title: S-01 Local Account Creation or Privileged Group Change
+id: c9f19fd6-c481-4335-bae3-fd4c0db92e87
+status: experimental
+description: >
+  Creation of a local account, or addition of a member to a security-enabled
+  local/global group, on S-01. The SCADA host has a fixed, small identity
+  footprint; net-new accounts or privilege grants are persistence/priv-esc
+  indicators.
+references:
+  - https://attack.mitre.org/techniques/T1136/001/
+  - https://attack.mitre.org/techniques/T1098/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_create:
+    EventID: 4720            # A user account was created
+  selection_group:
+    EventID:
+      - 4732                 # Member added to a security-enabled LOCAL group
+      - 4728                 # Member added to a security-enabled GLOBAL group
+      - 4756                 # Member added to a security-enabled UNIVERSAL group
+  condition: selection_create or selection_group
+fields:
+  - TargetUserName
+  - SubjectUserName
+  - GroupName
+falsepositives:
+  - Sanctioned account provisioning during a documented change window
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1136.001
+  - attack.t1098
+  - asset.s_01

@@ -1,0 +1,9 @@
+``` OTD-0140 - Unauthorized Association to Industrial Wireless Network (WirelessHART/ISA100/OT Wi-Fi) ```
+``` Source: 02-detection/sigma/advisory/18_unauthorized-association-to-industrial-wireless-network-wire.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  ((network_type="wirelesshart" OR network_type="isa100" OR network_type="ot_wifi"))
+  NOT (client_mac="approved_ot_wireless_assets")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

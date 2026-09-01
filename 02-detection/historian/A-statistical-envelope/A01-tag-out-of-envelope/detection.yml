@@ -1,0 +1,48 @@
+id: A01
+title: Tag out of operating envelope
+status: production
+description: >
+  A measured analog value breaches its normal operating band for its current
+  operating mode (engineering limits where defined, else the P1-P99 percentile
+  band from a validated clean window), sustained past a dwell threshold.
+  Catches manipulated setpoints, spoofed actuator commands, and process upsets.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0836
+family: A-statistical-envelope
+attack_ics:
+  - T0836   # Modify Parameter
+  - T0831   # Manipulation of Control
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.*.PV
+baseline:
+  method: envelope
+  segmentation: mode
+  clean_window: "2 weeks, all modes, Good quality"
+  rebaseline_cadence: quarterly
+  lookup: ot_baseline.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "3 consecutive out-of-band samples"
+fields:
+  - _time
+  - tag
+  - mode
+  - value
+  - lower
+  - upper
+  - breach
+falsepositives:
+  - Legitimate mode change the mode tag failed to reflect
+  - Startup / shutdown transient
+  - Post-MOC operating-point change (trigger re-baseline)
+level: medium
+response: |
+  Read-only. Corroborate with NDR write / operator action / second sensor
+  before escalation. Do not act on the control system.
+validation: validation.md

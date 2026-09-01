@@ -1,0 +1,8 @@
+``` OTD-0060 - Modbus Exception Response Flood (Possible Scanning or Fuzzing) ```
+``` Source: 02-detection/sigma/ot-ics-soc/03_modbus-exception-response-flood-possible-scanning-or-fuzzing.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:modbus
+  (proto="modbus" (exception_code=1 OR exception_code=2 OR exception_code=3 OR exception_code=4))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

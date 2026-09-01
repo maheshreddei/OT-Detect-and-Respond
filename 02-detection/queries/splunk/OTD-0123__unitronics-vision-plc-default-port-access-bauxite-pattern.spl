@@ -1,0 +1,9 @@
+``` OTD-0123 - Unitronics Vision PLC Default Port Access (BAUXITE Pattern) ```
+``` Source: 02-detection/sigma/advisory/01_unitronics-vision-plc-default-port-access-bauxite-pattern.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (dest_port=20256)
+  NOT (src_ip="designated_engineering_workstations")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

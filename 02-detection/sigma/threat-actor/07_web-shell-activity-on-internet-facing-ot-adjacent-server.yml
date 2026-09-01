@@ -1,0 +1,28 @@
+title: Web Shell Activity on Internet-Facing OT-Adjacent Server
+id: ta02a1b2-c3d4-4e5f-8071-002000000002
+status: experimental
+description: Detects a newly created ASPX/PHP/JSP file in a web-accessible directory followed by an HTTP request to that file producing a child process spawn from the web server process, matching the web shell deployment technique repeatedly used by APT34/OilRig against Middle East government and energy-sector targets to gain a persistent internet-facing foothold near OT-adjacent networks.
+references:
+  - Symantec Crambus Middle East Government Campaign
+threat_actor: APT34 / OilRig (Crambus)
+tags:
+  - attack.t1505.003
+  - attack.t1190
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    ParentImage|endswith:
+      - '\w3wp.exe'
+      - '\httpd.exe'
+      - '\nginx.exe'
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+  condition: selection
+falsepositives:
+  - Legitimate web application admin tooling that intentionally shells out to system utilities
+level: critical

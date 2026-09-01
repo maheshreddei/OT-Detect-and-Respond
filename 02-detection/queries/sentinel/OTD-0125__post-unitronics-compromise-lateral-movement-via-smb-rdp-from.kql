@@ -1,0 +1,10 @@
+// OTD-0125 - Post-Unitronics-Compromise Lateral Movement via SMB/RDP From PLC Network Segment
+// Source: 02-detection/sigma/advisory/03_post-unitronics-compromise-lateral-movement-via-smb-rdp-from.yml
+// ATT&CK for ICS: attack.ics.t0867
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (src_zone == "plc_field_network" and DestinationPort in (445, 3389))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

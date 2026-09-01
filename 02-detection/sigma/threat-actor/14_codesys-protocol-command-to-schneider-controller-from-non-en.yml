@@ -1,0 +1,29 @@
+title: CODESYS Protocol Command to Schneider Controller From Non-Engineering Host
+id: ta04a1b2-c3d4-4e5f-8071-004000000002
+status: experimental
+description: Detects a CODESYS runtime protocol command (file delete, login brute-force attempt, file upload/download) directed at a Schneider Electric Modicon controller from a source host outside the designated engineering workstation list, matching the CHERNOVITE/PIPEDREAM CODECALL module's capability set.
+references:
+  - CISA AA22-103A PIPEDREAM/INCONTROLLER Advisory
+threat_actor: CHERNOVITE (PIPEDREAM / INCONTROLLER)
+tags:
+  - attack.ics.t0859
+  - attack.ics.t0843
+  - attack.ics.t0814
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: codesys
+detection:
+  selection:
+    proto: codesys
+    command:
+      - 'file_delete'
+      - 'login_attempt'
+      - 'file_download'
+  filter:
+    src_ip|in_list: 'designated_engineering_workstations'
+  condition: selection and not filter
+falsepositives:
+  - Backup engineering workstation used during primary host outage
+level: critical

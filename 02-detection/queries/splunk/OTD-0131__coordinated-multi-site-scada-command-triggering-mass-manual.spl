@@ -1,0 +1,8 @@
+``` OTD-0131 - Coordinated Multi-Site SCADA Command Triggering Mass Manual-Fallback (Predatory Sparrow-Class Pattern) ```
+``` Source: 02-detection/sigma/advisory/09_coordinated-multi-site-scada-command-triggering-mass-manual.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  (command_type="setpoint_or_control_write")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

@@ -1,0 +1,11 @@
+// OTD-0126 - Remote Management Tool Installation on OT-Adjacent Host (MuddyWater Pattern)
+// Source: 02-detection/sigma/advisory/04_remote-management-tool-installation-on-ot-adjacent-host-mudd.yml
+// ATT&CK for ICS: attack.ics.t0883
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName in ("\AteraAgent.exe", "\RemoteUtilities.exe", "\ScreenConnect.ClientService.exe") and Computer in ("dmz_jump_hosts", "l3_scada_servers"))
+| where not ((approved_software_baseline == true))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

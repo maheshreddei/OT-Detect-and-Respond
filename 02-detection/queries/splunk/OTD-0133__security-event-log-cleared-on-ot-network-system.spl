@@ -1,0 +1,8 @@
+``` OTD-0133 - Security Event Log Cleared on OT Network System ```
+``` Source: 02-detection/sigma/advisory/11_security-event-log-cleared-on-ot-network-system.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((EventCode=1102 OR EventCode=104) (host="l2_hmi_hosts" OR host="l3_scada_servers" OR host="designated_engineering_workstations"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

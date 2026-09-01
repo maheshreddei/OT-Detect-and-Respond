@@ -1,0 +1,8 @@
+``` OTD-0125 - Post-Unitronics-Compromise Lateral Movement via SMB/RDP From PLC Network Segment ```
+``` Source: 02-detection/sigma/advisory/03_post-unitronics-compromise-lateral-movement-via-smb-rdp-from.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=firewall
+  (src_zone="plc_field_network" (dest_port=445 OR dest_port=3389))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

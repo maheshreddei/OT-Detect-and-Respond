@@ -1,0 +1,10 @@
+// OTD-0109 - Web Shell Activity on Internet-Facing OT-Adjacent Server
+// Source: 02-detection/sigma/threat-actor/07_web-shell-activity-on-internet-facing-ot-adjacent-server.yml
+// ATT&CK for ICS: n/a
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (ParentImage in ("\w3wp.exe", "\httpd.exe", "\nginx.exe") and NewProcessName in ("\cmd.exe", "\powershell.exe"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,36 @@
+// ============================================================================
+// E01 - Historian vs live PLC value divergence  (Stuxnet-class)
+// Read-only. Schedule every 1m, lookback 5m.
+// Requires the SAME tags from two independent sources:
+//   Source_s == "hmi_historian"  and  Source_s == "direct_opcua"
+// Data model: docs/data-model.md
+// ============================================================================
+let lookback = 5m;
+let binWidth = 10s;
+OTHistorian_CL
+| where TimeGenerated > ago(lookback) and Quality_s == "Good"
+| where Source_s in ("hmi_historian", "direct_opcua")
+| where TagName_s endswith ".PV"
+// Pivot the two sources into two columns per (tag, time bin)
+| summarize
+    v_hist   = anyif(Value_d, Source_s == "hmi_historian"),
+    v_direct = anyif(Value_d, Source_s == "direct_opcua")
+    by TagName_s, tbin = bin(TimeGenerated, binWidth)
+| where isnotnull(v_hist) and isnotnull(v_direct)
+// Scale tolerance to the tag's noise
+| lookup kind=leftouter _GetWatchlist("OTBaseline") on $left.TagName_s == $right.TagName
+| extend abs_diff   = abs(v_hist - v_direct)
+| extend pct_diff   = round(100 * abs_diff / abs(iff(v_direct == 0, 1.0, v_direct)), 2)
+| extend sigma_diff = round(abs_diff / iff(isnull(todouble(Std)) or todouble(Std) == 0, abs_diff, todouble(Std)), 2)
+| extend diverged = iff(sigma_diff > 3 or pct_diff > 2, 1, 0)
+// Persistence: >= 2 consecutive divergent bins per tag (island pattern)
+| order by TagName_s asc, tbin asc
+| serialize
+| extend newIsland = iff(TagName_s != prev(TagName_s) or diverged != prev(diverged), 1, 0)
+| extend islandId = row_cumsum(newIsland)
+| summarize run = count(), startBin = min(tbin), arg_max(tbin, v_hist, v_direct, abs_diff, pct_diff, sigma_diff, diverged)
+    by islandId, TagName_s
+| where diverged == 1 and run >= 2
+| extend severity = "high", detection = "E01"
+| project startBin, TagName_s, v_hist, v_direct, abs_diff, pct_diff, sigma_diff, run, severity, detection
+| order by startBin desc

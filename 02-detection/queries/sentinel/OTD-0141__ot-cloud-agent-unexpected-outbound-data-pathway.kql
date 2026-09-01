@@ -1,0 +1,11 @@
+// OTD-0141 - OT Cloud Agent Unexpected Outbound Data Pathway
+// Source: 02-detection/sigma/advisory/19_ot-cloud-agent-unexpected-outbound-data-pathway.yml
+// ATT&CK for ICS: attack.ics.t0846
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (src_zone in ("L2_HMI", "L3") and dst_zone == "internet" and process_tag == "iiot_cloud_agent")
+| where not ((dst_domain == "approved_ot_cloud_vendor_domains"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,10 @@
+// OTD-0063 - DNP3 CROB Control Command Outside Maintenance Window
+// Source: 02-detection/sigma/ot-ics-soc/08_dnp3-crob-control-command-outside-maintenance-window.yml
+// ATT&CK for ICS: attack.ics.t0855
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "dnp3" and FunctionCode in (3, 4, 5, 6) and object_group == 12) and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,24 @@
+title: East-West Traffic Between L1 Controllers Across Process Cells
+id: d1a1b2c3-0006-4a1b-8c1d-6a2b3c4d5e04
+status: experimental
+description: Detects direct peer-to-peer communication between Level 1 PLCs/RTUs belonging to different documented process cells/zones. Controllers should generally only communicate within their own cell via the supervisory layer, not directly with controllers in other cells.
+references:
+  - https://attack.mitre.org/techniques/T0867/
+tags:
+  - attack.ics.t0867
+  - attack.ics.t0883
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    src_ip|in_list: 'l1_controllers'
+    dst_ip|in_list: 'l1_controllers'
+  filter:
+    src_dst_same_cell: true
+  condition: selection and not filter
+falsepositives:
+  - Documented inter-cell interlock requiring direct PLC-to-PLC communication
+level: high

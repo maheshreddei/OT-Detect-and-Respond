@@ -1,0 +1,12 @@
+``` OTD-0184 - Vertical scan ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: SCAN-02 ```
+``` ATT&CK for ICS: T0840  |  Severity: medium ```
+``` Detection logic: One source to many ports on one host ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=netflow earliest=-24h
+``` TODO: express the detection condition -- One source to many ports on one host ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

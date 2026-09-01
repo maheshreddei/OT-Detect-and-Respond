@@ -1,0 +1,8 @@
+``` OTD-0085 - Web or Email Content Landing on OT DMZ Jump Host ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/06_web-or-email-content-landing-on-ot-dmz-jump-host.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  (host="dmz_jump_hosts" (Image="\outlook.exe" OR Image="\chrome.exe" OR Image="\msedge.exe" OR Image="\firefox.exe"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

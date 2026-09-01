@@ -1,0 +1,41 @@
+title: S-01 Unsigned/Untrusted DLL Loaded by SCADA/HMI Runtime
+id: 9c756ca7-3b6a-4991-a235-85d04d66d20a
+status: experimental
+description: >
+  The SCADA/HMI runtime process on S-01 loads a DLL that is unsigned or fails
+  signature validation. Injected/side-loaded modules in the runtime are a direct
+  path to command manipulation (T0831) issued with legitimate credentials.
+references:
+  - https://attack.mitre.org/techniques/T1574/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  category: image_load         # Sysmon EventID 7
+detection:
+  selection_proc:
+    Image|endswith:
+      - '\hmi_runtime.exe'      # PLACEHOLDER: set to the actual SCADA/HMI runtime + historian client images
+      - '\scada_server.exe'
+      - '\view.exe'
+  selection_untrusted:
+    Signed: 'false'
+  selection_badsig:
+    SignatureStatus:
+      - 'Expired'
+      - 'Unavailable'
+      - 'Invalid'
+  condition: selection_proc and (selection_untrusted or selection_badsig)
+fields:
+  - ImageLoaded
+  - Signed
+  - SignatureStatus
+  - Signature
+falsepositives:
+  - Legitimate vendor plug-ins that ship unsigned (baseline by hash and exclude)
+level: high
+tags:
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1574
+  - asset.s_01

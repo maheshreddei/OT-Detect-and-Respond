@@ -1,0 +1,65 @@
+# =====================================================================
+# ot-detection-program | S-01 Control/SCADA Server | HOST-SIDE (SPL)
+# Compiled from detections/S-01/host/sigma/*.yml
+# Security channel  -> sourcetype=WinEventLog:Security
+# Sysmon            -> source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+#                      (Splunk_TA_microsoft-sysmon field names)
+# Replace host / allowlists / runtime images before deploy.
+# =====================================================================
+
+# --- s01_rdp_logon_non_jumphost (T1021.001) -------------------------
+`comment("S01-RDP-NonJumpHost")`
+sourcetype=WinEventLog:Security host=SCADA-SRV01 EventCode=4624 (Logon_Type=10 OR Logon_Type=2)
+NOT (Source_Network_Address IN ("10.20.0.10","10.20.0.11","-","127.0.0.1","::1"))
+| table _time, Account_Name, Source_Network_Address, Logon_Type, Workstation_Name
+
+# --- s01_new_local_account_privgroup (T1136.001 / T1098) ------------
+`comment("S01-NewAccount-PrivGroup")`
+sourcetype=WinEventLog:Security host=SCADA-SRV01 (EventCode=4720 OR EventCode=4732 OR EventCode=4728 OR EventCode=4756)
+| table _time, EventCode, Target_Account_Name, Subject_Account_Name, Group_Name
+
+# --- s01_service_scheduledtask_install (T1543.003 / T1053.005) ------
+`comment("S01-Service-Task-Install")`
+sourcetype=WinEventLog:Security host=SCADA-SRV01 (EventCode=4697 OR EventCode=4698 OR EventCode=4702)
+| table _time, EventCode, Subject_Account_Name, Service_Name, Service_File_Name, Task_Name
+
+# --- s01_encoded_powershell_cradle (T1059.001) ----------------------
+`comment("S01-Encoded-PowerShell")`
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=SCADA-SRV01 EventCode=1
+(Image="*\\powershell.exe" OR Image="*\\pwsh.exe")
+(CommandLine="* -enc *" OR CommandLine="* -EncodedCommand*" OR CommandLine="*FromBase64String*" OR CommandLine="*-w hidden*" OR CommandLine="*WindowStyle Hidden*" OR CommandLine="*DownloadString*" OR CommandLine="*DownloadFile*" OR CommandLine="*IEX(*" OR CommandLine="*Invoke-Expression*" OR CommandLine="*Net.WebClient*")
+| table _time, CommandLine, ParentImage, User
+
+# --- s01_lsass_credential_access (T1003.001) ------------------------
+`comment("S01-LSASS-Access")`
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=SCADA-SRV01 EventCode=10 TargetImage="*\\lsass.exe"
+(GrantedAccess="0x1010" OR GrantedAccess="0x1410" OR GrantedAccess="0x1438" OR GrantedAccess="0x143a" OR GrantedAccess="0x1fffff")
+NOT (SourceImage IN ("*\\MsMpEng.exe","*\\wmiprvse.exe"))
+| table _time, SourceImage, GrantedAccess, CallTrace
+
+# --- s01_unsigned_dll_hmi_runtime (T1574) ---------------------------
+`comment("S01-Unsigned-DLL-Runtime")`
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=SCADA-SRV01 EventCode=7
+(Image="*\\hmi_runtime.exe" OR Image="*\\scada_server.exe" OR Image="*\\view.exe")
+(Signed=false OR SignatureStatus IN ("Expired","Unavailable","Invalid"))
+| table _time, ImageLoaded, Signed, SignatureStatus, Signature
+
+# --- s01_removable_media_attach (T1091) -----------------------------
+`comment("S01-Removable-Media")`
+sourcetype=WinEventLog:Security host=SCADA-SRV01 EventCode=6416
+| table _time, Subject_Account_Name, Class_Name, Device_Description
+
+# --- s01_defense_evasion_logging_disabled (T1562.001) ---------------
+`comment("S01-Log-Tamper-Event")`
+sourcetype=WinEventLog:Security host=SCADA-SRV01 (EventCode=1102 OR EventCode=4719)
+| table _time, EventCode, Subject_Account_Name
+`comment("S01-Log-Tamper-CLI")`
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=SCADA-SRV01 EventCode=1
+(CommandLine="*wevtutil cl*" OR CommandLine="*Clear-EventLog*" OR CommandLine="*Set-MpPreference -Disable*" OR CommandLine="*Add-MpPreference -ExclusionPath*" OR CommandLine="*sc stop eventlog*" OR CommandLine="*sc config eventlog*" OR CommandLine="*auditpol /clear*" OR CommandLine="*auditpol /set*" OR CommandLine="*fltmc unload*")
+| table _time, CommandLine, Image, ParentImage, User
+
+# --- s01_anomalous_outbound_c2 (T1071) ------------------------------
+`comment("S01-Anomalous-Egress")`
+source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" host=SCADA-SRV01 EventCode=3 Initiated=true
+NOT (DestinationIp="10.30.0.0/24" OR DestinationIp="10.20.0.0/24" OR DestinationIp="127.0.0.0/8" OR DestinationIp="169.254.0.0/16" OR DestinationIp="224.0.0.0/4")
+| table _time, Image, DestinationIp, DestinationPort, DestinationHostname

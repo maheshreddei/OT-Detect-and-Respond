@@ -1,0 +1,11 @@
+// OTD-0065 - OPC UA Write Request to Critical Node from Unauthorized Client
+// Source: 02-detection/sigma/ot-ics-soc/11_opc-ua-write-request-to-critical-node-from-unauthorized-clie.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0836
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "opcua" and service == "Write" and (node_id startswith "ns=2;s=Control."))
+| where not ((ipv4_is_in_range(SourceIP, "10.10.10.0/24")))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,11 @@
+// OTD-0060 - Modbus Exception Response Flood (Possible Scanning or Fuzzing)
+// Source: 02-detection/sigma/ot-ics-soc/03_modbus-exception-response-flood-possible-scanning-or-fuzzing.yml
+// ATT&CK for ICS: attack.ics.t0846, attack.ics.t0888
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "modbus" and exception_code in (1, 2, 3, 4))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 5m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,11 @@
+// OTD-0135 - Historian Query Pattern Anomaly From IT-Network Host
+// Source: 02-detection/sigma/advisory/13_historian-query-pattern-anomaly-from-it-network-host.yml
+// ATT&CK for ICS: attack.ics.t0801, attack.ics.t0811
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (DestinationPort in (5450, 443) and DestinationIP == "historian_servers" and src_zone == "IT")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1h
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

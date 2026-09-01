@@ -1,0 +1,30 @@
+```spl
+* ============================================================================
+* C01 - Frozen value / replay
+* Read-only. Two signatures: (1) exact freeze, (2) variance collapse.
+* Data model: docs/data-model.md
+* ============================================================================
+
+* ---- Signature 1: FROZEN VALUE (exact constant beyond max_stall_sec) ----
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    tag IN ("PLANT1.*.PV")
+| sort 0 tag _time
+| streamstats current=f last(value) as prev_value by tag
+| eval same = if(value==prev_value, 1, 0)
+* Mark the start of each constant run and measure how long it has held
+| streamstats reset_before="(same==0)" earliest(_time) as stall_start by tag
+| eval stall_sec = _time - stall_start
+| lookup ot_baseline.csv tag OUTPUT max_stall_sec
+| where stall_sec > max_stall_sec
+| eval detection="C01", signature="frozen_value", severity="medium"
+| table _time tag value stall_sec max_stall_sec signature severity detection
+
+* ---- Signature 2: VARIANCE COLLAPSE (run separately or append) ----
+* index=ot_historian sourcetype=historian:snapshot quality=Good tag IN ("PLANT1.*.PV")
+* | bin _time span=5m
+* | stats var(value) as win_variance avg(value) as win_avg count as n by tag _time
+* | lookup ot_baseline.csv tag OUTPUT min_variance
+* | where n>=10 AND win_variance < min_variance
+* | eval detection="C01", signature="variance_collapse", severity="high"
+* | table _time tag win_avg win_variance min_variance signature severity detection
+```

@@ -1,0 +1,20 @@
+Source_ID,Source,Feeds_UC_Categories,Example_UC_IDs,Enables_Detection
+LS-01,Control Server / SCADA Server,Control;Denial,OT-UC-0003;OT-UC-0005;OT-UC-0009,Commands reaching the process from the central server vantage point.
+LS-02,Firewall (OT),Access;C2,OT-UC-0001;OT-UC-0002;OT-UC-0019;OT-UC-0026,Purdue zone-crossing and IT-to-OT / OT-to-external connection detection.
+LS-03,Jump Host,Access,OT-UC-0001;OT-UC-0015,Remote-access sessions into OT; anything bypassing the jump host.
+LS-04,VPN Server,Access,OT-UC-0001,Remote-access chain visibility (paired with jump host).
+LS-05,Switch,Recon;Access,OT-UC-0014,"New MAC/node, port-security and VLAN anomalies at the segment layer."
+LS-06,PLC,Control;Denial,OT-UC-0003;OT-UC-0004;OT-UC-0027,Protocol-level control and mode-change detection via passive monitoring.
+LS-07,Safety Controller,Safety,OT-UC-0017,SIS key-switch / program-mode change; priority-1 on any event.
+LS-08,Workstations (Engineering/Operator),Access;Malware,OT-UC-0015;OT-UC-0020,"Rogue EWS behavior, removable media, engineering-tool execution."
+LS-09,Data Gateway,Control,OT-UC-0003;OT-UC-0011,Cross-protocol translation abuse at the zone chokepoint.
+LS-10,Data Historian,Exfil;Evasion,OT-UC-0024,Operational-data exfiltration and process baselining.
+LS-11,HMI,Evasion;Control,OT-UC-0016,Unauthorized setpoint / alarm-config changes and engineering-mode access.
+LS-12,IED,Control,OT-UC-0010,IEC 61850 GOOSE/MMS manipulation in substations.
+LS-13,Router,Recon;Access,OT-UC-0013,East-west traffic between cells/zones (complements firewall).
+LS-14,Application Server,Access;Malware,OT-UC-0022,Standard endpoint/auth telemetry for ICS application hosts.
+LS-15,DCS Controller,Control;Denial,OT-UC-0027;OT-UC-0023,Network-based detection where vendor logging is limited.
+LS-16,PAC,Control;Denial,OT-UC-0027,Passive protocol detection (same constraints as PLC).
+LS-17,RTU,Control;Denial,OT-UC-0007;OT-UC-0009,DNP3/IEC-104 control and restart detection at distributed sites.
+LS-18,Network Traffic (SPAN/TAP/IDS),Recon;Control;Denial;Malware;C2,OT-UC-0003;OT-UC-0006;OT-UC-0010;OT-UC-0013;OT-UC-0018;OT-UC-0019,The protocol-level backbone; fills every controller/RTU/DCS gap and carries native ATT&CK-for-ICS mapping.
+LS-19,Field I/O,None,,Not collected; represented indirectly via LS-06/LS-17/LS-10.

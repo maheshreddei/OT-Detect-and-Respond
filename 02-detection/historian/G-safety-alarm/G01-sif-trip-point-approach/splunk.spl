@@ -1,0 +1,45 @@
+```spl
+* ============================================================================
+* G01 - SIF trip-point approach  (TRITON/TRISIS precursor)
+* Read-only. MONITORING ONLY - does not interact with the SIS.
+* Schedule every 1m over a rolling window sized to the approach window.
+* Data model: docs/data-model.md   Lookup: sif_trip_limits.csv
+* ============================================================================
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    tag IN ("PLANT1.*.PV")
+
+* Keep only safety-related tags (those present in the SIF lookup)
+| lookup sif_trip_limits.csv tag OUTPUT sif_id trip_direction trip_value prealarm_value safe_margin unit
+| where isnotnull(sif_id)
+
+* Distance to the trip point, respecting trip direction
+| eval margin = case(trip_direction=="high", trip_value - value,
+                     trip_direction=="low",  value - trip_value)
+| eval margin_pct = round(100 * margin / safe_margin, 1)
+
+* Distance to pre-alarm (for severity)
+| eval past_prealarm = case(trip_direction=="high", value >= prealarm_value,
+                            trip_direction=="low",  value <= prealarm_value)
+
+* Trend: is the margin shrinking across the approach window? (slope over last 10 samples)
+| sort 0 tag _time
+| streamstats window=10 global=f first(margin) as m_first last(margin) as m_last
+              range(_time) as span_sec by tag sif_id
+| eval margin_rate = round((m_last - m_first) / (coalesce(span_sec,1)/60), 3)   /* per minute; negative = approaching */
+
+* Fire: inside the safe margin AND actively approaching (with a small deadband)
+| where margin < safe_margin AND margin_rate < -0.01
+
+* Severity: past pre-alarm => critical; else high
+| eval severity = if(past_prealarm=="True" OR past_prealarm==1, "critical", "high")
+| eval detection="G01"
+
+| table _time tag sif_id value trip_value prealarm_value margin margin_pct margin_rate unit severity detection
+| sort - _time
+
+* --- Optional enrichment: "control looks normal" (deceptive-approach signature) ---
+* If companion BPCS alarm/CV tags are available, join here and raise severity when the
+* PV is approaching the trip WITHOUT a corresponding process alarm. Left as an
+* integration point because companion tag naming is site-specific.
+```

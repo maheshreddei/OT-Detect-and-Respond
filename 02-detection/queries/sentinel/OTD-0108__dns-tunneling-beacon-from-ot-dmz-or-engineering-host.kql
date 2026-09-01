@@ -1,0 +1,11 @@
+// OTD-0108 - DNS Tunneling Beacon From OT DMZ or Engineering Host
+// Source: 02-detection/sigma/threat-actor/06_dns-tunneling-beacon-from-ot-dmz-or-engineering-host.yml
+// ATT&CK for ICS: n/a
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+DnsEvents
+| where (src_zone in ("OT_DMZ", "engineering"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1h
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

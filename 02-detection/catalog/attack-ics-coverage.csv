@@ -1,0 +1,23 @@
+ATTACK_Tactic,ATTACK_Technique_ID,ATTACK_Technique,UC_Count,UC_IDs,Coverage_Status
+Initial Access,T0822,External Remote Services,1,OT-UC-0001,Covered
+Initial Access,T0883,Internet Accessible Device,1,OT-UC-0002,Covered
+Initial Access,T0847,Replication Through Removable Media,1,OT-UC-0020,Covered
+Initial Access,T0860,Wireless Compromise,1,OT-UC-0026,Partial
+Execution,T0858,Change Operating Mode,2,OT-UC-0017;OT-UC-0027,Covered
+Persistence,T0857,System Firmware,1,OT-UC-0012,Partial
+Persistence,T0839,Module Firmware,1,OT-UC-0028,Partial
+Evasion,T0804,Block Reporting Message,1,OT-UC-0008,Covered
+Evasion,T0856,Spoof Reporting Message,2,OT-UC-0010;OT-UC-0025,Covered
+Evasion,T0878,Alarm Suppression,1,OT-UC-0016,Partial
+Discovery,T0840,Network Connection Enumeration,1,OT-UC-0013,Covered
+Discovery,T0846,Remote System Discovery,1,OT-UC-0014,Covered
+Collection,T0861,Point & Tag Identification,1,OT-UC-0021,Covered
+Collection,T0882,Theft of Operational Information,1,OT-UC-0024,Partial
+Lateral Movement,T0812,Default Credentials,2,OT-UC-0011;OT-UC-0022,Covered
+Lateral Movement,T0843,Program Download,1,OT-UC-0006,Covered
+Lateral Movement,T0859,Valid Accounts,1,OT-UC-0015,Covered
+Lateral Movement,T0867,Lateral Tool Transfer,1,OT-UC-0018,Covered
+Command and Control,T0885,Commonly Used Port,1,OT-UC-0019,Covered
+Impair Process Control,T0855,Unauthorized Command Message,2,OT-UC-0003;OT-UC-0009,Covered
+Inhibit Response Function,T0816,Device Restart/Shutdown,3,OT-UC-0004;OT-UC-0005;OT-UC-0007,Covered
+Inhibit Response Function,T0814,Denial of Service,1,OT-UC-0023,Covered

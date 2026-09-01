@@ -1,0 +1,30 @@
+id,category,protocol,detection,maps_to,execute_on,severity,assert_condition,ref
+Q-ACC-01,access,vnc/rdp,Remote access into OT zone,VNC-01;VNC-04,Guardian/CMC,high,non-empty,assertion-queries.md#q-acc-01
+Q-ACC-02,access,ftp,FTP into OT zone,FTP-01;FTP-03,Guardian/CMC,high,non-empty,assertion-queries.md#q-acc-02
+Q-ACC-03,access,http,HTTP to OT device from outside mgmt,HTTP-03,Guardian/CMC,medium,non-empty,assertion-queries.md#q-acc-03
+Q-ACC-04,access,any,Egress from OT to public internet,internet-egress,Guardian/CMC,high,non-empty,assertion-queries.md#q-acc-04
+Q-ACC-05,recon,icmp,Possible ICMP tunnelling,covert-channel,Guardian/CMC,medium,non-empty,assertion-queries.md#q-acc-05
+Q-ACC-06,recon,any,Horizontal scan (one source many peers),SCAN-01;SCAN-03,Guardian/CMC,medium,count>threshold,assertion-queries.md#q-acc-06
+Q-ACC-07,recon,tcp,Blocked/failed TCP handshakes,SCAN-03,Guardian/CMC,medium,count>threshold,assertion-queries.md#q-acc-07
+Q-SEG-01,segmentation,any,Traffic crossing >1 Purdue level,cross-zone,Guardian/CMC,high,non-empty,assertion-queries.md#q-seg-01
+Q-SEG-02,segmentation,control,Control protocol sourced from IT zone,MOD-05,Guardian/CMC,high,non-empty,assertion-queries.md#q-seg-02
+Q-SEG-03,segmentation,any,New IT->OT link,baseline-deviation,Guardian/CMC,medium,non-empty/on-change,assertion-queries.md#q-seg-03
+Q-WR-MOD-01,write-command,modbus,Modbus write from non-master,MOD-01;MOD-02,Guardian/CMC,high,non-empty,assertion-queries.md#q-wr-mod-01
+Q-WR-MOD-02,disruptive,modbus,Modbus diagnostic FC8,MOD-04,Guardian/CMC,high,non-empty,assertion-queries.md#q-wr-mod-02
+Q-WR-MOD-03,recon,modbus,Modbus device-ID recon FC43,MOD-03,Guardian/CMC,medium,non-empty,assertion-queries.md#q-wr-mod-03
+Q-WR-S7-01,write-command,s7comm,S7 program-transfer/stop,S7-01;S7-02,Guardian/CMC,critical,non-empty,assertion-queries.md#q-wr-s7-01
+Q-WR-DNP3-01,write-command,dnp3,DNP3 operate from non-master,DNP3-01;DNP3-02,Guardian/CMC,critical,non-empty,assertion-queries.md#q-wr-dnp3-01
+Q-WR-104-01,write-command,iec104,IEC-104 command ASDU from non-master,104-01;104-02,Guardian/CMC,critical,non-empty,assertion-queries.md#q-wr-104-01
+Q-WR-ENIP-01,write-command,cip,EtherNet/IP CIP write from non-controller,ENIP-01;ENIP-04,Guardian/CMC,high,non-empty,assertion-queries.md#q-wr-enip-01
+Q-WR-BAC-01,write-command,bacnet,BACnet WriteProperty from unexpected source,BAC-01;BAC-03,Guardian/CMC,high,non-empty,assertion-queries.md#q-wr-bac-01
+Q-WR-OPCUA-01,write-command,opcua,OPC UA activity into OT zone,OPC-02;OPC-04,Guardian/CMC,medium,non-empty,assertion-queries.md#q-wr-opcua-01
+Q-WR-MQTT-01,write-command,mqtt,MQTT client to broker from unexpected source,MQTT-01;MQTT-03,Guardian/CMC,high,non-empty,assertion-queries.md#q-wr-mqtt-01
+Q-BASE-01,baseline,any,Most-used protocols (confirm tokens),-,Guardian/CMC,info,none,assertion-queries.md#q-base-01
+Q-BASE-02,baseline,any,Is protocol/function in use (confirm codes),-,Guardian/CMC,info,none,assertion-queries.md#q-base-02
+Q-BASE-03,baseline,any,New nodes last 7 days,new-asset,Guardian/CMC,medium,new-in-OT-zone,assertion-queries.md#q-base-03
+Q-BASE-04,baseline,any,Multihomed assets,multihomed,Guardian/CMC,medium,on-change,assertion-queries.md#q-base-04
+Q-BASE-05,baseline,any,Assets per subnet,-,Guardian/CMC,info,none,assertion-queries.md#q-base-05
+Q-RPT-01,reporting,any,Top 10 alerts,-,Guardian/CMC/Vantage,info,none,assertion-queries.md#q-rpt-01
+Q-RPT-02,reporting,any,Greatest MITRE ATT&CK exposure,-,Guardian/CMC,info,none,assertion-queries.md#q-rpt-02
+Q-RPT-03,ir,any,Alerts in time window (hunt/IR),-,Guardian/CMC/Vantage,info,none,assertion-queries.md#q-rpt-03
+Q-RPT-04,reporting,any,Native unauthorized-write signatures,-,Guardian/CMC,info,none,assertion-queries.md#q-rpt-04

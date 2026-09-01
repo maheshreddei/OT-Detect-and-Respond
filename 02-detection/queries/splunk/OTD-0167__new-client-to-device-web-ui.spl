@@ -1,0 +1,12 @@
+``` OTD-0167 - New client to device web UI ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: HTTP-03 ```
+``` ATT&CK for ICS: T0822  |  Severity: medium ```
+``` Detection logic: First-time source to OT web UI pair ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- First-time source to OT web UI pair ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

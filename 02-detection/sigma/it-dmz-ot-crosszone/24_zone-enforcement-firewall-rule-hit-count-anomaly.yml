@@ -1,0 +1,21 @@
+title: Zone Enforcement Firewall Rule Hit-Count Anomaly
+id: d1a1b2c3-0006-4a1b-8c1d-6a2b3c4d5e02
+status: experimental
+description: Detects a sudden spike in permit-hit count on an inter-zone firewall rule that is historically rarely used, which can indicate exploitation of an overly broad legacy rule to move traffic across a Purdue Model boundary.
+references:
+  - https://attack.mitre.org/techniques/T0886/
+tags:
+  - attack.ics.t0886
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: firewall
+  product: generic
+detection:
+  selection:
+    rule_historical_avg_hits_per_day|lt: 5
+  timeframe: 1h
+  condition: selection | count() by rule_id > 50
+falsepositives:
+  - Legitimate spike from a scheduled batch job or bulk data transfer
+level: medium

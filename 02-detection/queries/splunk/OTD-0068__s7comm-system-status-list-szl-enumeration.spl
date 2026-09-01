@@ -1,0 +1,8 @@
+``` OTD-0068 - S7comm System Status List (SZL) Enumeration ```
+``` Source: 02-detection/sigma/ot-ics-soc/15_s7comm-system-status-list-szl-enumeration.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:s7comm
+  (proto="s7comm" rosctr="Userdata" function_group="CPU functions" subfunction="Read SZL")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

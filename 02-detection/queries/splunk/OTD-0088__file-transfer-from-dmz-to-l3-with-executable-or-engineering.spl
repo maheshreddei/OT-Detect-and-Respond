@@ -1,0 +1,8 @@
+``` OTD-0088 - File Transfer From DMZ to L3 With Executable or Engineering Project Extension ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/10_file-transfer-from-dmz-to-l3-with-executable-or-engineering.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((TargetFilename=".exe" OR TargetFilename=".dll" OR TargetFilename=".ps1" OR TargetFilename=".acd" OR TargetFilename=".s7p" OR TargetFilename=".ap16" OR TargetFilename=".l5x") host="l3_scada_servers") (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

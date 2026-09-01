@@ -1,0 +1,28 @@
+title: Mass Disk-Wiping Utility Execution Across Multiple Hosts
+id: ta01a1b2-c3d4-4e5f-8071-001000000003
+status: experimental
+description: Detects near-simultaneous execution of disk-wiping indicators (vssadmin delete shadows, bcdedit boot-recovery disable, raw disk-sector overwrite utilities) across multiple hosts in a short window, matching the KillDisk/NotPetya pattern used by Sandworm to destroy IT systems adjacent to OT environments and disrupt recovery.
+references:
+  - MITRE ATT&CK Software S0368 (NotPetya)
+  - Dragos CRASHOVERRIDE/Industroyer analysis
+threat_actor: Sandworm / APT44
+tags:
+  - attack.t1490
+  - attack.t1561
+  - attack.ics.t0826
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    CommandLine|contains:
+      - 'vssadmin delete shadows'
+      - 'bcdedit /set'
+      - 'wbadmin delete catalog'
+  timeframe: 10m
+  condition: selection | count(distinct ComputerName) > 3
+falsepositives:
+  - Legitimate backup software performing scheduled shadow-copy cleanup across the fleet
+level: critical

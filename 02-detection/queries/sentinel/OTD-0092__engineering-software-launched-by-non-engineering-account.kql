@@ -1,0 +1,11 @@
+// OTD-0092 - Engineering Software Launched by Non-Engineering Account
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/14_engineering-software-launched-by-non-engineering-account.yml
+// ATT&CK for ICS: attack.ics.t0858
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName in ("\Studio5000.exe", "\TIA Portal.exe", "\RSLogix5000.exe", "\WinCCExplorer.exe"))
+| where not ((User == "engineering_role_group"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,8 @@
+``` OTD-0097 - Setpoint Change Exceeding Safe Delta Threshold ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/21_setpoint-change-exceeding-safe-delta-threshold.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  ((node_id="Setpoint.*"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

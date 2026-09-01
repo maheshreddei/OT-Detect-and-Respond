@@ -1,0 +1,30 @@
+title: Unscheduled HMI Project or Configuration Deployment
+id: d1a1b2c3-0003-4a1b-8c1d-3a2b3c4d5e01
+status: experimental
+description: Detects an SCADA server pushing a new HMI project/configuration package (WinCC, FactoryTalk View, iFIX) to an HMI client outside the documented change window, which may indicate unauthorized screen, alarm, or logic-display tampering.
+references:
+  - https://attack.mitre.org/techniques/T0831/
+tags:
+  - attack.ics.t0831
+  - attack.ics.t0843
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: file_event
+  product: windows
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '.apa'
+      - '.hmi'
+      - '.fwx'
+      - '.cfg'
+    ComputerName|in_list: 'l2_hmi_hosts'
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Planned HMI graphics update performed during an approved off-hours window
+level: medium

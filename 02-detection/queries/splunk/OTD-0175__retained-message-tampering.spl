@@ -1,0 +1,12 @@
+``` OTD-0175 - Retained-message tampering ```
+``` Library: OT Protocol Defense (NDR)  |  Legacy ID: MQTT-04 ```
+``` ATT&CK for ICS: T0856  |  Severity: high ```
+``` Detection logic: Retained flag on command-topic publish ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_network earliest=-24h
+``` TODO: express the detection condition -- Retained flag on command-topic publish ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

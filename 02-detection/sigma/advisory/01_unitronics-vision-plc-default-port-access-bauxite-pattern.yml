@@ -1,0 +1,25 @@
+title: Unitronics Vision PLC Default Port Access (BAUXITE Pattern)
+id: sw01a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects a connection attempt to a Unitronics Vision Series PLC's web management interface on its default port (20256) from a source outside the designated engineering/HMI allow-list, the confirmed exploitation vector used by BAUXITE/CyberAv3ngers in the 2023 water-utility campaign and ongoing GCC water/energy targeting per the Shieldworkz advisory.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+  - CISA AA23-335A
+threat_actor: BAUXITE / CyberAv3ngers (IRGC-affiliated)
+tags:
+  - attack.ics.t0810
+  - attack.ics.t0806
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    dst_port: 20256
+  filter:
+    src_ip|in_list: 'designated_engineering_workstations'
+  condition: selection and not filter
+falsepositives:
+  - Authorized engineering laptop not yet added to the allow-list following a Unitronics PLC commissioning
+level: critical

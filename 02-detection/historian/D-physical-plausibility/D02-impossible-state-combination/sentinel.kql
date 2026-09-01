@@ -1,0 +1,24 @@
+// ============================================================================
+// D02 - Impossible state combination
+// Read-only. Example invariant: pump OFF but downstream flow present.
+// Data model: docs/data-model.md
+// ============================================================================
+let lookback = 30m;
+OTHistorian_CL
+| where TimeGenerated > ago(lookback) and Quality_s == "Good"
+| where TagName_s in ("PLANT1.U200.P101.RUN", "PLANT1.U200.FT201.PV")
+| summarize pump_run = anyif(Value_d, TagName_s == "PLANT1.U200.P101.RUN"),
+            flow     = anyif(Value_d, TagName_s == "PLANT1.U200.FT201.PV")
+    by tbin = bin(TimeGenerated, 10s)
+| where isnotnull(pump_run) and isnotnull(flow)
+| extend violation = iff(pump_run == 0 and flow > 5, 1, 0)
+// Short dwell: require 2 consecutive violating bins (island pattern)
+| order by tbin asc
+| serialize
+| extend newIsland = iff(violation != prev(violation), 1, 0)
+| extend islandId = row_cumsum(newIsland)
+| summarize run = count(), startBin = min(tbin), arg_max(tbin, pump_run, flow, violation) by islandId
+| where violation == 1 and run >= 2
+| extend rule = "P101_off_but_FT201_flow", severity = "high", detection = "D02"
+| project startBin, rule, pump_run, flow, run, severity, detection
+| order by startBin desc

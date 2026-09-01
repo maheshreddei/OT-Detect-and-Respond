@@ -1,0 +1,8 @@
+``` OTD-0109 - Web Shell Activity on Internet-Facing OT-Adjacent Server ```
+``` Source: 02-detection/sigma/threat-actor/07_web-shell-activity-on-internet-facing-ot-adjacent-server.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((ParentImage="\w3wp.exe" OR ParentImage="\httpd.exe" OR ParentImage="\nginx.exe") (Image="\cmd.exe" OR Image="\powershell.exe"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

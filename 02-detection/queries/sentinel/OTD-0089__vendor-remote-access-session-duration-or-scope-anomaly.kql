@@ -1,0 +1,11 @@
+// OTD-0089 - Vendor Remote Access Session Duration or Scope Anomaly
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/11_vendor-remote-access-session-duration-or-scope-anomaly.yml
+// ATT&CK for ICS: attack.ics.t0883
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SigninLogs
+| where (account_type == "vendor")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 1
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

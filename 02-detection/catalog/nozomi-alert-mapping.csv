@@ -1,0 +1,29 @@
+UC_ID,Nozomi_Category,Nozomi_Type_ID,Detection_Mechanism,Native_or_Assertion,Trigger_Detail,Surfaces_in_Syslog,ATTACK_ICS_Native
+OT-UC-0001,Network,NET:NEW-LINK,Learned baseline,Native,New communication link crosses zone boundary,Yes,No
+OT-UC-0002,Node/Inventory,VI:NEW-NODE,Asset visibility,Native+Assertion,Node with public-facing exposure attribute,Yes,No
+OT-UC-0003,Protocol,PROT:MODBUS-ILLEGAL,Protocol validation,Native+Assertion,Write FC (5/6/15/16) from unauthorized source,Yes,Partial
+OT-UC-0004,Protocol,PROT:MODBUS-ILLEGAL,Protocol validation,Assertion,FC08 sub-function 01/04 (restart/listen-only),Yes,Partial
+OT-UC-0005,Protocol,PROT:S7-ILLEGAL,Protocol validation,Native+Assertion,S7 job STOP (0x29) to CPU,Yes,Yes
+OT-UC-0006,Threat Intel,SIGN:PACKET-RULE,Packet rule (Suricata-style),Native,Program download job to controller,Yes,Yes
+OT-UC-0007,Protocol,PROT:DNP3-ILLEGAL,Protocol validation,Native+Assertion,DNP3 function 13/14 (cold/warm restart),Yes,Partial
+OT-UC-0008,Protocol,PROT:DNP3-ILLEGAL,Protocol validation,Assertion,DNP3 function 21 (disable unsolicited),Yes,Partial
+OT-UC-0009,Protocol,PROT:IEC104-ILLEGAL,Protocol validation,Native+Assertion,C_SC/C_DC ASDU from non-EWS source,Yes,Yes
+OT-UC-0010,Protocol,PROT:GOOSE-ANOMALY,Protocol validation,Native,GOOSE stNum/sqNum inconsistency or spoofed source,Yes,Partial
+OT-UC-0011,Protocol,PROT:OPCUA-INSECURE,Protocol validation,Native+Assertion,Anonymous token or SecurityMode=None,Yes,No
+OT-UC-0012,Protocol,PROT:ENIP-ILLEGAL,Protocol validation,Assertion,CIP firmware update service to controller,Yes,Yes
+OT-UC-0013,Network,NET:TCP-SYN-SCAN,Network anomaly,Native,SYN scan pattern across OT hosts,Yes,No
+OT-UC-0014,Network,NET:NEW-NODE,Learned baseline,Native,New node appears in monitored critical zone,Yes,No
+OT-UC-0015,Network,NET:NEW-LINK,Learned baseline,Native+Assertion,Engineering role node to PLC not in baseline,Yes,No
+OT-UC-0016,Threat Intel,SIGN:PACKET-RULE,Packet rule,Assertion,Alarm-config write to HMI/historian,No,No
+OT-UC-0017,Protocol,PROT:MALFORMED-PACKET,Protocol validation,Native+Assertion,TriStation/proprietary write to SIS controller,Yes,Yes
+OT-UC-0018,Threat Intel,SIGN:MALWARE-DETECTED,Yara rule,Native,Yara match on file over SMB (e.g. Havex/DragonFly),Yes,Yes
+OT-UC-0019,Threat Intel,SIGN:MALICIOUS-IP,STIX/IOC reputation,Native,Connection to known-bad IP from OT node,Yes,No
+OT-UC-0020,Host,N/A (Host-based),EDR/endpoint,External,Removable media mount on OT host,No,No
+OT-UC-0021,Protocol,PROT:MODBUS-ILLEGAL,Protocol validation,Assertion,FC43/17 device-ID reads and broad register sweeps,Yes,Partial
+OT-UC-0022,Application,N/A (App-based),App/auth log,External,Repeated failed auth to OT application,No,No
+OT-UC-0023,Network,NET:HIGH-BANDWIDTH,Network anomaly,Native,Traffic volume spike to controller,Yes,No
+OT-UC-0024,Network,NET:NEW-LINK,Learned baseline,Native+Assertion,Historian to external/atypical destination,Yes,No
+OT-UC-0025,Protocol,PROT:MALFORMED-PACKET,Protocol validation,Assertion,NTP response anomaly to OT time source,Yes,No
+OT-UC-0026,Node/Inventory,VI:NEW-NODE,Asset visibility,Native,New cellular/wireless node at remote site,Yes,No
+OT-UC-0027,Protocol,PROT:MODE-CHANGE,Protocol validation,Native+Assertion,PLC keyswitch/mode change to Program/Remote,Yes,Yes
+OT-UC-0028,Protocol,PROT:MALFORMED-PACKET,Protocol validation,Assertion,Firmware version regression on module load,Yes,Partial

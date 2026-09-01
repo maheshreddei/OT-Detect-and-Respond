@@ -1,0 +1,24 @@
+title: IEC 61850 GOOSE Unauthorized Publisher or Spoofed Message
+id: ta01a1b2-c3d4-4e5f-8071-001000000004
+status: experimental
+description: Detects a GOOSE (Generic Object Oriented Substation Event) message on the substation LAN published by a source MAC/IED identity not present in the configured GOOSE Control Block (GoCB) subscriber/publisher list, or with a StNum/SqNum sequence anomaly, consistent with protection-relay spoofing techniques associated with the Industroyer malware's IEC 61850 module.
+references:
+  - ESET Industroyer technical analysis
+threat_actor: Sandworm / APT44 (Electrum)
+tags:
+  - attack.ics.t0855
+  - attack.ics.t0856
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: iec61850
+detection:
+  selection:
+    proto: goose
+  filter:
+    publisher_mac|in_list: 'configured_gocb_publishers'
+  condition: selection and not filter
+falsepositives:
+  - IED replaced or reconfigured without updating the GoCB allow-list
+level: critical

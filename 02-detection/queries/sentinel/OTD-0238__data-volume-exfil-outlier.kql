@@ -1,0 +1,18 @@
+// OTD-0238 - Data-volume exfil outlier
+// Library: Perimeter-to-Endpoint  |  Legacy ID: OUT-06
+// ATT&CK for ICS: T1041  |  Severity: high
+// Detection logic: baseline
+//
+// STATUS: SCAFFOLD. This detection is catalogued as a specification; the logic below
+// expresses the intent against the mapped table but MUST be completed and validated
+// against real telemetry before deployment. Placeholders in <angle brackets> are
+// environment-specific.
+//
+CommonSecurityLog
+| where TimeGenerated > ago(24h)
+// TODO: express the detection condition -- baseline
+| where isnotempty(SourceIP)
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated)
+    by SourceIP, DestinationIP
+| where Count > <THRESHOLD>
+| order by Count desc

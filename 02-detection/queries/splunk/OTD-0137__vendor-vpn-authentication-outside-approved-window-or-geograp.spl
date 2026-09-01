@@ -1,0 +1,10 @@
+``` OTD-0137 - Vendor VPN Authentication Outside Approved Window or Geography ```
+``` Source: 02-detection/sigma/advisory/15_vendor-vpn-authentication-outside-approved-window-or-geograp.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog sourcetype=WinEventLog:Security
+  (account_type="vendor")
+  NOT (src_country="vendor_approved_countries")
+  NOT (change_ticket_active=true)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

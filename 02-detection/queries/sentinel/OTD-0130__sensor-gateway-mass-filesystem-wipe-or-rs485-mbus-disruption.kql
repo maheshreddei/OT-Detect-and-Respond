@@ -1,0 +1,11 @@
+// OTD-0130 - Sensor Gateway Mass Filesystem Wipe or RS485/MBus Disruption (Fuxnet Pattern)
+// Source: 02-detection/sigma/advisory/08_sensor-gateway-mass-filesystem-wipe-or-rs485-mbus-disruption.yml
+// ATT&CK for ICS: attack.ics.t0826
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (event_type in ("gateway_offline", "filesystem_error"))
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 10m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

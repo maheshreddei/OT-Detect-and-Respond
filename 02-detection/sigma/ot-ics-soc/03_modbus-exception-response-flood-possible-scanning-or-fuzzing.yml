@@ -1,0 +1,27 @@
+title: Modbus Exception Response Flood (Possible Scanning or Fuzzing)
+id: 7a1e9b3a-1d2c-4e1a-9b4e-1a2b3c4d5e03
+status: experimental
+description: Detects a high volume of Modbus exception responses (function code with high bit set / exception codes 01-04) from a single slave within a short window, indicating function code probing, fuzzing, or protocol scanning.
+references:
+  - https://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf
+tags:
+  - attack.ics.t0846
+  - attack.ics.t0888
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: modbus
+detection:
+  selection:
+    proto: modbus
+    exception_code:
+      - 1
+      - 2
+      - 3
+      - 4
+  timeframe: 5m
+  condition: selection | count(exception_code) by src_ip, dst_ip > 20
+falsepositives:
+  - Faulty HMI polling configuration causing repeated invalid requests
+level: medium

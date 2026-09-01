@@ -1,0 +1,11 @@
+// OTD-0116 - CODESYS Protocol Command to Schneider Controller From Non-Engineering Host
+// Source: 02-detection/sigma/threat-actor/14_codesys-protocol-command-to-schneider-controller-from-non-en.yml
+// ATT&CK for ICS: attack.ics.t0859, attack.ics.t0843, attack.ics.t0814
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "codesys" and command in ("file_delete", "login_attempt", "file_download"))
+| where not ((SourceIP == "designated_engineering_workstations"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

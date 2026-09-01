@@ -1,0 +1,8 @@
+``` OTD-0127 - Bulk Exfiltration of OT Documentation and Network Diagrams (Moses Staff Pattern) ```
+``` Source: 02-detection/sigma/advisory/05_bulk-exfiltration-of-ot-documentation-and-network-diagrams-m.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=wineventlog
+  ((Image="\7z.exe" OR Image="\rar.exe" OR Image="\WinRAR.exe") (CommandLine="*network diagram*" OR CommandLine="*P&ID*" OR CommandLine="*engineering*") host="l3_scada_servers")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

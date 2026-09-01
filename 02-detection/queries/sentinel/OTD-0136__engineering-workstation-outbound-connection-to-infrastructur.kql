@@ -1,0 +1,11 @@
+// OTD-0136 - Engineering Workstation Outbound Connection to Infrastructure Outside Approved List
+// Source: 02-detection/sigma/advisory/14_engineering-workstation-outbound-connection-to-infrastructur.yml
+// ATT&CK for ICS: attack.ics.t0883
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+DnsEvents
+| where (SourceIP == "designated_engineering_workstations")
+| where not ((query_name == "approved_ews_outbound_destinations"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

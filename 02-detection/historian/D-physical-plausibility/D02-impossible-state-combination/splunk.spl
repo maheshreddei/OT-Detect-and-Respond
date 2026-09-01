@@ -1,0 +1,29 @@
+```spl
+* ============================================================================
+* D02 - Impossible state combination
+* Read-only. Example invariant: pump OFF but downstream flow present.
+* Data model: docs/data-model.md
+* ============================================================================
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    tag IN ("PLANT1.U200.P101.RUN", "PLANT1.U200.FT201.PV")
+
+* Align the participating tags to a common 10s bin
+| bin _time span=10s
+| stats latest(eval(if(tag=="PLANT1.U200.P101.RUN", value, null()))) as pump_run
+        latest(eval(if(tag=="PLANT1.U200.FT201.PV",  value, null()))) as flow
+    by _time
+| where isnotnull(pump_run) AND isnotnull(flow)
+
+* Physical invariant: pump OFF (RUN=0) must not coexist with real downstream flow
+| eval violation = if(pump_run==0 AND flow>5, 1, 0)
+
+* Short dwell to tolerate the stop transient (require 2 consecutive violating bins)
+| sort 0 _time
+| streamstats reset_before="(violation==0)" count as viol_run
+| where violation==1 AND viol_run>=2
+
+| eval rule="P101_off_but_FT201_flow", detection="D02", severity="high"
+| table _time rule pump_run flow viol_run severity detection
+| sort - _time
+```

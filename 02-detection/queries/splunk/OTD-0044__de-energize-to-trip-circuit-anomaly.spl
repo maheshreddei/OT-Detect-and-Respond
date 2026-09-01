@@ -1,0 +1,12 @@
+``` OTD-0044 - De-energize-to-trip circuit anomaly ```
+``` Library: SIS Safety Detection  |  Legacy ID: SIS-C6 ```
+``` ATT&CK for ICS: T0837  |  Severity: high ```
+``` Detection logic: fail-safe ```
+``` STATUS: SCAFFOLD - complete and validate before deployment. ```
+index=ot_historian earliest=-24h
+``` TODO: express the detection condition -- fail-safe ```
+| stats count AS event_count, min(_time) AS first_seen, max(_time) AS last_seen
+    BY src_ip dest_ip
+| where event_count > <THRESHOLD>
+| convert ctime(first_seen) ctime(last_seen)
+| sort - event_count

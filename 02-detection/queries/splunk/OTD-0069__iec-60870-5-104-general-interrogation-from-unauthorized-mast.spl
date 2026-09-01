@@ -1,0 +1,9 @@
+``` OTD-0069 - IEC 60870-5-104 General Interrogation from Unauthorized Master ```
+``` Source: 02-detection/sigma/ot-ics-soc/16_iec-60870-5-104-general-interrogation-from-unauthorized-mast.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:iec104
+  (proto="iec104" type_id="C_IC_NA_1")
+  NOT (src_ip="10.10.20.0/24")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

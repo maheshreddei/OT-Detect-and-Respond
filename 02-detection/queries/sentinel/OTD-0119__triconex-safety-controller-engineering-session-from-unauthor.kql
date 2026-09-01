@@ -1,0 +1,11 @@
+// OTD-0119 - Triconex Safety Controller Engineering Session From Unauthorized Host
+// Source: 02-detection/sigma/threat-actor/17_triconex-safety-controller-engineering-session-from-unauthor.yml
+// ATT&CK for ICS: attack.ics.t0859, attack.ics.t0800, attack.ics.t0837
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "tristation")
+| where not ((SourceIP == "designated_sis_engineering_workstation"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

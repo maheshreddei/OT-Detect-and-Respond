@@ -1,0 +1,50 @@
+id: G01
+title: SIF trip-point approach
+status: production
+description: >
+  A safety-related PV trends steadily toward its SIF trip setpoint, entering the
+  engineered safe margin with a shrinking margin over time. Early-warning signal
+  for a safety-targeting attack (TRITON/TRISIS class) before the SIS is tested or
+  defeated. Monitoring control only - never interacts with the safety system.
+author: Mahesh Reddy
+date: 2026-01-14
+references:
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0880
+  - https://collaborate.mitre.org/attackics/index.php/Technique/T0837
+family: G-safety-alarm
+attack_ics:
+  - T0880   # Loss of Safety
+  - T0837   # Loss of Protection
+data_source:
+  index: ot_historian
+  table: OTHistorian_CL
+  tags:
+    - PLANT1.*.PV   # safety-related subset defined by sif_trip_limits lookup
+baseline:
+  method: margin-trend
+  segmentation: none              # threshold is engineered (LOPA), not learned
+  clean_window: "n/a - engineered trip/margin from SIS documentation"
+  rebaseline_cadence: on-MOC      # refresh when trip setpoints / SIF design change
+  lookup: sif_trip_limits.csv
+logic:
+  splunk: splunk.spl
+  sentinel: sentinel.kql
+  persistence: "margin shrinking across the approach window"
+fields:
+  - _time
+  - tag
+  - sif_id
+  - value
+  - trip_value
+  - margin
+  - margin_pct
+  - margin_rate
+falsepositives:
+  - Legitimate operation near a trip point during known transients
+  - Noise around a stable offset misread as approach (mitigated by rate deadband)
+level: high
+response: |
+  Safety-relevant and time-critical. Notify control room immediately.
+  Corroborate the PV independently (E01). Do NOT act on control/safety systems.
+  Escalate on the safety IR path as a potential loss-of-safety event.
+validation: validation.md

@@ -1,0 +1,26 @@
+title: PLC Logic or Firmware Upload From Non-Engineering Host
+id: d1a1b2c3-0004-4a1b-8c1d-4a2b3c4d5e02
+status: experimental
+description: Detects a PLC program/firmware download (Modbus, S7comm, EtherNet/IP CIP, or vendor-specific upload service) originating from a host other than the single designated engineering workstation for that process cell.
+references:
+  - https://attack.mitre.org/techniques/T0843/
+tags:
+  - attack.ics.t0843
+  - attack.ics.t0857
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    service:
+      - 'Download block'
+      - 'Request download'
+      - 'firmware_upload'
+  filter:
+    src_ip|in_list: 'designated_engineering_workstations'
+  condition: selection and not filter
+falsepositives:
+  - Backup engineering workstation used during primary workstation outage
+level: critical

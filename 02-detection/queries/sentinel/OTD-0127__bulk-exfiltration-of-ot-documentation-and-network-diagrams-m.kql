@@ -1,0 +1,10 @@
+// OTD-0127 - Bulk Exfiltration of OT Documentation and Network Diagrams (Moses Staff Pattern)
+// Source: 02-detection/sigma/advisory/05_bulk-exfiltration-of-ot-documentation-and-network-diagrams-m.yml
+// ATT&CK for ICS: attack.ics.t0811
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (NewProcessName in ("\7z.exe", "\rar.exe", "\WinRAR.exe") and (CommandLine contains "network diagram" or CommandLine contains "P&ID" or CommandLine contains "engineering") and Computer == "l3_scada_servers")
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

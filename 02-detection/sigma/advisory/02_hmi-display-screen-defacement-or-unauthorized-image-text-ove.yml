@@ -1,0 +1,30 @@
+title: HMI Display Screen Defacement or Unauthorized Image/Text Overwrite
+id: sw01a1b2-c3d4-4e5f-9081-000000000002
+status: experimental
+description: Detects an HMI project file or display screen being overwritten with new image/text resources outside an approved change window, matching the CyberAv3ngers defacement pattern of replacing HMI screens with propaganda imagery and "You have been hacked" messaging following PLC compromise.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: BAUXITE / CyberAv3ngers (IRGC-affiliated)
+tags:
+  - attack.ics.t0831
+  - attack.ics.t0829
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: file_event
+  product: windows
+detection:
+  selection:
+    TargetFilename|endswith:
+      - '.bmp'
+      - '.png'
+      - '.jpg'
+    ComputerName|in_list: 'l2_hmi_hosts'
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Planned HMI branding/graphics update performed during an approved off-hours window
+level: critical

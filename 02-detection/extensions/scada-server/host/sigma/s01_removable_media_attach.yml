@@ -1,0 +1,29 @@
+title: S-01 Removable Media Attached
+id: 91cfe519-fcf3-4853-b2ba-b78b1db7ca42
+status: experimental
+description: >
+  A removable/external device was recognised on S-01. USB remains a primary OT
+  initial-access and tooling-transfer vector; on a supervisory host media use
+  should be governed and rare.
+references:
+  - https://attack.mitre.org/techniques/T1091/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 6416              # A new external device was recognized by the system
+  condition: selection
+fields:
+  - DeviceDescription
+  - ClassName
+  - SubjectUserName
+falsepositives:
+  - Sanctioned engineering media used under a documented procedure
+level: medium
+tags:
+  - attack.initial_access
+  - attack.t1091
+  - asset.s_01

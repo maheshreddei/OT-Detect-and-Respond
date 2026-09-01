@@ -1,0 +1,25 @@
+```spl
+* ============================================================================
+* B01 - Setpoint outside approved range  (Oldsmar-class)
+* Read-only. Alert on CHANGE to an out-of-band setpoint value.
+* Data model: docs/data-model.md   SP limits carried as ll/hl on *.SP rows.
+* ============================================================================
+
+index=ot_historian sourcetype=historian:snapshot quality=Good
+    tag IN ("PLANT1.*.SP")
+| lookup ot_baseline.csv tag OUTPUT ll as sp_min hl as sp_max
+
+* Detect the write: value differs from the previous sample for this tag
+| sort 0 tag _time
+| streamstats current=f last(value) as prev_value by tag
+| eval changed = if(isnull(prev_value) OR value!=prev_value, 1, 0)
+
+* Out-of-approved-band
+| eval out_of_band = if(value < sp_min OR value > sp_max, 1, 0)
+| where changed==1 AND out_of_band==1
+
+| eval breach = if(value < sp_min, "below_min", "above_max")
+| eval detection="B01", severity="high"
+| table _time tag prev_value value sp_min sp_max breach severity detection
+| sort - _time
+```

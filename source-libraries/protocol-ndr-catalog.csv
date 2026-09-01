@@ -1,0 +1,55 @@
+id,protocol,detection,pattern,logic,log_source,attack_ics,severity
+SCAN-01,Scanning,Horizontal scan,recon,One source to many hosts on same port in short window,NetFlow / conn.log,T0846,medium
+SCAN-02,Scanning,Vertical scan,recon,One source to many ports on one host,NetFlow / conn.log,T0840,medium
+SCAN-03,Scanning,Scan from unexpected source,recon,Any scan pattern from host outside mgmt baseline,NDR + baseline,T0846,high
+SCAN-04,Scanning,OT control-port probing,recon,Probes to 502/102/2404/20000/44818/47808 from non-master,NDR/Zeek,T0846,high
+HTTP-01,HTTP,Web login brute force,unauthorized-client,Many auth failures then success to OT web UI,web-app log / http.log,T0859,high
+HTTP-02,HTTP,Directory/endpoint enumeration,recon,Burst of 404s / many distinct paths from one source,http.log / WAF,T0846,medium
+HTTP-03,HTTP,New client to device web UI,baseline-deviation,First-time source to OT web UI pair,NDR + baseline,T0822,medium
+HTTP-04,HTTP,Post-login control action,write-command,Config/upload/start-stop endpoints hit after login,web-app log,T0831,high
+VNC-01,VNC,VNC to a control host,unauthorized-client,Session to EWS/HMI/PLC from any source,conn.log/NDR + asset context,T0822,high
+VNC-02,VNC,VNC from unexpected source,baseline-deviation,New source-to-EWS VNC pair or off-hours,NDR + baseline,T0822,high
+VNC-03,VNC,Post-session engineering activity,write-command,Engineering-tool launch / program download after VNC session,host Sysmon + S7/ENIP network,T0843,critical
+VNC-04,VNC,Cross-zone VNC,unauthorized-client,VNC crossing IT to OT boundary,firewall,T0822,high
+FTP-01,FTP,Anonymous FTP login to OT device,unauthorized-client,USER anonymous accepted on OT asset,ftp.log / server log,T0822,high
+FTP-02,FTP,FTP brute force,unauthorized-client,Many failed logins then success from one source,ftp.log / server log,T0859,high
+FTP-03,FTP,Upload to a control device,write-command,STOR/PUT to a PLC/RTU/gateway,ftp.log,T0839,high
+FTP-04,FTP,Firmware/project file transfer,write-command,Firmware/project extensions transferred to/from OT,ftp.log + filename,T0873,high
+MOD-01,Modbus,Write from unauthorized source,write-command,Write FCs 5/6/15/16 from host outside master baseline,modbus.log,T0836,high
+MOD-02,Modbus,Write to critical register,write-command,Write to safety/critical register range,modbus.log + tag map,T0836,critical
+MOD-03,Modbus,Device-ID reconnaissance,recon,FC 43 (0x2B) from unexpected source,modbus.log,T0888,medium
+MOD-04,Modbus,Diagnostic abuse,disruptive-function,FC 8 sub-functions (restart / listen-only),modbus.log,T0814,high
+MOD-05,Modbus,Cross-zone Modbus,unauthorized-client,Any TCP/502 crossing IT to OT boundary,firewall/NDR,T0885,high
+S7-01,S7comm,PLC STOP/START,disruptive-function,S7 PLC-control function from any source,s7comm.log,T0813,critical
+S7-02,S7comm,Program download,write-command,Block download (program transfer),s7comm.log,T0843,critical
+S7-03,S7comm,Program upload (logic theft),recon,Block upload,s7comm.log,T0845,high
+S7-04,S7comm,Write from non-engineering source,write-command,Write-var from host outside EWS baseline,s7comm.log,T0836,high
+S7-05,S7comm,SZL/system recon,recon,Read SZL / system-status from unexpected source,s7comm.log,T0888,medium
+104-01,IEC-104,Command ASDU from non-master,write-command,C_SC/C_DC/C_RC/C_SE from host outside master baseline,iec104.log,T0855,critical
+104-02,IEC-104,Setpoint command,write-command,C_SE (48-50) to a command IOA,iec104.log,T0836,high
+104-03,IEC-104,Interrogation recon,recon,C_IC (100) from unexpected source,iec104.log,T0846,medium
+104-04,IEC-104,Clock-sync/reset abuse,disruptive-function,C_CS (103) / C_RP (105) anomalies,iec104.log,T0814,high
+DNP3-01,DNP3,Operate from non-master,write-command,FC 4/5 from outside master baseline,dnp3.log,T0855,critical
+DNP3-02,DNP3,CROB/analog-output write,write-command,Operate carrying Group 12 (CROB) or Group 41 (AO),dnp3.log,T0836,high
+DNP3-03,DNP3,Cold/warm restart,disruptive-function,FC 13/14 to an outstation,dnp3.log,T0814,high
+DNP3-04,DNP3,Unsolicited-response anomaly,baseline-deviation,Unexpected FC 130 / spoofed outstation source,dnp3.log,T0856,high
+MQTT-01,MQTT,Publish to command topic,write-command,PUBLISH to control topic from non-authorized client id,mqtt.log / broker log,T0855,high
+MQTT-02,MQTT,Wildcard subscribe (mass recon),recon,SUBSCRIBE with # or high-level +,mqtt.log / broker log,T0846,medium
+MQTT-03,MQTT,Anonymous/new client connect,unauthorized-client,CONNECT with no auth or new client id,broker log,T0822,medium
+MQTT-04,MQTT,Retained-message tampering,write-command,Retained flag on command-topic publish,mqtt.log,T0856,high
+OPC-01,OPC UA,Anonymous/None session,unauthorized-client,ActivateSession anonymous or securityMode None vs policy,opcua.log / server audit,T0859,high
+OPC-02,OPC UA,Write to command node,write-command,Write service to control NodeId from unexpected client,opcua.log,T0836,high
+OPC-03,OPC UA,CallMethod to control method,write-command,Call service invoking a control method,opcua.log,T0831,high
+OPC-04,OPC UA,Browse sweep (recon),recon,Broad Browse/Read across address space from new client,opcua.log,T0846,medium
+ENIP-01,EtherNet/IP,Tag/Set_Attribute write from non-controller,write-command,CIP write service from host outside controller/EWS baseline,cip.log,T0836,high
+ENIP-02,EtherNet/IP,ListIdentity sweep,recon,UDP/44818 ListIdentity to many hosts / unexpected source,enip.log,T0846,medium
+ENIP-03,EtherNet/IP,forward_open from unexpected source,unauthorized-client,Connection establishment from non-controller,enip.log,T0855,high
+ENIP-04,EtherNet/IP,Write to config class,disruptive-function,Set_Attribute to identity/config/assembly classes,cip.log,T0836,high
+61850-01,IEC 61850,MMS control Operate from non-master,write-command,Operate on control object from outside SCADA baseline,mms.log/ICSNPP-61850,T0855,critical
+61850-02,IEC 61850,MMS write to named variable,write-command,Write service to critical variables,mms.log,T0836,high
+61850-03,IEC 61850,GOOSE stNum/sqNum anomaly,baseline-deviation,Out-of-sequence or jumped state number (spoof signature),L2 capture / ICSNPP-61850,T0856,critical
+61850-04,IEC 61850,GOOSE from unexpected source,baseline-deviation,GOOSE with unknown source MAC / wrong segment,L2 capture,T0856,high
+BAC-01,BACnet,WriteProperty to command object,write-command,WriteProperty(Multiple) to AO/BO/AV/BV present-value from unexpected source,bacnet.log,T0836,high
+BAC-02,BACnet,Who-Is sweep (recon),recon,Broad/repeated Who-Is from one source,bacnet.log,T0846,medium
+BAC-03,BACnet,DeviceCommunicationControl,disruptive-function,Any DeviceCommunicationControl service,bacnet.log,T0814,high
+BAC-04,BACnet,ReinitializeDevice,disruptive-function,Any ReinitializeDevice service,bacnet.log,T0816,high

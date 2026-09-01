@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="620" viewBox="0 0 680 620" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img">
+<title>OT SOC delivery journey mapped to repositories</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<rect x="150" y="30" width="380" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.75"/>
+<text x="340" y="54" text-anchor="middle" fill="#2C2C2A" font-size="14" font-weight="500">1 · Strategy &amp; plan</text>
+<text x="340" y="72" text-anchor="middle" fill="#5F5E5A" font-size="12">ot-soc-delivery-playbook</text>
+<line x1="340" y1="86" x2="340" y2="114" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="150" y="116" width="380" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.75"/>
+<text x="340" y="140" text-anchor="middle" fill="#042C53" font-size="14" font-weight="500">2 · Assess &amp; design</text>
+<text x="340" y="158" text-anchor="middle" fill="#185FA5" font-size="12">ot-monitoring-deployment · ics-procurement-language</text>
+<line x1="340" y1="172" x2="340" y2="200" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="150" y="202" width="380" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.75"/>
+<text x="340" y="226" text-anchor="middle" fill="#042C53" font-size="14" font-weight="500">3 · Deploy</text>
+<text x="340" y="244" text-anchor="middle" fill="#185FA5" font-size="12">passive sensors · SIEM · tiered log onboarding</text>
+<line x1="340" y1="258" x2="340" y2="286" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="150" y="288" width="380" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.75"/>
+<text x="340" y="312" text-anchor="middle" fill="#04342C" font-size="14" font-weight="500">4 · Detect</text>
+<text x="340" y="330" text-anchor="middle" fill="#0F6E56" font-size="12">protocol · physics · safety · IT (5 libraries)</text>
+<line x1="340" y1="344" x2="340" y2="372" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="150" y="374" width="380" height="56" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.75"/>
+<text x="340" y="398" text-anchor="middle" fill="#4A1B0C" font-size="14" font-weight="500">5 · Respond</text>
+<text x="340" y="416" text-anchor="middle" fill="#993C1D" font-size="12">it-ot-incident-response</text>
+<line x1="340" y1="430" x2="340" y2="458" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<rect x="150" y="460" width="380" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.75"/>
+<text x="340" y="484" text-anchor="middle" fill="#2C2C2A" font-size="14" font-weight="500">6 · Run &amp; improve</text>
+<text x="340" y="502" text-anchor="middle" fill="#5F5E5A" font-size="12">monitor · KPIs · hunt · detection lifecycle</text>
+
+<path d="M150 488 L96 488 L96 316 L148 316" stroke="#0F6E56" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+<text x="88" y="402" text-anchor="middle" fill="#0F6E56" font-size="12" transform="rotate(-90 88 402)">continuous improvement</text>
+
+<text x="560" y="300" fill="#5F5E5A" font-size="12">gray plan</text>
+<text x="560" y="318" fill="#185FA5" font-size="12">blue build</text>
+<text x="560" y="336" fill="#0F6E56" font-size="12">teal detect</text>
+<text x="560" y="354" fill="#993C1D" font-size="12">coral respond</text>
+</svg>

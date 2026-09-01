@@ -1,0 +1,27 @@
+title: Unauthenticated Modbus/DNP3 Traffic Through Legacy Serial-to-Ethernet Gateway
+id: sw15a1b2-c3d4-4e5f-9081-000000000001
+status: experimental
+description: Detects Modbus or DNP3 traffic traversing a known legacy serial-to-Ethernet converter device from a source not in the approved polling list, surfacing the advisory's identified blind spot where operators migrating to Ethernet-based OT networks retained serial-to-Ethernet gateways that expose previously serial-isolated protocols without authentication on the OT LAN.
+references:
+  - Shieldworkz OT Cyber Threat Intelligence Advisory, Middle East (June 2026)
+threat_actor: Generalized (legacy gateway exposure, not actor-specific)
+tags:
+  - attack.ics.t0846
+  - attack.ics.t0855
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: generic
+detection:
+  selection:
+    proto:
+      - modbus
+      - dnp3
+    src_device_type: 'serial_to_ethernet_gateway'
+  filter:
+    dst_ip|in_list: 'approved_scada_polling_hosts'
+  condition: selection and not filter
+falsepositives:
+  - Newly commissioned polling host not yet added to the approved list for that gateway
+level: high

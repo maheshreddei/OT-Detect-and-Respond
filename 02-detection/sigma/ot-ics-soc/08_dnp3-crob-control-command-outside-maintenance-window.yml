@@ -1,0 +1,30 @@
+title: DNP3 CROB Control Command Outside Maintenance Window
+id: 8b2f0c4b-2e3d-4f2b-ac5f-2b3c4d5e6f04
+status: experimental
+description: Detects DNP3 Control Relay Output Block (CROB) commands (function codes 3,4,5,6) issued from the SCADA master outside the approved operating/maintenance window, which may indicate unauthorized switching/breaker operation.
+references:
+  - https://www.dnp.org/About/Overview-of-DNP3-Protocol
+tags:
+  - attack.ics.t0855
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: dnp3
+detection:
+  selection:
+    proto: dnp3
+    function_code:
+      - 3
+      - 4
+      - 5
+      - 6
+    object_group: 12   # CROB object group
+  timefilter:
+    hour|gte: 20
+  timefilter2:
+    hour|lte: 5
+  condition: selection and (timefilter or timefilter2)
+falsepositives:
+  - Emergency switching operation performed by authorized operator off-hours
+level: medium

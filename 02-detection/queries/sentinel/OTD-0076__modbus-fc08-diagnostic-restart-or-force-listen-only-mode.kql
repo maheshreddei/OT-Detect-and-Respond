@@ -1,0 +1,10 @@
+// OTD-0076 - Modbus FC08 Diagnostic Restart or Force Listen-Only Mode
+// Source: 02-detection/sigma/core-protocol/modbus-fc08-restart.yml
+// ATT&CK for ICS: attack.t0816
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (FunctionCode == "DIAGNOSTICS") and (SubFunction in (1, 4))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

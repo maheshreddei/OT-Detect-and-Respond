@@ -1,0 +1,8 @@
+``` OTD-0108 - DNS Tunneling Beacon From OT DMZ or Engineering Host ```
+``` Source: 02-detection/sigma/threat-actor/06_dns-tunneling-beacon-from-ot-dmz-or-engineering-host.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=dns
+  ((src_zone="OT_DMZ" OR src_zone="engineering"))
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

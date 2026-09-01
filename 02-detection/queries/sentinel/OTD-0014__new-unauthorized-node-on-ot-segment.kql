@@ -1,0 +1,11 @@
+// OTD-0014 - First-Time Asset Communication Across a Zone Boundary
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/23_first-time-asset-communication-across-a-zone-boundary.yml
+// ATT&CK for ICS: attack.ics.t0883, attack.ics.t0846
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+CommonSecurityLog
+| where (src_zone == "all_purdue_zones" and dst_zone == "all_purdue_zones")
+| where not ((src_dst_pair == "baseline_observed_pairs"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,10 @@
+// OTD-0086 - Remote Access Session into L3 Without Approved Change Window
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/08_remote-access-session-into-l3-without-approved-change-window.yml
+// ATT&CK for ICS: attack.ics.t0859
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (EventID == 4624 and LogonType in (10, 3) and TargetComputerName == "l3_scada_servers") and (hour == 20) and (hour == 5)
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

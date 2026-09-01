@@ -1,0 +1,23 @@
+title: Abnormal Authentication Pattern on SCADA or HMI Server
+id: d1a1b2c3-0003-4a1b-8c1d-3a2b3c4d5e04
+status: experimental
+description: Detects a burst of failed logons (password spray), an off-hours successful logon, or a logon from an account that has never previously authenticated to a given L2/L3 SCADA or HMI server, indicating credential-guessing or use of a freshly compromised account.
+references:
+  - https://attack.mitre.org/techniques/T1110/
+tags:
+  - attack.t1110
+  - attack.ics.t0859
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: authentication
+  product: windows
+detection:
+  selection_spray:
+    EventID: 4625
+    TargetComputerName|in_list: 'l2_l3_ot_servers'
+  timeframe: 10m
+  condition: selection_spray | count() by TargetComputerName > 10
+falsepositives:
+  - Misconfigured service account with an outdated stored credential causing repeated failures
+level: medium

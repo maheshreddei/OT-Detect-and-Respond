@@ -1,0 +1,25 @@
+title: Safety Controller Key-Switch or Mode Change Outside Proof-Test Window
+id: ta05a1b2-c3d4-4e5f-8071-005000000002
+status: experimental
+description: Detects a Safety Instrumented System controller mode change (RUN to PROGRAM) occurring outside the scheduled, documented proof-test or maintenance window, a precondition exploited in the TRITON/TRISIS attack where the SIS controller was placed in PROGRAM mode to allow malicious logic upload.
+references:
+  - FireEye TRITON Attack on Safety Instrumented System
+threat_actor: XENOTIME (TRITON / TRISIS)
+tags:
+  - attack.ics.t0858
+  - attack.ics.t0800
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: tristation
+detection:
+  selection:
+    proto: tristation
+    mode_change: 'PROGRAM'
+  filter:
+    change_ticket_active: true
+  condition: selection and not filter
+falsepositives:
+  - Authorized proof test with a change ticket not correctly tagged in the work-order system
+level: critical

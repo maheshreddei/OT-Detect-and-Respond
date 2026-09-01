@@ -1,0 +1,63 @@
+id,category,detection,data_source,attack,style,severity
+NET-01,network-dos,Ingress/egress volume baseline deviation,firewall/flow,T1498,baseline,medium
+NET-02,network-dos,SYN flood,firewall/flow,T1498.001,signature,high
+NET-03,network-dos,UDP/amplification flood,flow,T1498.002,signature,high
+NET-04,network-dos,Connection-rate spike to a service,firewall/flow,T1498,baseline,high
+NET-05,network-dos,Source fan-in DDoS,firewall/flow,T1498,signature,high
+NET-06,network-dos,ICMP flood,flow,T1498,baseline,medium
+NET-07,network-dos,Perimeter deny surge,firewall,T1595,baseline,medium
+NET-08,network-dos,Resource exhaustion on public service,WAF/LB/app,T1499,baseline,high
+IAM-01,identity,Brute force single account,auth/SigninLogs,T1110.001,signature,medium
+IAM-02,identity,Password spray,auth/SigninLogs,T1110.003,signature,high
+IAM-03,identity,Success after repeated failures,auth/SigninLogs,T1110,signature,high
+IAM-04,identity,Privilege/permission change,SecurityEvent/AuditLogs,T1098,signature,high
+IAM-05,identity,New/re-enabled account then use,Security/AuditLogs,T1136,signature,medium
+IAM-06,identity,Impossible travel/atypical geo,SigninLogs,T1078,baseline,high
+IAM-07,identity,Off-hours privileged logon,auth,T1078,baseline,medium
+IAM-08,identity,Disabled/dormant account use,auth,T1078.002,signature,high
+IAM-09,identity,MFA fatigue,SigninLogs,T1621,signature,high
+EDR-01,endpoint,Encoded/suspicious PowerShell,4104/Sysmon1/MDE,T1059.001,signature,high
+EDR-02,endpoint,LOLBin abuse,4688/Sysmon1/MDE,T1218,signature,high
+EDR-03,endpoint,Credential access LSASS,Sysmon10/MDE,T1003.001,signature,critical
+EDR-04,endpoint,Persistence run key/startup,Sysmon13/MDE,T1547.001,signature,high
+EDR-05,endpoint,Persistence service install,7045/MDE,T1543.003,signature,high
+EDR-06,endpoint,Persistence scheduled task,4698/MDE,T1053.005,signature,medium
+EDR-07,endpoint,Defense evasion log clearing,1102/SecurityEvent,T1070.001,signature,high
+EDR-08,endpoint,Defense evasion AV/EDR tamper,Defender/MDE,T1562.001,signature,critical
+EDR-09,endpoint,Suspicious parent-child,Sysmon1/MDE,T1059,signature,high
+EDR-10,endpoint,Masquerading binary,Sysmon1/MDE,T1036.005,signature,medium
+EW-01,east-west,Internal host scanning,flow/DeviceNetworkEvents,T1046,baseline,high
+EW-02,east-west,New east-west peer relationship,flow baseline,T1021,baseline,medium
+EW-03,east-west,Lateral SMB admin shares,5140/5145/MDE,T1021.002,signature,high
+EW-04,east-west,Lateral RDP internal spread,4624t10/flow,T1021.001,baseline,high
+EW-05,east-west,Lateral WMI/WinRM exec,Sysmon1/MDE,T1021.006,signature,high
+EW-06,east-west,Remote service creation PsExec-like,7045+5145,T1569,signature,high
+EW-07,east-west,Pass-the-hash/anomalous NTLM,4624/4776,T1550.002,signature,high
+EW-08,east-west,Kerberoasting,4769,T1558.003,signature,high
+EW-09,east-west,Internal DNS/AD recon,4662/DNS/Sysmon,T1087,baseline,medium
+OUT-01,outliers,DNS tunnelling,DNS,T1071.004,baseline,high
+OUT-02,outliers,DGA activity,DNS,T1568.002,baseline,high
+OUT-03,outliers,Rare/new external domain,DNS/proxy,T1071,baseline,medium
+OUT-04,outliers,Beaconing C2,flow/proxy,T1071,baseline,high
+OUT-05,outliers,Connection-count outlier,flow,T1071,baseline,medium
+OUT-06,outliers,Data-volume exfil outlier,flow/proxy,T1041,baseline,high
+OUT-07,outliers,Long-lived high-byte session,flow,T1071,baseline,medium
+OUT-08,outliers,DoH/rare resolver,flow/proxy,T1071.004,signature,medium
+SCN-01,scanning-web,Outbound scanning external ranges,firewall/flow,T1595.001,baseline,high
+SCN-02,scanning-web,Outbound vertical scan,firewall/flow,T1595.001,baseline,medium
+SCN-03,scanning-web,High outbound deny rate,firewall,T1595,baseline,medium
+WEB-01,scanning-web,Web login brute force,WAF/IIS/app,T1110,signature,high
+WEB-02,scanning-web,Directory/endpoint enumeration,WAF/IIS,T1595.003,signature,medium
+WEB-03,scanning-web,Injection patterns SQLi/XSS/cmd,WAF/web,T1190,signature,high
+WEB-04,scanning-web,High 5xx error spike,web/LB,T1190,baseline,medium
+WEB-05,scanning-web,Suspicious user-agent/tool,WAF/web,T1595,signature,medium
+WEB-06,scanning-web,Web shell indicators,web/EDR,T1505.003,signature,critical
+PRB-01,prohibited,Threat-intel IOC hit,flow/DNS+TI,T1071,signature,high
+PRB-02,prohibited,Tor usage,flow/proxy,T1090.003,signature,high
+PRB-03,prohibited,Crypto-mining,flow/DNS/proxy,T1496,signature,high
+PRB-04,prohibited,P2P/torrent,flow/IDS,T1048,signature,medium
+PRB-05,prohibited,Geo-prohibited destination,flow+geoIP,T1071,signature,medium
+PRB-06,prohibited,Unauthorized cloud storage,proxy/DNS,T1567.002,signature,medium
+PRB-07,prohibited,Prohibited cleartext protocol,flow,T1071,signature,medium
+PRB-08,prohibited,Unauthorized remote-access tool,proxy/DNS/flow,T1219,signature,high
+PRB-09,prohibited,Traffic to newly-registered domain,DNS+enrichment,T1071,baseline,medium

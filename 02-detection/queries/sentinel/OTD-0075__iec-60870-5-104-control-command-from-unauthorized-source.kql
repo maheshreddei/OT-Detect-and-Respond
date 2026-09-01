@@ -1,0 +1,11 @@
+// OTD-0075 - IEC 60870-5-104 Control Command from Unauthorized Source
+// Source: 02-detection/sigma/core-protocol/iec104-unauthorized-control.yml
+// ATT&CK for ICS: attack.t0855
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (TypeId in (45, 46, 48, 49, 50))
+| where not ((SourceIP == "10.40.1.10"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

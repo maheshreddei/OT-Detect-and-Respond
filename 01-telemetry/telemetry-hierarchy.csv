@@ -1,0 +1,15 @@
+TEL_ID,Rank,Source,Effort,Hunt_Value,Notes,Maps_To_LS,Collection_Pattern
+TEL-01,1,Network metadata (Zeek/sensor),Medium,Very High,Works where agents cannot go,LS-18,C
+TEL-02,2,Windows Security + Sysmon on HMI/EWS/historian,Medium,Very High,Where adversaries actually operate,LS-08;LS-11;LS-10,A
+TEL-03,3,Firewall / boundary logs,Low,High,Every zone crossing,LS-02,B
+TEL-04,4,Remote-access and VPN authentication,Low,High,Most common initial access,LS-03;LS-04,A;B
+TEL-05,5,Full PCAP at key points,Medium,High,Ground truth for investigations,LS-18,C
+TEL-06,6,OT platform alerts (Nozomi/Claroty/Dragos),Low,High,"Protocol-aware, asset context",LS-18,C
+TEL-07,7,Controller checksums and mode state,Medium,Very High,Highest fidelity signal in OT,LS-06;LS-16;LS-15,C
+TEL-08,8,Historian process data,Medium,High,Detects process manipulation,LS-10,A
+TEL-09,9,Engineering software audit logs,Medium,Medium-High,"Who downloaded what, when",LS-08,A
+TEL-10,10,"Switch/router syslog, MAC tables",Low,Medium,Rogue device and port-change detection,LS-05;LS-13,B
+TEL-11,11,AV/EDR alerts on OT Windows,Low,Medium,Often in detect-only mode,LS-08;LS-14,A
+TEL-12,12,"Physical access, USB, badge logs",Medium,Medium,Correlates the human dimension,LS-08,A;B
+TEL-13,13,Wireless controller logs,Low,Medium,"Rogue AP, unusual associations",LS-05,B
+TEL-14,14,Alarm/event server database,Medium,Medium,Alarm suppression detection,LS-11;LS-10,A

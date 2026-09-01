@@ -1,0 +1,8 @@
+``` OTD-0103 - IEC 104 Mass Coordinated Breaker-Open Command Burst ```
+``` Source: 02-detection/sigma/threat-actor/01_iec-104-mass-coordinated-breaker-open-command-burst.yml ```
+``` Severity: critical ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:iec104
+  (proto="iec104" (type_id="C_SC_NA_1" OR type_id="C_DC_NA_1") command_state="open")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

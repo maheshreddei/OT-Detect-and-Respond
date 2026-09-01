@@ -1,0 +1,28 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Rebuild catalog, queries, and crosswalk
+        run: |
+          python3 tools/build_catalog.py
+          python3 tools/generate_queries.py
+          python3 tools/build_crosswalk.py
+      - name: Fail if generated content is stale
+        run: |
+          git diff --exit-code 02-detection/catalog/ 02-detection/queries/ 05-crosswalk/ \
+            || (echo "Generated content out of date - run the build chain and commit" && exit 1)
+      - name: Validate referential integrity
+        run: python3 tools/validate.py

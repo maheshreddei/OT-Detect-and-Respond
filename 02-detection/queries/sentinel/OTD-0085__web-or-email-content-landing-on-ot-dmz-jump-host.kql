@@ -1,0 +1,10 @@
+// OTD-0085 - Web or Email Content Landing on OT DMZ Jump Host
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/06_web-or-email-content-landing-on-ot-dmz-jump-host.yml
+// ATT&CK for ICS: attack.ics.t0817
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (Computer == "dmz_jump_hosts" and NewProcessName in ("\outlook.exe", "\chrome.exe", "\msedge.exe", "\firefox.exe"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

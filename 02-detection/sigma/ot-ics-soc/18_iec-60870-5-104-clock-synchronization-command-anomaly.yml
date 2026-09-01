@@ -1,0 +1,23 @@
+title: IEC 60870-5-104 Clock Synchronization Command Anomaly
+id: be5c3f7e-516f-427e-df8c-5e6f70819203
+status: experimental
+description: Detects IEC 104 Clock Synchronization commands (C_CS_NA_1) sent at an abnormal frequency or from a non-master source, which can be used to desynchronize event timestamps and hinder forensic timeline reconstruction.
+references:
+  - https://www.iec.ch/standards
+tags:
+  - attack.ics.t0804
+  - attack.ics.t0851
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: iec104
+detection:
+  selection:
+    proto: iec104
+    type_id: 'C_CS_NA_1'
+  timeframe: 1h
+  condition: selection | count() by dst_ip > 5
+falsepositives:
+  - Misconfigured NTP/time sync causing repeated correction commands
+level: low

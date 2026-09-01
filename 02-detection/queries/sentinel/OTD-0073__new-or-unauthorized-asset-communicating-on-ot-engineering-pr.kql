@@ -1,0 +1,11 @@
+// OTD-0073 - New or Unauthorized Asset Communicating on OT Engineering Protocol Port
+// Source: 02-detection/sigma/ot-ics-soc/20_new-or-unauthorized-asset-communicating-on-ot-engineering-pr.yml
+// ATT&CK for ICS: attack.ics.t0883, attack.ics.t0846
+// Severity: medium
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (DestinationPort in (502, 20000, 102, 4840, 2404))
+| where not ((SourceIP == "known_ot_asset_inventory"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,8 @@
+``` OTD-0063 - DNP3 CROB Control Command Outside Maintenance Window ```
+``` Source: 02-detection/sigma/ot-ics-soc/08_dnp3-crob-control-command-outside-maintenance-window.yml ```
+``` Severity: medium ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network sourcetype=zeek:dnp3
+  (proto="dnp3" (function_code=3 OR function_code=4 OR function_code=5 OR function_code=6) object_group=12) (hour=20) (hour=5)
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

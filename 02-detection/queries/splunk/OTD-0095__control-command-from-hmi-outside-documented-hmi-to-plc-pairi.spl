@@ -1,0 +1,9 @@
+``` OTD-0095 - Control Command From HMI Outside Documented HMI-to-PLC Pairing ```
+``` Source: 02-detection/sigma/it-dmz-ot-crosszone/17_control-command-from-hmi-outside-documented-hmi-to-plc-pairi.yml ```
+``` Severity: high ```
+``` PLACEHOLDERS in <angle brackets> must be baselined before use. ```
+index=ot_network
+  ((proto="modbus" OR proto="dnp3" OR proto="s7comm" OR proto="opcua") function_code=true)
+  NOT (hmi_plc_pair="documented_hmi_plc_pairing_map")
+| table _time src_ip dest_ip protocol function_code user host
+| sort - _time

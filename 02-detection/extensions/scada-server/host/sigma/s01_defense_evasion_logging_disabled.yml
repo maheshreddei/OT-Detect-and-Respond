@@ -1,0 +1,67 @@
+title: S-01 Logging / AV / Audit Tampering
+id: 30697cd1-b0e5-42c9-a6a0-4ada7f8587f5
+status: experimental
+description: >
+  Indicators that audit logging, event logs, or endpoint protection were cleared
+  or disabled on S-01 - a precursor to hiding manipulation of the process.
+references:
+  - https://attack.mitre.org/techniques/T1562/001/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_evt:
+    EventID:
+      - 1102   # The audit log was cleared
+      - 4719   # System audit policy was changed
+  condition: selection_evt
+fields:
+  - SubjectUserName
+  - SubjectDomainName
+falsepositives:
+  - Sanctioned audit-policy change during hardening (should be change-ticketed)
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+  - asset.s_01
+---
+title: S-01 Logging/AV Tampering via Command Line
+id: 30697cd1-b0e5-42c9-a6a0-4ada7f8587f6
+status: experimental
+description: Command-line tampering with Defender, event log, or logging services on S-01.
+references:
+  - https://attack.mitre.org/techniques/T1562/001/
+author: Mahesh (ot-detection-program)
+date: 2026/08/12
+logsource:
+  product: windows
+  category: process_creation   # Sysmon EventID 1 / 4688
+detection:
+  selection:
+    CommandLine|contains:
+      - 'wevtutil cl'
+      - 'wevtutil clear-log'
+      - 'Clear-EventLog'
+      - 'Set-MpPreference -Disable'
+      - 'Add-MpPreference -ExclusionPath'
+      - 'sc stop eventlog'
+      - 'sc config eventlog'
+      - 'auditpol /clear'
+      - 'auditpol /set'
+      - 'fltmc unload'
+  condition: selection
+fields:
+  - CommandLine
+  - Image
+  - ParentImage
+  - User
+falsepositives:
+  - Approved hardening scripts (baseline and exclude)
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+  - asset.s_01

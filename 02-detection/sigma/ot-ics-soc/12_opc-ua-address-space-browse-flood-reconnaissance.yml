@@ -1,0 +1,23 @@
+title: OPC UA Address Space Browse Flood (Reconnaissance)
+id: 9c3a1d5c-3f4e-405c-bd6a-3c4d5e6f7004
+status: experimental
+description: Detects a high volume of OPC UA Browse service calls from a single client within a short window, consistent with automated enumeration of the server's address space/tag list prior to a targeted attack.
+references:
+  - https://reference.opcfoundation.org/Core/Part4/v104/docs/5.8.2
+tags:
+  - attack.ics.t0846
+  - attack.ics.t0888
+author: Mahesh
+date: 2026/07/01
+logsource:
+  category: ics-network
+  product: opcua
+detection:
+  selection:
+    proto: opcua
+    service: Browse
+  timeframe: 5m
+  condition: selection | count() by src_ip > 100
+falsepositives:
+  - Engineering tool performing full project tag synchronization
+level: medium

@@ -1,0 +1,11 @@
+// OTD-0103 - IEC 104 Mass Coordinated Breaker-Open Command Burst
+// Source: 02-detection/sigma/threat-actor/01_iec-104-mass-coordinated-breaker-open-command-burst.yml
+// ATT&CK for ICS: attack.ics.t0855, attack.ics.t0831, attack.ics.t0879
+// Severity: critical
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Protocol == "iec104" and TypeId in ("C_SC_NA_1", "C_DC_NA_1") and command_state == "open")
+| summarize Count = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by SourceIP, DestinationIP // original Sigma timeframe: 2m
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

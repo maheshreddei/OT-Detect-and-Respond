@@ -1,0 +1,10 @@
+// OTD-0100 - Removable Media Event on DMZ or L3 Asset
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/25_removable-media-event-on-dmz-or-l3-asset.yml
+// ATT&CK for ICS: attack.ics.t0847
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+SecurityEvent
+| where (EventID in (2003, 2010) and Computer in ("dmz_jump_hosts", "l3_scada_servers"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,11 @@
+// OTD-0005 - S7comm STOP CPU Command to PLC
+// Source: 02-detection/sigma/core-protocol/s7comm-stop-cpu.yml
+// ATT&CK for ICS: attack.t0816
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (Rosctr == "USERDATA" and (FunctionName contains "PLC_STOP" or FunctionName contains "P_PROGRAM"))
+| where not ((SourceIP == "10.20.30.11"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc

@@ -1,0 +1,10 @@
+// OTD-0096 - Engineering Protocol Session Opened by HMI Account
+// Source: 02-detection/sigma/it-dmz-ot-crosszone/19_engineering-protocol-session-opened-by-hmi-account.yml
+// ATT&CK for ICS: attack.ics.t0867, attack.ics.t0858
+// Severity: high
+// PLACEHOLDERS in <angle brackets> must be baselined before use.
+//
+OTNetwork_CL
+| where (SourceIP == "l2_hmi_hosts" and Protocol in ("s7comm", "cip", "fins") and Rosctr in ("Job", "Userdata"))
+| project TimeGenerated, SourceIP, DestinationIP, Protocol, FunctionCode, AccountName, Computer
+| order by TimeGenerated desc
