@@ -1,5 +1,7 @@
 # Nozomi High-Level Design (HLD)
 
+![Nozomi enterprise HLD](diagrams/nozomi-enterprise-hld.svg)
+
 ## 1. Objective
 
 Provide passive, resilient visibility of OT assets, industrial protocols, abnormal behavior and security events without placing Nozomi inline with control traffic. The design supports local operations, enterprise SOC monitoring, incident investigation and auditable telemetry assurance.
