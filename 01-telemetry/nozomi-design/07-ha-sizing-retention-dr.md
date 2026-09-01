@@ -1,5 +1,7 @@
 # High Availability, Sizing, Retention and Disaster Recovery
 
+![Nozomi HA and DR architecture](diagrams/nozomi-ha-dr.svg)
+
 > Confirm model limits, licenses, backup compatibility and supported failover procedures against the installed N2OS release and an approved Nozomi design.
 
 ## Service objectives
