@@ -1,5 +1,7 @@
 # Threat Detection Engineering and Tuning
 
+![Nozomi detection and investigation lifecycle](diagrams/nozomi-soc-workflow.svg)
+
 ## Objective
 
 Translate process risk into observable behavior, prove required telemetry, validate safely, integrate with SOC operations and continuously measure efficacy. Exact alert names and licensed features vary by N2OS release; design around behaviors and outcomes.
