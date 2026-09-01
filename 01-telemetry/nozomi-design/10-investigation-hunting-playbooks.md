@@ -1,5 +1,7 @@
 # Nozomi Investigation and Threat-Hunting Playbooks
 
+![Nozomi SOC workflow](diagrams/nozomi-soc-workflow.svg)
+
 ## Principles
 
 Safety and process stability come first. Nozomi observations are evidence, not automatic proof. Preserve timestamps, capture origin, query/filter and exports. Correlate with process state and MOC. Never block, scan, reboot, isolate or modify a control asset without authorized operations approval.
