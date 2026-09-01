@@ -11,6 +11,7 @@ source here.
 | `log-source-inventory.csv` | `LS-01..19` | **Onboarding tier**, from four-axis scoring |
 | `parser-mapping.csv` | `LS-##` | Transport, parser, sourcetype, key fields, CIM |
 | `onboarding-tiers.csv` | — | Tier rollup with rationale |
+| [`nozomi-design/`](nozomi-design/) | — | Nozomi HLD, LLD, SPAN/TAP, interfaces, commissioning and interview guide |
 
 ## Three views, deliberately
 
