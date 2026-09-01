@@ -1,5 +1,7 @@
 # Management, Monitoring and Expansion Interfaces
 
+![Nozomi interface separation](diagrams/nozomi-interface-separation.svg)
+
 ## 1. Management interface
 
 The management interface is the sensor's addressed and normally routable control plane. It is used for the web console, administration, authentication, NTP/DNS/PKI, updates/licensing, backups, API/syslog integrations and Guardian-to-CMC/Vantage/collector coordination as applicable.
