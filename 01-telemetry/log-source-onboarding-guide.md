@@ -11,17 +11,27 @@ overall **Importance**. The onboarding tier translates those four axes into the 
 which a Cyber Defense / MSS team should realistically bring sources into the SIEM, rather
 than trying to ingest everything on day one.
 
-The machine-readable version of the table below lives in
-`catalog/log-source-inventory.csv`; collection/parser detail is in
-`catalog/parser-mapping.csv`; and the mapping from each source to the detection use cases
-it enables is in `catalog/detection-linkage.csv`.
+The machine-readable version of the table below lives in `log-source-inventory.csv`;
+collection/parser detail is in `parser-mapping.csv`; and the outcome mapping from each
+source to detection, validation evidence, and response playbooks is in
+`detection-response-linkage.csv`.
+
+## Collection boundary
+
+“OT telemetry” means telemetry needed to defend the OT mission, not only packets captured
+inside Levels 0–2. Keep IT-side data when it establishes the route into OT (identity, VPN,
+jump host, IDMZ firewall), describes activity on an OT-serving host, or helps confirm
+operational impact. Do not duplicate unrelated enterprise telemetry in the OT pipeline.
+
+Every source must have a named detection use, a validation role, an owner, and a response
+playbook. If it has none, do not onboard it merely because it is available.
 
 ## Onboarding tiers
 
 ### Tier 1 — Onboard first
 
 Control Server/SCADA Server, Firewall (OT), Jump Host, VPN Server, Switch,
-Engineering/Operator Workstations.
+Engineering/Operator Workstations, OT Identity/Directory.
 
 These combine easy or medium collection effort with critical importance. They form the
 backbone of both IT-to-OT crossing detections and remote-access abuse detections — the two
@@ -29,7 +39,8 @@ most common real-world OT compromise paths.
 
 ### Tier 2 — Onboard next
 
-PLC, Safety Controller, Data Gateway, Data Historian, HMI, IED, Router.
+PLC, Safety Controller, Data Gateway, Data Historian, HMI, IED, Router,
+Backup/Recovery Platform.
 
 High or critical importance, but either harder to instrument directly (PLC, Safety
 Controller) or lower urgency/volume (Historian, Router). Safety Controllers deserve special
@@ -37,12 +48,14 @@ handling: rare events here should always page out regardless of collection diffi
 
 ### Tier 3 — Fill coverage gaps
 
-Application Server, DCS Controller, PAC, RTU, Network Traffic (SPAN/TAP/IDS).
+Application Server, DCS Controller, PAC, RTU, and expansion of Network Traffic
+(SPAN/TAP/IDS) beyond the initial boundary pilot.
 
-Network Traffic monitoring is listed here not because it's low-value — it's arguably the
-single most important source for protocol-level Sigma detections (Modbus, DNP3, OPC UA,
-S7comm, IEC 104) — but because it demands the most engineering effort (SPAN/TAP
-architecture, DPI tuning) before it produces usable signal.
+Network Traffic monitoring is phased. One boundary sensor is an early minimum-viable
+control because it exposes IT/OT crossings and remote-access paths. Extending sensors to
+every cell/area is Tier 3 because SPAN/TAP architecture, asset context, protocol parsing,
+and tuning require more engineering. This distinction removes the apparent conflict
+between collection priority and rollout effort.
 
 ### Tier 4 — Do not collect directly
 
@@ -74,6 +87,8 @@ native collection here adds cost for near-zero marginal detection value.
 | PAC | Advanced programmable controller with extended capabilities | Hard | Low | Moderate | **Critical** | Tier 3 — same constraints as PLC; passive monitoring is the practical path. |
 | RTU | Aggregates field data and forwards to SCADA | Hard | Low | Moderate | **High** | Tier 3 — geographically distributed, often serial-based; polling-based DNP3/104 monitoring recommended. |
 | Network Traffic (SPAN/TAP/IDS) | Passive monitoring of OT protocols | Medium | Nightmare | Very Few | **High** | Tier 3 — highest engineering effort but fills every visibility gap above (PLC, PAC, RTU, DCS). Needs dedicated tuning and a Sigma/DPI ruleset. |
+| OT Identity / Directory | Directory and identity services used by OT users, systems, and remote access | Easy | Medium | Very Few | **Critical** | Tier 1 — scope to OT identities and dependencies; detect account, privilege, policy, and authentication abuse. |
+| Backup / Recovery Platform | Backups for OT hosts, applications, and controller projects | Easy | Low | Very Few | **High** | Tier 2 — detect tampering and preserve evidence that a safe recovery point actually exists. |
 | Field I/O | Sensors and actuators providing raw input/output | Nightmare | Low | Very Many | **Low** | Tier 4 — do not attempt direct log collection; covered indirectly via PLC/RTU and process historian data. |
 
 ---

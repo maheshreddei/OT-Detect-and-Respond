@@ -1,5 +1,5 @@
 OTD_ID,Title,Library_Name,LS_IDs,Log_Sources,Onboarding_Tiers,Reachable_At_Tier1
-OTD-0001,External remote services abuse into OT/DMZ,OT Threat Content,LS-02;LS-03;LS-04,Firewall (OT);Jump Host;VPN Server,Tier 1,Yes
+OTD-0001,External remote services abuse into OT/DMZ,OT Threat Content,LS-02;LS-03;LS-04;LS-20,Firewall (OT);Jump Host;VPN Server;OT Identity / Directory,Tier 1,Yes
 OTD-0002,Internet-accessible ICS device exposure,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
 OTD-0003,Unauthorized Modbus write to coils/registers,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
 OTD-0004,Modbus FC08 diagnostic restart/listen-only,OT Threat Content,LS-06;LS-18,PLC;Network Traffic (SPAN/TAP/IDS),Tier 2;Tier 3,No
@@ -84,14 +84,14 @@ OTD-0082,OT DMZ Historian Replication Direction Anomaly,Sigma: IT/DMZ/OT Cross-Z
 OTD-0083,AV/Patch Management Push to DMZ Outside Maintenance Window or Scope,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0084,OT DMZ Asset External DNS or NTP Resolution Attempt,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0085,Web or Email Content Landing on OT DMZ Jump Host,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0086,Remote Access Session into L3 Without Approved Change Window,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
-OTD-0087,Shared or Service Account Used From Unusual DMZ Source,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0086,Remote Access Session into L3 Without Approved Change Window,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-20,Workstations (Engineering/Operator);OT Identity / Directory,Tier 1,Yes
+OTD-0087,Shared or Service Account Used From Unusual DMZ Source,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-20,Workstations (Engineering/Operator);OT Identity / Directory,Tier 1,Yes
 OTD-0088,File Transfer From DMZ to L3 With Executable or Engineering Project Extension,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0089,Vendor Remote Access Session Duration or Scope Anomaly,Sigma: IT/DMZ/OT Cross-Zone,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
+OTD-0089,Vendor Remote Access Session Duration or Scope Anomaly,Sigma: IT/DMZ/OT Cross-Zone,LS-04;LS-20,VPN Server;OT Identity / Directory,Tier 1,Yes
 OTD-0090,Unscheduled HMI Project or Configuration Deployment,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0091,New or Modified Scheduled Task on HMI or SCADA Server,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0092,Engineering Software Launched by Non-Engineering Account,Sigma: IT/DMZ/OT Cross-Zone,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0093,Abnormal Authentication Pattern on SCADA or HMI Server,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0093,Abnormal Authentication Pattern on SCADA or HMI Server,Sigma: IT/DMZ/OT Cross-Zone,LS-08;LS-20,Workstations (Engineering/Operator);OT Identity / Directory,Tier 1,Yes
 OTD-0094,Unexpected Outbound Connection from L2 HMI Toward DMZ or IT,Sigma: IT/DMZ/OT Cross-Zone,LS-02,Firewall (OT),Tier 1,Yes
 OTD-0095,Control Command From HMI Outside Documented HMI-to-PLC Pairing,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0096,Engineering Protocol Session Opened by HMI Account,Sigma: IT/DMZ/OT Cross-Zone,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
@@ -111,7 +111,7 @@ OTD-0109,Web Shell Activity on Internet-Facing OT-Adjacent Server,Sigma: Threat 
 OTD-0110,Credential Harvesting Tool Execution on Engineering or SCADA Host,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0111,Low-and-Slow HTTPS Beaconing Indicative of OilRig-Class Backdoor C2,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0112,Shamoon-Style MBR Wiper Execution,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0113,Password Spray Against OT Remote Access Portal,Sigma: Threat Actor,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
+OTD-0113,Password Spray Against OT Remote Access Portal,Sigma: Threat Actor,LS-04;LS-20,VPN Server;OT Identity / Directory,Tier 1,Yes
 OTD-0114,Mass Malware Spreader Tool Execution Across Multiple Hosts,Sigma: Threat Actor,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0115,OPC UA Server Enumeration Followed by Node Value Tampering,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0116,CODESYS Protocol Command to Schneider Controller From Non-Engineering Host,Sigma: Threat Actor,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
@@ -126,17 +126,17 @@ OTD-0124,HMI Display Screen Defacement or Unauthorized Image/Text Overwrite,Sigm
 OTD-0125,Post-Unitronics-Compromise Lateral Movement via SMB/RDP From PLC Network Segment,Sigma: CTI Advisory,LS-02,Firewall (OT),Tier 1,Yes
 OTD-0126,Remote Management Tool Installation on OT-Adjacent Host (MuddyWater Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0127,Bulk Exfiltration of OT Documentation and Network Diagrams (Moses Staff Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0128,Ransomware Precursor — Lateral Movement Targeting Historian or SCADA Hostnames,Sigma: CTI Advisory,LS-08;LS-14,Workstations (Engineering/Operator);Application Server,Tier 1;Tier 3,Yes
+OTD-0128,Ransomware Precursor — Lateral Movement Targeting Historian or SCADA Hostnames,Sigma: CTI Advisory,LS-08;LS-20,Workstations (Engineering/Operator);OT Identity / Directory,Tier 1,Yes
 OTD-0129,Mass File Transfer Appliance Exploitation Preceding OT Document Theft (Cl0p Pattern),Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0130,Sensor Gateway Mass Filesystem Wipe or RS485/MBus Disruption (Fuxnet Pattern),Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0131,Coordinated Multi-Site SCADA Command Triggering Mass Manual-Fallback (Predatory Sparrow-Class Pattern),Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
-OTD-0132,Password Spray Against Cloud Identity Tenant Serving OT-Adjacent Accounts,Sigma: CTI Advisory,LS-14,Application Server,Tier 3,No
+OTD-0132,Password Spray Against Cloud Identity Tenant Serving OT-Adjacent Accounts,Sigma: CTI Advisory,LS-20,OT Identity / Directory,Tier 1,Yes
 OTD-0133,Security Event Log Cleared on OT Network System,Sigma: CTI Advisory,LS-08,Workstations (Engineering/Operator),Tier 1,Yes
 OTD-0134,PLC Configuration Drift From Verified Offline Backup,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0135,Historian Query Pattern Anomaly From IT-Network Host,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0136,Engineering Workstation Outbound Connection to Infrastructure Outside Approved List,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
-OTD-0137,Vendor VPN Authentication Outside Approved Window or Geography,Sigma: CTI Advisory,LS-04;LS-14,VPN Server;Application Server,Tier 1;Tier 3,Yes
-OTD-0138,Dormant Vendor Account First-Use After Extended Inactivity,Sigma: CTI Advisory,LS-14,Application Server,Tier 3,No
+OTD-0137,Vendor VPN Authentication Outside Approved Window or Geography,Sigma: CTI Advisory,LS-04;LS-20,VPN Server;OT Identity / Directory,Tier 1,Yes
+OTD-0138,Dormant Vendor Account First-Use After Extended Inactivity,Sigma: CTI Advisory,LS-20,OT Identity / Directory,Tier 1,Yes
 OTD-0139,Unauthenticated Modbus/DNP3 Traffic Through Legacy Serial-to-Ethernet Gateway,Sigma: CTI Advisory,LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,No
 OTD-0140,Unauthorized Association to Industrial Wireless Network (WirelessHART/ISA100/OT Wi-Fi),Sigma: CTI Advisory,LS-05,Switch,Tier 1,Yes
 OTD-0141,OT Cloud Agent Unexpected Outbound Data Pathway,Sigma: CTI Advisory,LS-02,Firewall (OT),Tier 1,Yes
@@ -214,15 +214,15 @@ OTD-0212,Remote service creation PsExec-like,Perimeter-to-Endpoint,LS-02,Firewal
 OTD-0213,Pass-the-hash/anomalous NTLM,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
 OTD-0214,Kerberoasting,Perimeter-to-Endpoint,LS-02,Firewall (OT),Tier 1,Yes
 OTD-0215,Internal DNS/AD recon,Perimeter-to-Endpoint,LS-02;LS-08,Firewall (OT);Workstations (Engineering/Operator),Tier 1,Yes
-OTD-0216,Brute force single account,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0217,Password spray,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0218,Success after repeated failures,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0219,Privilege/permission change,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0220,New/re-enabled account then use,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0221,Impossible travel/atypical geo,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0222,Off-hours privileged logon,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0223,Disabled/dormant account use,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
-OTD-0224,MFA fatigue,Perimeter-to-Endpoint,LS-02;LS-14,Firewall (OT);Application Server,Tier 1;Tier 3,Yes
+OTD-0216,Brute force single account,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0217,Password spray,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0218,Success after repeated failures,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0219,Privilege/permission change,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0220,New/re-enabled account then use,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0221,Impossible travel/atypical geo,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0222,Off-hours privileged logon,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0223,Disabled/dormant account use,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
+OTD-0224,MFA fatigue,Perimeter-to-Endpoint,LS-02;LS-20,Firewall (OT);OT Identity / Directory,Tier 1,Yes
 OTD-0225,Ingress/egress volume baseline deviation,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
 OTD-0226,SYN flood,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes
 OTD-0227,UDP/amplification flood,Perimeter-to-Endpoint,LS-02;LS-18,Firewall (OT);Network Traffic (SPAN/TAP/IDS),Tier 1;Tier 3,Yes

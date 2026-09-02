@@ -1,5 +1,5 @@
 Tier,Label,Source_Count,Sources,Rationale
-Tier 1,Onboard First,6,LS-01;LS-02;LS-03;LS-04;LS-05;LS-08,Easy-to-medium collection with critical importance. Backbone of IT-to-OT crossing and remote-access-abuse detection - the two most common OT compromise paths.
-Tier 2,Onboard Next,7,LS-06;LS-07;LS-09;LS-10;LS-11;LS-12;LS-13,"High or critical importance but harder to instrument (PLC, Safety Controller) or lower urgency/volume (Historian, Router). Safety Controller events always page out."
-Tier 3,Fill Coverage Gaps,5,LS-14;LS-15;LS-16;LS-17;LS-18,High value but high engineering effort. Network Traffic is the single most important source for protocol-level Sigma detection but demands SPAN/TAP architecture and DPI tuning first.
+Tier 1,Onboard First,7,LS-01;LS-02;LS-03;LS-04;LS-05;LS-08;LS-20,Easy-to-medium collection with critical importance. Backbone of IT-to-OT crossing identity and remote-access-abuse detection - the two most common OT compromise paths.
+Tier 2,Onboard Next,8,LS-06;LS-07;LS-09;LS-10;LS-11;LS-12;LS-13;LS-21,"High or critical importance but harder to instrument (PLC, Safety Controller) or lower urgency/volume (Historian, Router, Backup). Safety Controller events always page out."
+Tier 3,Fill Coverage Gaps,5,LS-14;LS-15;LS-16;LS-17;LS-18,"High value but high engineering effort. LS-18 here means expansion beyond the priority-1 boundary sensor pilot to cell/area coverage; it requires SPAN/TAP architecture, asset context, protocol parsing, and DPI tuning."
 Tier 4,Do Not Collect Directly,1,LS-19,State already represented indirectly via PLC/RTU telemetry and historian; native collection adds cost for near-zero marginal detection value.

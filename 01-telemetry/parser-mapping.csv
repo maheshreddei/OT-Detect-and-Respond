@@ -17,4 +17,6 @@ LS-15,DCS Controller,Passive network monitoring,Syslog/CEF,Nozomi Guardian,nozom
 LS-16,PAC,Passive network monitoring,Syslog/CEF,Nozomi Guardian / Zeek ICSNPP,nozomi:alert / zeek:enip,type_id;ip_src;ip_dst;func,IDS (custom)
 LS-17,RTU,Polling / passive DNP3-104,Sensor / poller,Nozomi Guardian / Zeek ICSNPP,nozomi:alert / zeek:dnp3,type_id;ip_src;ip_dst;fc,IDS (custom)
 LS-18,Network Traffic (SPAN/TAP/IDS),Passive sensor SPAN/TAP,Syslog/CEF from sensor,Nozomi Guardian + Zeek ICSNPP,nozomi:alert / zeek:*,type_id;ip_src;ip_dst;protocol;mitre_attack_for_ics,Network Traffic;IDS (custom)
+LS-20,OT Identity / Directory,Native audit / API / host agent,API / TCP forwarder,Identity vendor TA / Windows TA,identity audit / WinEventLog:Security,user;src;action;group;target;result,Authentication;Change
+LS-21,Backup / Recovery Platform,Syslog / API / native audit,Syslog / REST,Vendor TA / custom,backup audit,job;asset;user;action;result;retention;repository,Change;Endpoint (custom)
 LS-19,Field I/O,Not collected directly,N/A,N/A (indirect),N/A,N/A,N/A

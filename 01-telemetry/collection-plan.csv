@@ -3,7 +3,7 @@ CP-01,1,IDMZ firewall (both directions),Every boundary crossing - the single bes
 CP-02,1,Jump host / remote access broker,"Who entered OT, when, from where, session recording",Agent or syslog,LS-03;LS-04,TEL-04
 CP-03,1,EWS: Windows Security + Sysmon,"Logons, process creation, service install, USB, network connections",Windows Event Forwarding or agent,LS-08,TEL-02
 CP-04,1,Passive network sensor (Zeek/Nozomi/Claroty/Dragos),Protocol-level activity where no host log exists,"SPAN/TAP, sensor forwards to SIEM",LS-18,TEL-01;TEL-06
-CP-05,2,OT domain controller,"Kerberos, account changes, GPO changes",WEF/agent,LS-14,TEL-02
+CP-05,2,OT identity / directory,"Authentication, account changes, privileged groups, GPO or access-policy changes",Native audit/API or WEF/agent,LS-20,TEL-04
 CP-06,2,SCADA/HMI application audit trail,"Tag writes, setpoint changes, acknowledgements, operator identity",Vendor log file or DB -> SIEM,LS-01;LS-11,TEL-09
 CP-07,2,Historian,Actual process values - the ground truth of impact,Query API; forward exception events,LS-10,TEL-08
 CP-08,2,PLC diagnostic buffer,"Mode changes, download events, comms faults",Poll and forward (S7: SZL; Logix: controller log),LS-06,TEL-07
@@ -11,5 +11,5 @@ CP-09,3,Switches and OT firewalls internal,East-west movement inside Level 2,Sys
 CP-10,3,SIS / Sequence-of-Events recorder,Millisecond-accurate trip cause,"Vendor export, scheduled",LS-07,TEL-07
 CP-11,3,Antivirus / EDR where deployed,Malware detections on Level 2/3,Native console -> SIEM,LS-08;LS-14,TEL-11
 CP-12,3,"Physical access control, USB kiosk",Who was in the room; what media entered,Syslog / DB export,LS-08,TEL-12
-CP-13,4,Backup system,"Backup success, and deletion attempts (ransomware precursor)",Syslog,LS-14,TEL-11
+CP-13,4,Backup / recovery platform,"Backup success, policy or retention changes, deletion attempts, recovery readiness",Syslog / API / native audit,LS-21,TEL-15
 CP-14,4,Wireless controller,"Rogue AP, new client MACs",Syslog,LS-05,TEL-13

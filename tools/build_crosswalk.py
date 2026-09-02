@@ -53,10 +53,13 @@ LS_HINTS = {
     "LS-10": ["historian", "process data", "tag"],
     "LS-11": ["hmi", "scada", "operator"],
     "LS-12": ["ied", "61850", "goose"],
-    "LS-14": ["identity", "auth", "account", "kerberos", "domain", "application"],
+    "LS-14": ["application"],
     "LS-17": ["rtu", "dnp3", "104"],
     "LS-18": ["ndr", "network", "zeek", "nozomi", "span", "tap", "conn", "ics-network",
               "opcua", "enip", "cip", "mqtt", "bacnet", "vnc", "ftp", "http"],
+    "LS-20": ["identity", "authentication", "account", "kerberos", "domain", "credential", "logon",
+              "password", "vpn", "remote access"],
+    "LS-21": ["backup", "recovery", "restore", "repository", "retention"],
 }
 
 

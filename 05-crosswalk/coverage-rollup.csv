@@ -12,9 +12,11 @@ LS-10,Data Historian,Tier 2,High,Easy,24,11,T0804;T0815;T0831;T0832;T0835;T0836;
 LS-11,HMI,Tier 2,High,Easy,1,1,T0878
 LS-12,IED,Tier 2,High,Easy,6,3,T0836;T0855;T0856
 LS-13,Router,Tier 2,High,Medium,0,0,
-LS-14,Application Server,Tier 3,Medium,Medium,18,3,T0859;T0883;T0888
+LS-14,Application Server,Tier 3,Medium,Medium,0,0,
 LS-15,DCS Controller,Tier 3,High,Hard,0,0,
 LS-16,PAC,Tier 3,Critical,Hard,0,0,
 LS-17,RTU,Tier 3,High,Hard,16,12,T0804;T0814;T0816;T0831;T0836;T0846;T0851;T0855;T0856;T0858;T0879;T0888
 LS-18,Network Traffic (SPAN/TAP/IDS),Tier 3,High,Medium,138,37,T0800;T0801;T0804;T0806;T0810;T0811;T0812;T0813;T0814;T0816;T0822;T0826;T0831;T0836;T0837;T0839;T0840;T0843;T0845;T0846;T0851;T0855;T0856;T0857;T0858
 LS-19,Field I/O,Tier 4,Low,Nightmare,0,0,
+LS-20,OT Identity / Directory,Tier 1,Critical,Easy,19,4,T0822;T0859;T0883;T0888
+LS-21,Backup / Recovery Platform,Tier 2,High,Easy,0,0,
